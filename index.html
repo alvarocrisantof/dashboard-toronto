@@ -326,6 +326,7 @@ function renderBI(){
   var sc=STORES[biStore].c;
   var totRec=S(d.rec,n),totLB=S(d.lb,n),totRes=S(d.res,n);
   var totQtd=S(d.qtd,n),totPess=S(d.pess,n),totAdm=S(d.adm,n);
+  if(biStore==='cons'&&totQtd===0){var _dm=DRE.mm[biYear],_db=DRE.bk[biYear];for(var _i=0;_i<n;_i++)totQtd+=(_dm.qtd[_i]||0)+(_db.qtd[_i]||0);}
   var totProp=S(d.prop,n),totRet=S(d.ret,n),totFin=S(d.fin,n);
   var totVend=S(d.vend,n),totCshow=S(d.cshow,n),totCatac=S(d.catac,n);
   var totCprep=S(d.cprep,n),totCdocs=S(d.cdocs,n),totCsa=S(d.csa,n);
@@ -336,6 +337,7 @@ function renderBI(){
   var pProp=totRec?totProp/totRec*100:0;
   var ticket=totQtd?totRec/totQtd:0;
   var lucVei=totQtd?totRes/totQtd:0;
+  var lbVei=totQtd?totLB/totQtd:0;
   var af=n>0&&n<12?12/n:1;
   var isP=n<12;
 
@@ -390,7 +392,7 @@ function renderBI(){
   html+='</div>';
   html+='<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px">';
   html+=kpi('Ticket Médio',fmtK(ticket),'Bench 2026: ~R$85k',ticket>=75000?'#3fb6a8':'#d8aa2c');
-  html+=kpi('Lucro / Veículo',fmtK(lucVei),'Bench: R$3k–8k',clr(lucVei));
+  html+=kpi('LB / Veículo',fmtK(lbVei),'Bench: R$5k–12k',lbVei>=5000&&lbVei<=12000?'#3fb6a8':lbVei>0?'#d8aa2c':'#e05c5c');
   html+=kpi('Pessoal / Receita',pPess.toFixed(1)+'%','Benchmark: 3–5%',pPess>=3&&pPess<=5?'#3fb6a8':pPess>5?'#e05c5c':'#d8aa2c');
   html+=kpi('Retorno Financ.',fmtK(totRet),pct(totRet,totRec)+' da receita','#a78bfa');
   html+='</div>';
@@ -498,7 +500,7 @@ html+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bo
     {l:'Pessoal/Rec.',v:pPess,lo:3,hi:5,u:'%'},
     {l:'Admin/Rec.',v:pAdm,lo:2,hi:4,u:'%'},
     {l:'Marketing/Rec.',v:pProp,lo:0.8,hi:1.5,u:'%'},
-    {l:'Lucro/Veículo',v:lucVei/1000,lo:3,hi:8,u:'k'},
+    {l:'LB/Veículo',v:lbVei/1000,lo:5,hi:12,u:'k'},
   ];
   var gbody='<table style="width:100%;border-collapse:collapse">';
   bmarks.forEach(function(bm){
@@ -543,10 +545,11 @@ html+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bo
     var dy=DRE[biStore][y],ny=dy.n;
     var rT=S(dy.rec,ny),lT=S(dy.lb,ny),rsT=S(dy.res,ny);
     var qT=S(dy.qtd,ny),psT=S(dy.pess,ny),adT=S(dy.adm,ny),prT=S(dy.prop,ny),vdT=S(dy.vend,ny);
+    if(biStore==='cons'&&qT===0){var _ym=DRE.mm[y],_yb=DRE.bk[y],_yn=Math.min(ny,_ym.n,_yb.n);for(var _qi=0;_qi<_yn;_qi++)qT+=(_ym.qtd[_qi]||0)+(_yb.qtd[_qi]||0);}
     var ebitdaT=lT-psT-adT-prT-vdT;
     ydata[y]={rec:rT,lb:lT,res:rsT,qtd:qT,ebitda:ebitdaT,
       pLB:rT?lT/rT*100:0,pRes:rT?rsT/rT*100:0,pEbitda:rT?ebitdaT/rT*100:0,
-      tk:qT?rT/qT:0,lv:qT?rsT/qT:0,
+      tk:qT?rT/qT:0,lv:qT?lT/qT:0,
       pPess:rT?psT/rT*100:0,pAdm:rT?adT/rT*100:0,pProp:rT?prT/rT*100:0,n:ny};
   });
   var af26=DRE[biStore][2026].n>0?12/DRE[biStore][2026].n:1;
@@ -558,7 +561,7 @@ html+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bo
     {l:'Margem Líquida',k:'pRes',f:function(v){return v.toFixed(1)+'%';},s:true},
     {l:'Qtd. Vendida',k:'qtd',f:function(v){return Math.round(v)+'';},s:false},
     {l:'Ticket Médio',k:'tk',f:fmtK,s:false},
-    {l:'Lucro / Veículo',k:'lv',f:fmtK,s:false},
+    {l:'LB / Veículo',k:'lv',f:fmtK,s:false},
     {l:'Pessoal / Receita',k:'pPess',f:function(v){return v.toFixed(1)+'%';},s:true},
     {l:'Admin / Receita',k:'pAdm',f:function(v){return v.toFixed(1)+'%';},s:true},
     {l:'Marketing / Receita',k:'pProp',f:function(v){return v.toFixed(2)+'%';},s:true},
@@ -608,8 +611,8 @@ html+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bo
   if(pAdm>5)insights.push({t:'warn',s:'Despesas administrativas ('+pAdm.toFixed(1)+'%) acima do benchmark (2–4%) — maior oportunidade de redução de custos'});
   if(pProp<0.8)insights.push({t:'warn',s:'Marketing ('+pProp.toFixed(2)+'%) abaixo do recomendado (0.8–1.5%) — considerar ampliar investimento em mídia'});
   if(ticket>85000)insights.push({t:'ok',s:'Ticket médio R$'+Math.round(ticket/1000)+'k superior à média do mercado — mix de veículos de maior valor'});
-  if(lucVei>=3000&&lucVei<=8000)insights.push({t:'ok',s:'Lucro por veículo R$'+Math.round(lucVei/1000)+'k dentro do benchmark (R$3k–8k)'});
-  else if(lucVei<0)insights.push({t:'alert',s:'Prejuízo médio por veículo de R$'+Math.round(-lucVei/1000)+'k — custo total superior ao ticket médio'});
+  if(lbVei>=5000&&lbVei<=12000)insights.push({t:'ok',s:'LB por veículo R$'+Math.round(lbVei/1000)+'k dentro do benchmark (R$5k–12k)'});
+  else if(lbVei<5000&&lbVei>0)insights.push({t:'warn',s:'LB por veículo R$'+Math.round(lbVei/1000)+'k abaixo do benchmark (R$5k–12k) — margem por unidade pressionada'});
   // YoY trend
   var r26a=ydata[2026].rec*af26,r25=ydata[2025].rec;
   if(r25>0){var gr=(r26a-r25)/r25*100;if(gr>10)insights.push({t:'ok',s:'Crescimento de receita anualizado de +'+gr.toFixed(1)+'% vs 2025 — aceleração de vendas'});}
