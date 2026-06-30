@@ -188,6 +188,90 @@ function svgLine(series,labels,opts){
 }
 
 // ── KPI CARD ───────────────────────────────────────────────────────
+
+// ── SVG GROUPED BAR ──────────────────────────────────────────────
+function svgGroupBar(series,sLabels,colors,xLabels,opts){
+  opts=opts||{};
+  var W=820,H=opts.h||200,PL=58,PR=12,PT=22,PB=50;
+  var cW=W-PL-PR,cH=H-PT-PB,n=xLabels.length,ns=series.length;
+  var allV=[];series.forEach(function(sr){allV=allV.concat(sr.map(function(v){return v||0;}));});
+  var maxV=Math.max.apply(null,allV.concat([1]));
+  var grpW=cW/n,bW=Math.max(4,grpW*0.75/ns);
+  var parts=[];
+  parts.push('<rect x="'+PL+'" y="'+PT+'" width="'+cW+'" height="'+cH+'" fill="#0a1525" rx="4"/>');
+  for(var gi=0;gi<=4;gi++){
+    var gy=PT+cH*(1-gi/4);
+    parts.push('<line x1="'+PL+'" y1="'+gy.toFixed(1)+'" x2="'+(PL+cW)+'" y2="'+gy.toFixed(1)+'" stroke="#172436" stroke-width="1"/>');
+    parts.push('<text x="'+(PL-5)+'" y="'+(gy+3).toFixed(1)+'" fill="#4a5568" font-size="9" text-anchor="end" font-family="Inter,Arial,sans-serif">'+fmtAx(gi/4*maxV)+'</text>');
+  }
+  series.forEach(function(ser,si){
+    var gidG='gbg_'+si+'_'+Math.floor(Math.random()*9999);
+    parts.push('<defs><linearGradient id="'+gidG+'" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="'+colors[si]+'" stop-opacity="1"/><stop offset="100%" stop-color="'+colors[si]+'" stop-opacity="0.5"/></linearGradient></defs>');
+    for(var i=0;i<n;i++){
+      var v=ser[i]||0;if(!v)continue;
+      var cx=PL+(i+0.5)*grpW;
+      var bx=cx+(si-(ns-1)/2)*(bW+2)-bW/2;
+      var bh=Math.max(v/maxV*cH,1),by=PT+cH-bh;
+      parts.push('<rect x="'+bx.toFixed(1)+'" y="'+by.toFixed(1)+'" width="'+bW.toFixed(1)+'" height="'+bh.toFixed(1)+'" fill="url(#'+gidG+')" rx="2"/>');
+    }
+  });
+  for(var i=0;i<n;i++){
+    var cx2=PL+(i+0.5)*grpW;
+    parts.push('<text x="'+cx2.toFixed(1)+'" y="'+(H-PB+12)+'" fill="#4a5568" font-size="9.5" text-anchor="middle" font-family="Inter,Arial,sans-serif">'+xLabels[i]+'</text>');
+  }
+  parts.push('<line x1="'+PL+'" y1="'+PT+'" x2="'+PL+'" y2="'+(PT+cH)+'" stroke="#1d2d49" stroke-width="1"/>');
+  var legX=PL;
+  series.forEach(function(ser,si){
+    parts.push('<rect x="'+legX+'" y="'+(H-PB+24)+'" width="10" height="10" fill="'+colors[si]+'" rx="2"/>');
+    parts.push('<text x="'+(legX+14)+'" y="'+(H-PB+33)+'" fill="#6b7f96" font-size="10" font-family="Inter,Arial,sans-serif">'+esc(sLabels[si])+'</text>');
+    legX+=160;
+  });
+  return '<svg width="100%" viewBox="0 0 '+W+' '+H+'" style="display:block;overflow:visible">'+parts.join('')+'</svg>';
+}
+// ── SVG PE COMBO ─────────────────────────────────────────────────
+function svgPECombo(fatVals,peVals,mcArr,xLabels,opts){
+  opts=opts||{};
+  var W=820,H=opts.h||200,PL=58,PR=12,PT=22,PB=38;
+  var cW=W-PL-PR,cH=H-PT-PB,n=xLabels.length;
+  var maxV=Math.max.apply(null,fatVals.concat(peVals).concat([1]));
+  var bW=Math.max(8,cW/n*0.55);
+  var parts=[];
+  parts.push('<rect x="'+PL+'" y="'+PT+'" width="'+cW+'" height="'+cH+'" fill="#0a1525" rx="4"/>');
+  for(var gi=0;gi<=4;gi++){
+    var gy=PT+cH*(1-gi/4);
+    parts.push('<line x1="'+PL+'" y1="'+gy.toFixed(1)+'" x2="'+(PL+cW)+'" y2="'+gy.toFixed(1)+'" stroke="#172436" stroke-width="1"/>');
+    parts.push('<text x="'+(PL-5)+'" y="'+(gy+3).toFixed(1)+'" fill="#4a5568" font-size="9" text-anchor="end" font-family="Inter,Arial,sans-serif">'+fmtAx(gi/4*maxV)+'</text>');
+  }
+  var linePts=[];
+  for(var i=0;i<n;i++){
+    var fat=fatVals[i]||0,pe=peVals[i]||0;
+    var cx=PL+(i+0.5)*cW/n,bx=cx-bW/2;
+    if(fat>0){
+      var bh=fat/maxV*cH,by=PT+cH-bh;
+      parts.push('<rect x="'+bx.toFixed(1)+'" y="'+by.toFixed(1)+'" width="'+bW.toFixed(1)+'" height="'+bh.toFixed(1)+'" fill="#2a4a7a" rx="3"/>');
+      if(fat>pe&&pe>0){
+        var sh=(fat-pe)/maxV*cH;
+        parts.push('<rect x="'+bx.toFixed(1)+'" y="'+by.toFixed(1)+'" width="'+bW.toFixed(1)+'" height="'+sh.toFixed(1)+'" fill="#3fb6a8" rx="3" opacity="0.45"/>');
+      } else if(fat<pe&&pe>0){
+        parts.push('<rect x="'+bx.toFixed(1)+'" y="'+by.toFixed(1)+'" width="'+bW.toFixed(1)+'" height="'+bh.toFixed(1)+'" fill="#7a2020" rx="3" opacity="0.8"/>');
+      }
+      if(mcArr[i]>0){
+        var ty=by-11;
+        parts.push('<text x="'+cx.toFixed(1)+'" y="'+ty.toFixed(1)+'" fill="#7a90a8" font-size="8.5" text-anchor="middle" font-family="Inter,Arial,sans-serif">MC '+mcArr[i].toFixed(1)+'%</text>');
+      }
+    }
+    if(pe>0) linePts.push([cx,PT+cH*(1-pe/maxV)]);
+    parts.push('<text x="'+cx.toFixed(1)+'" y="'+(H-9)+'" fill="#4a5568" font-size="9.5" text-anchor="middle" font-family="Inter,Arial,sans-serif">'+xLabels[i]+'</text>');
+  }
+  if(linePts.length>1){
+    var pth='M '+linePts[0][0].toFixed(1)+' '+linePts[0][1].toFixed(1);
+    for(var li=1;li<linePts.length;li++) pth+=' L '+linePts[li][0].toFixed(1)+' '+linePts[li][1].toFixed(1);
+    parts.push('<path d="'+pth+'" fill="none" stroke="#d8aa2c" stroke-width="2.5" stroke-dasharray="6,3" stroke-linecap="round" stroke-linejoin="round"/>');
+    linePts.forEach(function(p){parts.push('<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="3.5" fill="#d8aa2c" stroke="#0b1626" stroke-width="2"/>');});
+  }
+  parts.push('<line x1="'+PL+'" y1="'+PT+'" x2="'+PL+'" y2="'+(PT+cH)+'" stroke="#1d2d49" stroke-width="1"/>');
+  return '<svg width="100%" viewBox="0 0 '+W+' '+H+'" style="display:block;overflow:visible">'+parts.join('')+'</svg>';
+}
 function kpi(label,val,sub,accent,delta){
   var dc=delta===undefined?'':delta>=0?'#3fb6a8':'#e05c5c';
   var da=delta===undefined?'':delta>=0?'▲':('▼');
@@ -363,7 +447,11 @@ function renderBI(){
     +'</div>');
 
   // ── Cost breakdown + Benchmarks side by side
-  html+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px">';
+  
+  var custoAq=d.rec.map(function(r,i){var ca=(d.cshow[i]||0)+(d.catac[i]||0);return ca>0?ca:Math.max(0,r-(d.lb[i]||0));});
+  html+=section('Faturamento vs Lucro Bruto por Mês','Barras agrupadas: custo de aquisição (escuro) × lucro bruto (azul) — como no relatório Mult Results',
+    svgGroupBar([custoAq.slice(0,12),lbVals.slice(0,12)],['Custo de Aquisição','Lucro Bruto'],['#1e3a6e','#4a9be8'],mnAll,{h:200}));
+html+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px">';
 
   // Cost breakdown horizontal bars
   var costItems=[
@@ -406,6 +494,26 @@ function renderBI(){
   gbody+='</div>';
   html+=section('Benchmarking vs Mercado','Concessionárias seminovos Brasil · FENABRAVE/ABRAVE',gbody);
   html+='</div>';
+
+  var mc_r=d.rec.map(function(r,i){return r>0&&d.lb[i]?d.lb[i]/r:0;});
+  var cfx_pe=d.rec.map(function(r,i){return(d.pess[i]||0)+(d.adm[i]||0)+(d.prop[i]||0);});
+  var pe_v=cfx_pe.map(function(c,i){return mc_r[i]>0?c/mc_r[i]:0;});
+  var ms_p=d.rec.map(function(r,i){return r>0&&pe_v[i]>0?(r-pe_v[i])/r*100:0;});
+  var pe_q=pe_v.map(function(p,i){var tk=d.qtd[i]>0&&d.rec[i]>0?d.rec[i]/d.qtd[i]:0;return tk>0?Math.ceil(p/tk):0;});
+  var mcPctArr=mc_r.map(function(v){return v*100;});
+  var peChartSvg=svgPECombo(d.rec.slice(0,12),pe_v.slice(0,12),mcPctArr.slice(0,12),mnAll,{h:190});
+  peChartSvg+='<div style="display:flex;gap:20px;margin-top:10px;font-size:11px;color:#6b7f96">'
+    +'<span><span style="display:inline-block;width:14px;height:14px;background:#3fb6a8;opacity:0.6;margin-right:6px;vertical-align:middle;border-radius:3px"></span>Margem de Segurança (acima do PE)</span>'
+    +'<span><span style="display:inline-block;width:14px;height:14px;background:#7a2020;opacity:0.9;margin-right:6px;vertical-align:middle;border-radius:3px"></span>Faturamento abaixo do PE</span>'
+    +'<span><span style="display:inline-block;width:24px;height:2.5px;background:#d8aa2c;margin-right:6px;vertical-align:middle;border-top:2px dashed #d8aa2c;margin-top:6px"></span>Ponto de Equilíbrio</span>'
+    +'</div>';
+  var petable='<div style="overflow-x:auto;margin-top:16px"><table style="width:100%;border-collapse:collapse;font-size:12px">';
+  petable+='<thead><tr style="border-bottom:1px solid #1a2d46">';
+  ['Mês','Margem Contrib.','Custo Fixo','PE — Faturamento','PE — Qtd veíc.','Faturamento Real','Margem de Segurança'].forEach(function(h){petable+='<th style="text-align:right;padding:7px 10px;color:#4a5e74;font-size:10px;text-transform:uppercase;letter-spacing:.5px">'+h+'</th>';});
+  petable+='</tr></thead><tbody>';
+  for(var mpe=0;mpe<n;mpe++){if(!d.rec[mpe])continue;var ms2=ms_p[mpe];var msc=ms2>=25?'#3fb6a8':ms2>=5?'#d8aa2c':'#e05c5c';petable+='<tr style="border-bottom:1px solid #0f1d30"><td style="padding:8px 10px;color:#8093ab;font-weight:600">'+mnAll[mpe]+'</td><td style="text-align:right;padding:8px 10px;color:#e8eef6">'+mcPctArr[mpe].toFixed(1)+'%</td><td style="text-align:right;padding:8px 10px;color:#e8eef6">'+fmtK(cfx_pe[mpe])+'</td><td style="text-align:right;padding:8px 10px;color:#d8aa2c;font-weight:700">'+fmtK(pe_v[mpe])+'</td><td style="text-align:right;padding:8px 10px;color:#e8eef6">'+pe_q[mpe]+' veíc.</td><td style="text-align:right;padding:8px 10px;color:#4a9be8;font-weight:700">'+fmtK(d.rec[mpe])+'</td><td style="text-align:right;padding:8px 10px;color:'+msc+';font-weight:700">'+(ms2>=0?'+':'')+ms2.toFixed(1)+'%</td></tr>';}
+  petable+='</tbody></table></div>';
+  html+=section('Ponto de Equilíbrio','MC% = Margem Bruta. Custo Fixo = Pessoal + Admin + Marketing. PE = Custo Fixo ÷ MC%. Barra verde = margem de segurança acima do PE.',peChartSvg+petable);
 
   // ── Annual Comparison Table
   var ydata={};
