@@ -176,6 +176,7 @@ function svgLine(series,labels,opts){
     // dots
     pts.forEach(function(p,pi){
       parts.push('<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="3.5" fill="'+ser.color+'" stroke="#0b1626" stroke-width="1.5"/>');
+      if(opts.showVals){var lv=ser.vals[validIdx[pi]];if(lv!==0&&lv!==null&&lv!==undefined){var ty2=p[1]-11;parts.push('<text x="'+p[0].toFixed(1)+'" y="'+ty2.toFixed(1)+'" fill="'+ser.color+'" font-size="9" text-anchor="middle" font-weight="600" font-family="Inter,Arial,sans-serif">'+fmtAx(lv)+'</text>');}}
     });
   });
   // x labels
@@ -213,6 +214,9 @@ function svgGroupBar(series,sLabels,colors,xLabels,opts){
       var bx=cx+(si-(ns-1)/2)*(bW+2)-bW/2;
       var bh=Math.max(v/maxV*cH,1),by=PT+cH-bh;
       parts.push('<rect x="'+bx.toFixed(1)+'" y="'+by.toFixed(1)+'" width="'+bW.toFixed(1)+'" height="'+bh.toFixed(1)+'" fill="url(#'+gidG+')" rx="2"/>');
+      if(opts.showVals&&v>0&&bh>16){
+        parts.push('<text x="'+( bx+bW/2).toFixed(1)+'" y="'+( by-5).toFixed(1)+'" fill="#a0b4c8" font-size="8" text-anchor="middle" font-family="Inter,Arial,sans-serif">'+fmtAx(v)+'</text>');
+      }
     }
   });
   for(var i=0;i<n;i++){
@@ -285,51 +289,24 @@ function kpi(label,val,sub,accent,delta){
 }
 
 // ── GAUGE BENCHMARK ────────────────────────────────────────────────
-function gauge(val,lo,hi,unit,label,good){
-  var W=200,H=110;
-  // Semicircle gauge
-  var cx=100,cy=85,r=65;
-  var startA=Math.PI,endA=0;
-  // Map val to angle
-  var rangeA=hi-lo;
-  var clampV=Math.min(Math.max(val,lo-rangeA*0.3),hi+rangeA*0.3);
-  var normV=(clampV-lo)/rangeA;
-  var needleA=Math.PI-normV*Math.PI;
-  var nx=cx+r*Math.cos(needleA);
-  var ny=cy-r*Math.sin(needleA);
+function gauge(val,lo,hi,unit,label){
+  var W=320,H=52,TY=15,TH=18;
+  var maxV=Math.max(hi*2.2,val>0?val*1.1:1);
+  var sc2=W/maxV;
+  var loPx=lo*sc2,hiPx=hi*sc2,valPx=Math.min(Math.max(val*sc2,2),W-2);
   var ok=val>=lo&&val<=hi;
   var vc=ok?'#3fb6a8':val<lo?'#e05c5c':'#d8aa2c';
-  // Arc path helper
-  function arc(cx,cy,r,sa,ea){
-    var x1=cx+r*Math.cos(sa),y1=cy-r*Math.sin(sa);
-    var x2=cx+r*Math.cos(ea),y2=cy-r*Math.sin(ea);
-    var lg=ea-sa>Math.PI?1:0;
-    return'M '+x1.toFixed(1)+' '+y1.toFixed(1)+' A '+r+' '+r+' 0 '+lg+' 0 '+x2.toFixed(1)+' '+y2.toFixed(1);
-  }
-  var svg='<svg width="'+W+'" height="'+H+'" viewBox="0 0 '+W+' '+H+'" style="display:block;margin:0 auto">';
-  // bg arc
-  svg+='<path d="'+arc(cx,cy,r,Math.PI,0)+'" fill="none" stroke="#172436" stroke-width="10" stroke-linecap="round"/>';
-  // colored zone arc (lo to hi mapped)
-  var loA=Math.PI*(1-(lo-(lo-rangeA*0.3))/(rangeA*1.6));
-  var hiA=Math.PI*(1-(hi-(lo-rangeA*0.3))/(rangeA*1.6));
-  svg+='<path d="'+arc(cx,cy,r,loA,hiA)+'" fill="none" stroke="#1a3a2a" stroke-width="10" stroke-linecap="round"/>';
-  // value arc from start to needle
-  var valA=Math.PI-normV*Math.PI;
-  if(normV>0){svg+='<path d="'+arc(cx,cy,r,Math.PI,valA)+'" fill="none" stroke="'+vc+'" stroke-width="10" stroke-linecap="round"/>';}
-  // needle
-  svg+='<line x1="'+cx+'" y1="'+cy+'" x2="'+nx.toFixed(1)+'" y2="'+ny.toFixed(1)+'" stroke="'+vc+'" stroke-width="2.5" stroke-linecap="round"/>';
-  svg+='<circle cx="'+cx+'" cy="'+cy+'" r="4" fill="'+vc+'"/>';
-  // value text
-  svg+='<text x="'+cx+'" y="'+(cy+18)+'" text-anchor="middle" fill="'+vc+'" font-size="16" font-weight="800" font-family="Inter,Arial,sans-serif">'+val.toFixed(val%1===0?0:1)+unit+'</text>';
-  svg+='<text x="'+cx+'" y="'+(cy+30)+'" text-anchor="middle" fill="#4a5568" font-size="9" font-family="Inter,Arial,sans-serif">'+lo+'-'+hi+unit+'</text>';
-  svg+='<text x="'+cx+'" y="12" text-anchor="middle" fill="#6b7f96" font-size="9" font-family="Inter,Arial,sans-serif">'+esc(label)+'</text>';
-  // status badge
-  var stTxt=ok?'✓ OK':val<lo?'↓ Baixo':'↑ Alto';
-  svg+='<text x="'+cx+'" y="'+(H-6)+'" text-anchor="middle" fill="'+vc+'" font-size="9" font-weight="700" font-family="Inter,Arial,sans-serif">'+stTxt+'</text>';
-  svg+='</svg>';
-  return '<div style="background:#0f1d33;border:1px solid #1e3452;border-radius:12px;padding:12px 8px 8px">'+svg+'</div>';
+  var parts=[];
+  parts.push('<rect x="0" y="'+TY+'" width="'+W+'" height="'+TH+'" fill="#0d1b2e" rx="9"/>');
+  parts.push('<rect x="'+loPx.toFixed(1)+'" y="'+TY+'" width="'+(hiPx-loPx).toFixed(1)+'" height="'+TH+'" fill="'+(ok?'rgba(63,182,168,0.18)':'rgba(255,255,255,0.04)')+'" rx="0"/>');
+  parts.push('<line x1="'+loPx.toFixed(1)+'" y1="'+TY+'" x2="'+loPx.toFixed(1)+'" y2="'+(TY+TH)+'" stroke="#2a4060" stroke-width="1.5"/>');
+  parts.push('<line x1="'+hiPx.toFixed(1)+'" y1="'+TY+'" x2="'+hiPx.toFixed(1)+'" y2="'+(TY+TH)+'" stroke="#2a4060" stroke-width="1.5"/>');
+  parts.push('<rect x="0" y="'+TY+'" width="'+valPx.toFixed(1)+'" height="'+TH+'" fill="'+vc+'" rx="9" opacity="0.22"/>');
+  parts.push('<rect x="'+(valPx-2.5).toFixed(1)+'" y="'+(TY-5)+'" width="5" height="'+(TH+10)+'" fill="'+vc+'" rx="2.5"/>');
+  parts.push('<text x="'+loPx.toFixed(1)+'" y="'+(TY+TH+12)+'" fill="#3a4f6a" font-size="9" text-anchor="middle" font-family="Inter,Arial,sans-serif">'+lo+unit+'</text>');
+  parts.push('<text x="'+hiPx.toFixed(1)+'" y="'+(TY+TH+12)+'" fill="#3a4f6a" font-size="9" text-anchor="middle" font-family="Inter,Arial,sans-serif">'+hi+unit+'</text>');
+  return '<svg width="'+W+'" height="'+H+'" viewBox="0 0 '+W+' '+H+'" style="display:block">'+parts.join('')+'</svg>';
 }
-
 // ── SECTION WRAPPER ────────────────────────────────────────────────
 function section(title,sub,body,opts){
   opts=opts||{};
@@ -427,7 +404,7 @@ function renderBI(){
   html+=section('Lucro Bruto Mensal','Receita – Deduções – Custos Diretos',
     svgBar(lbVals,mnAll,{color:'#4a9be8',h:170}));
   html+=section('Resultado Líquido Mensal','Lucro bruto – Desp. operacionais + Financeiro',
-    svgLine([{vals:resVals,color:clr(totRes)}],mnAll,{h:170}));
+    svgLine([{vals:resVals,color:clr(totRes)}],mnAll,{h:175,showVals:true}));
   html+='</div>';
 
   // ── Margin evolution (line chart)
@@ -450,7 +427,7 @@ function renderBI(){
   
   var custoAq=d.rec.map(function(r,i){var ca=(d.cshow[i]||0)+(d.catac[i]||0);return ca>0?ca:Math.max(0,r-(d.lb[i]||0));});
   html+=section('Faturamento vs Lucro Bruto por Mês','Barras agrupadas: custo de aquisição (escuro) × lucro bruto (azul) — como no relatório Mult Results',
-    svgGroupBar([custoAq.slice(0,12),lbVals.slice(0,12)],['Custo de Aquisição','Lucro Bruto'],['#1e3a6e','#4a9be8'],mnAll,{h:200}));
+    svgGroupBar([custoAq.slice(0,12),lbVals.slice(0,12)],['Custo de Aquisição','Lucro Bruto'],['#1e3a6e','#4a9be8'],mnAll,{h:210,showVals:true}));
 html+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px">';
 
 
@@ -475,7 +452,7 @@ html+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bo
     [shn.slice(0,12), atn.slice(0,12)],
     ['Showroom (Venda Normal)','Atacado (Repasse)'],
     ['#4a9be8','#d8aa2c'],
-    mnAll,{h:190}
+    mnAll,{h:200,showVals:true}
   );
   
   // % mix line chart
@@ -523,9 +500,20 @@ html+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bo
     {l:'Marketing/Rec.',v:pProp,lo:0.8,hi:1.5,u:'%'},
     {l:'Lucro/Veículo',v:lucVei/1000,lo:3,hi:8,u:'k'},
   ];
-  var gbody='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">';
-  bmarks.forEach(function(bm){gbody+=gauge(bm.v,bm.lo,bm.hi,bm.u,bm.l);});
-  gbody+='</div>';
+  var gbody='<table style="width:100%;border-collapse:collapse">';
+  bmarks.forEach(function(bm){
+    var ok=bm.v>=bm.lo&&bm.v<=bm.hi;
+    var vc=ok?'#3fb6a8':bm.v<bm.lo?'#e05c5c':'#d8aa2c';
+    var stl=ok?'✓ OK':bm.v<bm.lo?'↓ Baixo':'↑ Alto';
+    gbody+='<tr style="border-bottom:1px solid #0f1d30">'
+      +'<td style="padding:10px 0;color:#8093ab;font-size:12px;min-width:160px;white-space:nowrap">'+esc(bm.l)+'</td>'
+      +'<td style="padding:10px 20px;color:'+vc+';font-weight:800;font-size:20px;text-align:right;white-space:nowrap">'+bm.v.toFixed(bm.v%1===0?0:1)+bm.u+'</td>'
+      +'<td style="padding:10px 12px;color:#3a4f6a;font-size:11px;white-space:nowrap">ref: '+bm.lo+'–'+bm.hi+bm.u+'</td>'
+      +'<td style="padding:6px 0;width:100%">'+gauge(bm.v,bm.lo,bm.hi,bm.u,bm.l)+'</td>'
+      +'<td style="padding:10px 0 10px 16px;color:'+vc+';font-size:12px;font-weight:700;white-space:nowrap">'+stl+'</td>'
+      +'</tr>';
+  });
+  gbody+='</table>';
   html+=section('Benchmarking vs Mercado','Concessionárias seminovos Brasil · FENABRAVE/ABRAVE',gbody);
   html+='</div>';
 
@@ -554,9 +542,10 @@ html+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bo
   [2024,2025,2026].forEach(function(y){
     var dy=DRE[biStore][y],ny=dy.n;
     var rT=S(dy.rec,ny),lT=S(dy.lb,ny),rsT=S(dy.res,ny);
-    var qT=S(dy.qtd,ny),psT=S(dy.pess,ny),adT=S(dy.adm,ny),prT=S(dy.prop,ny);
-    ydata[y]={rec:rT,lb:lT,res:rsT,qtd:qT,
-      pLB:rT?lT/rT*100:0,pRes:rT?rsT/rT*100:0,
+    var qT=S(dy.qtd,ny),psT=S(dy.pess,ny),adT=S(dy.adm,ny),prT=S(dy.prop,ny),vdT=S(dy.vend,ny);
+    var ebitdaT=lT-psT-adT-prT-vdT;
+    ydata[y]={rec:rT,lb:lT,res:rsT,qtd:qT,ebitda:ebitdaT,
+      pLB:rT?lT/rT*100:0,pRes:rT?rsT/rT*100:0,pEbitda:rT?ebitdaT/rT*100:0,
       tk:qT?rT/qT:0,lv:qT?rsT/qT:0,
       pPess:rT?psT/rT*100:0,pAdm:rT?adT/rT*100:0,pProp:rT?prT/rT*100:0,n:ny};
   });
@@ -573,6 +562,8 @@ html+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bo
     {l:'Pessoal / Receita',k:'pPess',f:function(v){return v.toFixed(1)+'%';},s:true},
     {l:'Admin / Receita',k:'pAdm',f:function(v){return v.toFixed(1)+'%';},s:true},
     {l:'Marketing / Receita',k:'pProp',f:function(v){return v.toFixed(2)+'%';},s:true},
+    {l:'EBITDA',k:'ebitda',f:fmtK,s:false},
+    {l:'EBITDA Margin',k:'pEbitda',f:function(v){return v.toFixed(1)+'%';},s:true},
   ];
   var tbody='<table style="width:100%;border-collapse:collapse;font-size:12px">';
   tbody+='<thead><tr style="border-bottom:1px solid #1a2d46">';
