@@ -327,9 +327,12 @@ function renderBI(){
   var totRec=S(d.rec,n),totLB=S(d.lb,n),totRes=S(d.res,n);
   var totQtd=S(d.qtd,n),totPess=S(d.pess,n),totAdm=S(d.adm,n);
   if(biStore==='cons'&&totQtd===0){var _dm=DRE.mm[biYear],_db=DRE.bk[biYear];for(var _i=0;_i<n;_i++)totQtd+=(_dm.qtd[_i]||0)+(_db.qtd[_i]||0);}
-  var totProp=S(d.prop,n),totRet=S(d.ret,n),totFin=S(d.fin,n);
+  var totProp=S(d.prop,n),totFin=S(d.fin,n);
+  var totRet=(typeof FINAL!=='undefined'&&FINAL.comp&&FINAL.comp[biStore]&&FINAL.comp[biStore].kpi)?FINAL.comp[biStore].kpi.ret:S(d.ret,n);
   var totVend=S(d.vend,n),totCshow=S(d.cshow,n),totCatac=S(d.catac,n);
   var totCprep=S(d.cprep,n),totCdocs=S(d.cdocs,n),totCsa=S(d.csa,n);
+  var ebitda=totLB-totPess-totAdm-totProp-totVend;
+  var pEbitda=totRec?ebitda/totRec*100:0;
   var pLB=totRec?totLB/totRec*100:0;
   var pRes=totRec?totRes/totRec*100:0;
   var pPess=totRec?totPess/totRec*100:0;
@@ -374,10 +377,19 @@ function renderBI(){
   html+=kpi('Pessoal / Receita',pPess.toFixed(1)+'%','Benchmark: 3–5%',pPess>=3&&pPess<=5?'#3fb6a8':pPess>5?'#e05c5c':'#d8aa2c');
   html+=kpi('Retorno Financ.',fmtK(totRet),pct(totRet,totRec)+' da receita','#a78bfa');
   html+='</div>';
+  html+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">';
+  html+=kpi('EBITDA'+(isP?' ('+n+'m)':''),fmtK(ebitda),'Margem: '+pEbitda.toFixed(1)+'%',clr(ebitda));
+  html+=kpi('Margem EBITDA',pEbitda.toFixed(1)+'%','LB − Pessoal − Admin − Mktg − Vendas',pEbitda>=5?'#3fb6a8':pEbitda>=0?'#d8aa2c':'#e05c5c');
+  html+='</div>';
 
   // ── Revenue Chart
   html+=section('Receita Mensal','Faturamento mês a mês — R$',
     svgBar(recVals,mnAll,{color:sc,h:200}));
+
+  // ── EBITDA Chart
+  var ebitdaVals=d.lb.map(function(lb,i){return(lb||0)-(d.pess[i]||0)-(d.adm[i]||0)-(d.prop[i]||0)-(d.vend[i]||0);});
+  html+=section('EBITDA Mensal','Lucro Bruto − Pessoal − Admin − Marketing − Vendas (resultado operacional puro)',
+    svgBar(ebitdaVals.slice(0,12),mnAll,{color:'#3fb6a8',negColor:'#e05c5c',h:180}));
   document.getElementById('pg-visaogeral').innerHTML=html;html='';
 
   // ── Profit side by side
