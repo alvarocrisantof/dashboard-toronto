@@ -1,0 +1,409 @@
+#!/usr/bin/env python3
+"""
+update_dashboard.py — Atualiza FINAL no index.html via API AutoConf
+Competência : lucro-venda  (filtro: mês de saída)
+Fluxo de caixa: extrato-titulos (filtro: Data Liquidação no mês, Status=Liquidado)
+
+Uso: python3 update_dashboard.py
+"""
+
+import csv, io, json, re, sys
+from collections import defaultdict
+from datetime import datetime, date
+
+try:
+    import requests
+except ImportError:
+    print("Instalando requests..."); import subprocess
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "requests", "-q"])
+    import requests
+
+# ── CREDENCIAIS ────────────────────────────────────────────────────────────
+TOKEN = "ZU1DsPDbRbva9ccEDF8eRjv7BrkkSwqj96lfrt1z"
+AUTH  = "vyOhX5a2LbXG9B2LHDK0I5JUQe51m63rkRlP7crsQHAKIbi4Sugl4z2hSozDl4iakm79HMtIlwRIw3RdZ0ZZ4ZdXTQ0iJnE3qc1HMRbLLZDHKS43TdcrPbwYeqn932PLKCdKOJTw3PJQE8NmUjGSpuT74FxQsJ59R6IaprxVLxX6YG8OmOJOD5dpEY0Y9TqsvwLGZvAnN7Fl2sjQ5v2AnAiAjn0FEdlE3hVp69oENti8hStYmkCstXIuvtz0PpNM"
+BASE  = "https://api.autoconf.com.br/api/v1"
+YEAR  = 2026
+INDEX = "/Users/alvarocrisanto/projetos/dashboard-toronto/index.html"
+
+# Revenda IDs
+REV_MM = "185"   # Toronto Corretora E Locadora (Multimarcas)
+REV_BK = "726"   # Toronto Black
+
+# ── NORMALIZAÇÃO DE BANCOS ─────────────────────────────────────────────────
+BANK_MAP = {
+    'BANCO VOTORANTIM S.A.':         'Votorantim',
+    'BCO VOTORANTIM S.A.':           'Votorantim',
+    'BCO C6 S.A.':                   'C6',
+    'BCO SANTANDER (BRASIL) S.A.':   'Santander',
+    'BCO BRADESCO S.A.':             'Bradesco',
+    'BCO BRADESCO FINANC. S.A.':     'Bradesco',
+    'BCO SAFRA S.A.':                'Safra',
+    'CARBANK AUTOMOVEIS':            'Carbank',
+    'ITAÚ UNIBANCO S.A.':            'Itaú',
+    'BCO ITAÚ BBA S.A.':             'Itaú',
+    'BANCO PAN':                     'Pan',
+    'BCO COOPERATIVO SICREDI S.A.':  'Sicredi',
+    'BCO DO BRASIL S.A.':            'Banco do Brasil',
+}
+BANK_KEYS = ['VOTORANTIM','SANTANDER','SAFRA','BRADESCO','C6 S.A','CARBANK','ITAÚ','ITAU','BANCO PAN','SICREDI','DO BRASIL S.A']
+
+def norm_bank(b):
+    b = b.strip()
+    return BANK_MAP.get(b, b)
+
+def is_bank(s):
+    return any(k in s.upper() for k in BANK_KEYS)
+
+def parse_num(s):
+    s = (s or '').strip()
+    if not s: return 0.0
+    if ',' in s:
+        # Brazilian format: "1.141,58" or "32.900,00"
+        s = s.replace('.', '').replace(',', '.')
+    # else: US/plain format already uses '.' as decimal
+    try: return float(s)
+    except: return 0.0
+
+def parse_date(s):
+    s = (s or '').strip()
+    if len(s) == 10:
+        try: return datetime.strptime(s, '%d/%m/%Y').date()
+        except: pass
+    return None
+
+# ── API CALLS ──────────────────────────────────────────────────────────────
+def api_get(endpoint, mes, ano):
+    r = requests.get(
+        f"{BASE}/{endpoint}",
+        params={"mes": f"{mes:02d}", "ano": str(ano), "token": TOKEN},
+        headers={"authorization": AUTH},
+        timeout=30
+    )
+    t = r.text
+    if t.startswith('{'):
+        return None  # JSON error
+    return t
+
+# ── COMPETÊNCIA: lucro-venda ───────────────────────────────────────────────
+def parse_comp(csv_text, store_filter=None):
+    """
+    Retorna dict: bank -> {fin, ret, q}
+    store_filter: None=todos, 'mm'=185, 'bk'=726
+    """
+    if not csv_text: return {}
+    reader = csv.DictReader(io.StringIO(csv_text))
+    result = defaultdict(lambda: {'fin':0,'ret':0,'q':0})
+    rev_id_col = 'Revenda Saída ID'
+    for row in reader:
+        if (row.get('Saida','') or '').strip().lower() == 'total':
+            continue
+        # store filter
+        if store_filter:
+            rev = (row.get(rev_id_col,'') or '').strip()
+            target = REV_MM if store_filter == 'mm' else REV_BK
+            if rev != target:
+                continue
+        banco_raw = (row.get('Banco') or '').strip()
+        if not banco_raw: continue
+        try: float(banco_raw); continue
+        except: pass
+        banco = norm_bank(banco_raw)
+        fin = parse_num(row.get('Valor Financiado'))
+        ret = parse_num(row.get('Retorno'))
+        if fin == 0: continue
+        result[banco]['fin'] += fin
+        result[banco]['ret'] += ret
+        result[banco]['q']   += 1
+    return dict(result)
+
+# ── FLUXO DE CAIXA: extrato-titulos ───────────────────────────────────────
+# Acumula entradas de TODOS os meses; filtra por data de liquidação
+_extrato_cache = {}  # (mes,ano) -> csv_text
+
+def fetch_all_extratos(ano, months):
+    for m in months:
+        key = (m, ano)
+        if key not in _extrato_cache:
+            print(f"  Extrato {m:02d}/{ano}...", end=" ", flush=True)
+            t = api_get("relatorio/financeiro/extrato-titulos", m, ano)
+            _extrato_cache[key] = t
+            print("ok" if t else "sem dados")
+
+def parse_fluxo_month(target_mes, target_ano, store_filter=None):
+    """
+    Varre TODOS os extratos em cache.
+    Filtra: Data Liquidação == target_mes/target_ano AND Status == Liquidado.
+    Conta Contábil financing = 'Vendas de Mercadorias' (ident contém 'Financiamento')
+                              + 'Intermediação de financiamento'
+    """
+    by_fin = defaultdict(float)
+    by_ret = defaultdict(float)
+    by_q   = defaultdict(int)
+    seen_idents_fin = set()  # dedup por ident (evita dupla contagem)
+
+    target_month_str = f"{target_mes:02d}/{target_ano}"
+
+    for (m, ano), csv_text in _extrato_cache.items():
+        if not csv_text: continue
+        reader = csv.DictReader(io.StringIO(csv_text))
+        for row in reader:
+            status   = (row.get('Status','') or '').strip()
+            if status != 'Liquidado': continue
+
+            data_liq = (row.get('Data Liquidação','') or '').strip()
+            if not data_liq or len(data_liq) < 10: continue
+            # formato DD/MM/YYYY → verificar MM/YYYY
+            if data_liq[3:10] != target_month_str: continue
+
+            conta    = (row.get('Conta Contábil','') or '').strip()
+            op       = (row.get('Operação','') or '').strip()
+            ident    = (row.get('Identificação','') or '').strip()
+            cliente  = (row.get('Cliente Fornecedor','') or '').strip()
+            valor    = parse_num(row.get('Valor',''))
+            rev_orig = (row.get('Revenda Origem Id','') or '').strip()
+            part_id  = (row.get('Parcela Id','') or '').strip()
+
+            if op != 'A receber': continue
+            if not is_bank(cliente): continue
+
+            banco = norm_bank(cliente)
+
+            # store filter
+            if store_filter:
+                target_rev = REV_MM if store_filter == 'mm' else REV_BK
+                if rev_orig != target_rev: continue
+
+            # Valor Financiado
+            is_fin = (
+                (conta == 'Vendas de Mercadorias' and 'Financiamento' in ident and 'Retorno' not in ident) or
+                (conta == 'Intermediação de financiamento')
+            )
+            # Retorno de Financiamento
+            is_ret = (conta == 'Retorno de Financiamento')
+
+            if is_fin:
+                key_dedup = f"{banco}|{part_id}|{valor}"
+                if key_dedup in seen_idents_fin: continue
+                seen_idents_fin.add(key_dedup)
+                by_fin[banco] += valor
+                by_q[banco]   += 1
+            elif is_ret:
+                by_ret[banco] += valor
+
+    result = {}
+    for b in set(list(by_fin.keys()) + list(by_ret.keys())):
+        if by_fin.get(b,0) > 0 or by_ret.get(b,0) > 0:
+            result[b] = {
+                'fin': round(by_fin.get(b,0), 2),
+                'ret': round(by_ret.get(b,0), 2),
+                'q':   by_q.get(b,0)
+            }
+    return result
+
+# ── BUILDER ────────────────────────────────────────────────────────────────
+def build_store_comp(months_data):
+    """months_data: {mes: {bank: {fin,ret,q}}}"""
+    bm = {}
+    for mes, banks in months_data.items():
+        for bank, v in banks.items():
+            if bank not in bm: bm[bank] = {}
+            bm[bank][str(mes)] = v
+
+    monthly = {}
+    for mes, banks in months_data.items():
+        f = sum(v['fin'] for v in banks.values())
+        r = sum(v['ret'] for v in banks.values())
+        q = sum(v['q']   for v in banks.values())
+        if f > 0 or q > 0:
+            monthly[str(mes)] = f
+
+    kpi_fin = sum(v['fin'] for banks in months_data.values() for v in banks.values())
+    kpi_ret = sum(v['ret'] for banks in months_data.values() for v in banks.values())
+    kpi_q   = sum(v['q']   for banks in months_data.values() for v in banks.values())
+
+    fin_by_bank = {}
+    for banks in months_data.values():
+        for bank, v in banks.items():
+            fin_by_bank[bank] = fin_by_bank.get(bank,0) + v['fin']
+    fin_by_bank_list = sorted(
+        [{'bank': b, 'fin': f} for b,f in fin_by_bank.items()],
+        key=lambda x: -x['fin']
+    )
+
+    active_months = sorted(m for m,banks in months_data.items() if any(v['fin']>0 for v in banks.values()))
+
+    return {
+        'bm': bm,
+        'monthly': monthly,
+        'finByBank': fin_by_bank_list,
+        'months': active_months,
+        'kpi': {'fin': round(kpi_fin,2), 'ret': round(kpi_ret,2), 'q': kpi_q}
+    }
+
+def build_store_fluxo(months_data):
+    """months_data: {mes: {bank: {fin,ret,q}}}"""
+    bm = {}
+    for mes, banks in months_data.items():
+        for bank, v in banks.items():
+            if bank not in bm: bm[bank] = {}
+            bm[bank][str(mes)] = v
+
+    monthly = {}
+    for mes, banks in months_data.items():
+        f = sum(v['fin'] for v in banks.values())
+        r = sum(v['ret'] for v in banks.values())
+        q = sum(v['q']   for v in banks.values())
+        if f != 0 or r != 0 or q != 0:
+            monthly[str(mes)] = {'fin': round(f,2), 'ret': round(r,2), 'q': q}
+
+    # finByBank as dict (fluxo format)
+    fin_by_bank = {}
+    for banks in months_data.values():
+        for bank, v in banks.items():
+            if bank not in fin_by_bank: fin_by_bank[bank] = {'fin':0,'q':0}
+            fin_by_bank[bank]['fin'] += v['fin']
+            fin_by_bank[bank]['q']   += v['q']
+
+    kpi_fin = sum(v['fin'] for banks in months_data.values() for v in banks.values())
+    kpi_q   = sum(v['q']   for banks in months_data.values() for v in banks.values())
+
+    active_months = sorted(m for m,banks in months_data.items() if any(v['fin']!=0 or v['ret']!=0 for v in banks.values()))
+
+    return {
+        'bm': bm,
+        'monthly': monthly,
+        'finByBank': fin_by_bank,
+        'months': active_months,
+        'kpi': {'fin': round(kpi_fin,2), 'q': kpi_q}
+    }
+
+# ── MAIN ───────────────────────────────────────────────────────────────────
+def main():
+    today = date.today()
+    # months to fetch: all months up to current
+    active_months = [m for m in range(1, 13) if date(YEAR, m, 1) <= today]
+    if not active_months:
+        print("Sem meses ativos."); return
+
+    print(f"=== Atualizando dashboard {YEAR} — {len(active_months)} meses ===")
+    print(f"Data atual: {today.strftime('%d/%m/%Y')}")
+
+    # ── 1. COMPETÊNCIA (lucro-venda) ──────────────────────────────────────
+    print("\n[1/3] Buscando lucro-venda (competência)...")
+    comp_mm_raw = {}; comp_bk_raw = {}
+    for m in active_months:
+        print(f"  lucro-venda {m:02d}/{YEAR}...", end=" ", flush=True)
+        txt = api_get("relatorio/financeiro/lucro-venda", m, YEAR)
+        if txt:
+            mm = parse_comp(txt, store_filter='mm')
+            bk = parse_comp(txt, store_filter='bk')
+            if mm: comp_mm_raw[m] = mm
+            if bk: comp_bk_raw[m] = bk
+            print(f"MM:{sum(v['q'] for v in mm.values())}veic BK:{sum(v['q'] for v in bk.values())}veic")
+        else:
+            print("sem dados")
+
+    comp_mm   = build_store_comp(comp_mm_raw)
+    comp_bk   = build_store_comp(comp_bk_raw)
+    # cons = mm + bk merged
+    cons_comp_raw = {}
+    for m in active_months:
+        mm = comp_mm_raw.get(m, {}); bk = comp_bk_raw.get(m, {})
+        merged = defaultdict(lambda: {'fin':0,'ret':0,'q':0})
+        for bank, v in mm.items():
+            merged[bank]['fin'] += v['fin']
+            merged[bank]['ret'] += v['ret']
+            merged[bank]['q']   += v['q']
+        for bank, v in bk.items():
+            merged[bank]['fin'] += v['fin']
+            merged[bank]['ret'] += v['ret']
+            merged[bank]['q']   += v['q']
+        if merged: cons_comp_raw[m] = dict(merged)
+    comp_cons = build_store_comp(cons_comp_raw)
+
+    # ── 2. FLUXO DE CAIXA (extrato-titulos) ──────────────────────────────
+    print("\n[2/3] Buscando extrato-titulos (fluxo de caixa)...")
+    # Fetch all months into cache
+    fetch_all_extratos(YEAR, active_months)
+    # Also fetch previous month (entries de mês anterior liquidadas no mês atual)
+    if active_months[0] > 1:
+        fetch_all_extratos(YEAR, [active_months[0] - 1])
+    if YEAR > 2024:
+        fetch_all_extratos(YEAR - 1, [12])
+
+    fluxo_mm_raw = {}; fluxo_bk_raw = {}
+    for m in active_months:
+        print(f"  Agregando fluxo {m:02d}/{YEAR} (MM)...", end=" ", flush=True)
+        mm = parse_fluxo_month(m, YEAR, store_filter='mm')
+        bk = parse_fluxo_month(m, YEAR, store_filter='bk')
+        if mm: fluxo_mm_raw[m] = mm
+        if bk: fluxo_bk_raw[m] = bk
+        tf = sum(v['fin'] for v in mm.values())
+        print(f"fin=R${tf:,.0f} q={sum(v['q'] for v in mm.values())}")
+
+    fluxo_mm   = build_store_fluxo(fluxo_mm_raw)
+    fluxo_bk   = build_store_fluxo(fluxo_bk_raw)
+    cons_fluxo_raw = {}
+    for m in active_months:
+        mm = fluxo_mm_raw.get(m, {}); bk = fluxo_bk_raw.get(m, {})
+        merged = defaultdict(lambda: {'fin':0,'ret':0,'q':0})
+        for bank, v in mm.items():
+            merged[bank]['fin'] += v['fin']
+            merged[bank]['ret'] += v['ret']
+            merged[bank]['q']   += v['q']
+        for bank, v in bk.items():
+            merged[bank]['fin'] += v['fin']
+            merged[bank]['ret'] += v['ret']
+            merged[bank]['q']   += v['q']
+        if merged: cons_fluxo_raw[m] = dict(merged)
+    fluxo_cons = build_store_fluxo(cons_fluxo_raw)
+
+    # ── 3. MONTAR FINAL E ATUALIZAR INDEX.HTML ────────────────────────────
+    print("\n[3/3] Atualizando index.html...")
+
+    with open(INDEX, 'r', encoding='utf-8') as f:
+        html = f.read()
+
+    m = re.search(r'var FINAL=(\{.*?\});', html, re.DOTALL)
+    if not m:
+        print("ERRO: var FINAL não encontrado em index.html"); return
+
+    old_final = json.loads(m.group(1))
+
+    # Preserve gvop / acordo / seguro (não vêm do lucro-venda nem extrato)
+    new_final = {
+        'generated': today.strftime('%d/%m/%Y'),
+        'comp': {
+            'mm':   comp_mm,
+            'bk':   comp_bk,
+            'cons': comp_cons,
+        },
+        'fluxo': {
+            'mm':   fluxo_mm,
+            'bk':   fluxo_bk,
+            'cons': fluxo_cons,
+        },
+        'gvop':   old_final.get('gvop', {}),
+        'acordo': old_final.get('acordo', {}),
+        'seguro': old_final.get('seguro', {}),
+    }
+
+    new_json = json.dumps(new_final, ensure_ascii=False, separators=(',', ':'))
+    new_html = html[:m.start(1)] + new_json + html[m.end(1):]
+
+    with open(INDEX, 'w', encoding='utf-8') as f:
+        f.write(new_html)
+
+    print(f"✓ index.html atualizado — gerado em {today.strftime('%d/%m/%Y')}")
+    print(f"\nResumo COMP (cons):")
+    print(f"  Total financiado: R${comp_cons['kpi']['fin']:,.2f}")
+    print(f"  Total retorno:    R${comp_cons['kpi']['ret']:,.2f}")
+    print(f"  Total veículos:   {comp_cons['kpi']['q']}")
+    print(f"\nResumo FLUXO (mm):")
+    for m_num in active_months:
+        fd = fluxo_mm['monthly'].get(str(m_num), {})
+        if fd:
+            print(f"  Mês {m_num:02d}: fin=R${fd.get('fin',0):,.0f} ret=R${fd.get('ret',0):,.0f} q={fd.get('q',0)}")
+
+if __name__ == '__main__':
+    main()
