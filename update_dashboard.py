@@ -44,6 +44,7 @@ BANK_MAP = {
     'BANCO PAN':                     'Pan',
     'BCO COOPERATIVO SICREDI S.A.':  'Sicredi',
     'BCO DO BRASIL S.A.':            'Banco do Brasil',
+    'IDEALY CORRETORA DE SEGURO':    'Idealy Corretora',
 }
 BANK_KEYS = ['VOTORANTIM','SANTANDER','SAFRA','BRADESCO','C6 S.A','CARBANK','ITAÚ','ITAU','BANCO PAN','SICREDI','DO BRASIL S.A']
 
@@ -200,6 +201,37 @@ def parse_fluxo_month(target_mes, target_ano, store_filter=None):
             }
     return result
 
+# ── SEGURO: Comissão de Seguro (extrato-titulos) ──────────────────────────
+def parse_seguro_month(target_mes, target_ano, store_filter=None):
+    """
+    Varre extratos em cache para Conta Contábil='Comissão de Seguro',
+    Status=Liquidado, Operação=A receber, filtrado por Data Liquidação.
+    Retorna dict: bank -> total
+    """
+    by_bank = defaultdict(float)
+    target_month_str = f"{target_mes:02d}/{target_ano}"
+
+    for (m, ano), csv_text in _extrato_cache.items():
+        if not csv_text: continue
+        reader = csv.DictReader(io.StringIO(csv_text))
+        for row in reader:
+            if (row.get('Conta Contábil','') or '').strip() != 'Comissão de Seguro': continue
+            if (row.get('Status','') or '').strip() != 'Liquidado': continue
+            if (row.get('Operação','') or '').strip() != 'A receber': continue
+            data_liq = (row.get('Data Liquidação','') or '').strip()
+            if not data_liq or len(data_liq) < 10: continue
+            if data_liq[3:10] != target_month_str: continue
+            valor = parse_num(row.get('Valor',''))
+            if valor <= 0: continue
+            if store_filter:
+                rev_orig = (row.get('Revenda Origem Id','') or '').strip()
+                target_rev = REV_MM if store_filter == 'mm' else REV_BK
+                if rev_orig != target_rev: continue
+            banco = norm_bank((row.get('Cliente Fornecedor','') or '').strip())
+            by_bank[banco] += valor
+
+    return {b: round(v, 2) for b, v in by_bank.items()}
+
 # ── BUILDER ────────────────────────────────────────────────────────────────
 def build_store_comp(months_data):
     """months_data: {mes: {bank: {fin,ret,q}}}"""
@@ -343,6 +375,31 @@ def main():
 
     fluxo_mm   = build_store_fluxo(fluxo_mm_raw)
     fluxo_bk   = build_store_fluxo(fluxo_bk_raw)
+
+    # Seguro: parse Comissão de Seguro (extrato já em cache)
+    seguro_mm_raw = {}; seguro_bk_raw = {}
+    for m in active_months:
+        mm_s = parse_seguro_month(m, YEAR, store_filter='mm')
+        bk_s = parse_seguro_month(m, YEAR, store_filter='bk')
+        if mm_s: seguro_mm_raw[str(m)] = mm_s
+        if bk_s: seguro_bk_raw[str(m)] = bk_s
+
+    seguro_cons_raw = {}
+    all_seg_months = set(seguro_mm_raw) | set(seguro_bk_raw)
+    for mes in all_seg_months:
+        merged = defaultdict(float)
+        for b, v in seguro_mm_raw.get(mes, {}).items():
+            merged[b] += v
+        for b, v in seguro_bk_raw.get(mes, {}).items():
+            merged[b] += v
+        seguro_cons_raw[mes] = {b: round(v, 2) for b, v in merged.items()}
+
+    seguro_final = {
+        'mm':   seguro_mm_raw,
+        'bk':   seguro_bk_raw,
+        'cons': seguro_cons_raw,
+    }
+
     cons_fluxo_raw = {}
     for m in active_months:
         mm = fluxo_mm_raw.get(m, {}); bk = fluxo_bk_raw.get(m, {})
@@ -385,7 +442,7 @@ def main():
         },
         'gvop':   old_final.get('gvop', {}),
         'acordo': old_final.get('acordo', {}),
-        'seguro': old_final.get('seguro', {}),
+        'seguro': seguro_final,
     }
 
     new_json = json.dumps(new_final, ensure_ascii=False, separators=(',', ':'))
