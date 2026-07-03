@@ -40,7 +40,7 @@
     var tblc='<table><thead><tr><th>Banco</th><th class="r">Retorno</th><th class="r">GVOP</th><th class="r">Acordos</th><th class="r">Seguros</th><th class="r">Total</th><th class="r">%</th></tr></thead><tbody>'+trc+'</tbody><tfoot><tr><td>TOTAL</td><td class="r">'+fmt(sumR)+'</td><td class="r">'+fmt(sumG)+'</td><td class="r">'+fmt(sumA)+'</td><td class="r">'+fmt(sumS)+'</td><td class="r">'+fmt(sumT)+'</td><td class="r">'+(sumF?pc(sumT/sumF*100):'\u2014')+'</td></tr></tfoot></table>';
     document.getElementById('combo').innerHTML=card('Retorno Líquido + GVOP + Acordos por Banco',leg+segBars+tblc,'Total que cada banco deixa \u00b7 % sobre o financiado \u00b7 '+SL[st.store]+' \u00b7 '+lblMes);
   }
-  var FIXED=[1,2,3,4,5,6];
+  var FIXED=[1,2,3,4,5,6,7,8,9,10,11,12];
   document.getElementById('msel').innerHTML='<option value="all">Todos os meses (2026)</option>'+FIXED.map(function(m){return'<option value="'+m+'">'+MN[m]+' / 2026</option>';}).join('');
   document.getElementById('tab_cons').onclick=function(){st.store='cons';render();};
   document.getElementById('tab_mm').onclick=function(){st.store='mm';render();};
