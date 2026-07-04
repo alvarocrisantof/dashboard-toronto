@@ -309,6 +309,137 @@ def build_store_fluxo(months_data):
         'kpi': {'fin': round(kpi_fin,2), 'q': kpi_q}
     }
 
+# ── DRE: lucro-venda + extrato por Data Competência ───────────────────────
+_DRE_EXT = {
+    'intermediacao_fin':('Intermediação de financiamento', 'A receber'),
+    'laudo_venda':      ('Laudo cautelar/venda',           'A receber'),
+    'transf_venda':     ('Transferência - venda',          'A receber'),
+    'fotos':            ('Fotos Veiculares',                'A receber'),
+    'prep_veiculo':     ('Preparação Veícular',             'A receber'),
+    'gasolina':         ('Gasolina de Agenciados',          'A receber'),
+    'garantia_venda':   ('Garantia',                        'A receber'),
+    'aluguel':          ('Receitas com Aluguéis',           'A receber'),
+    'rec_diversas':     ('Ajuste de saldo - Entrada',       'A receber'),
+    'retorno_acordos':  ('Retorno (Acordos e Plus)',         'A receber'),
+    'rendimento':       ('Rendimento de aplicação',          'A receber'),
+    'seguro_rec':       ('Comissão de Seguro',               'A receber'),
+    'devolucao':        ('Devolução',                        'A pagar'),
+    'dev_fin':          ('Devolução - intermediação de financiamento', 'A pagar'),
+    'esocial':          ('Darf E-social (INSS e IR)',        'A pagar'),
+    'fgts':             ('FGTS',                             'A pagar'),
+    'fgts_rescis':      ('FGTS Rescisório',                  'A pagar'),
+    'csll_irpj':        ('DARF CSLL E IRPJ',                 'A pagar'),
+    'pis_cofins':       ('DARF PIS E COFINS',                'A pagar'),
+    'icms':             ('ICMS',                             'A pagar'),
+    'iss':              ('ISS',                              'A pagar'),
+    'alvara':           ('Taxa de Alvará',                   'A pagar'),
+    'fisc_func':        ('Taxa de Fiscalização e Funcionamento', 'A pagar'),
+    'iptu':             ('IPTU',                             'A pagar'),
+    'retencoes':        ('Darf Retenções Federais',          'A pagar'),
+    'custas':           ('Custas e taxas processuais',       'A pagar'),
+    'das':              ('Documento de Arrecadação do Simples Nacional (DAS)', 'A pagar'),
+    'custo_prep_entrega':('Custo Preparação e Entrega',      'A pagar'),
+    'frete':            ('Frete',                            'A pagar'),
+    'multa_veiculo':    ('Multa veícular',                   'A pagar'),
+    'despachante_ent':  ('Despachante (ENTRADA)',             'A pagar'),
+    'despachante_sai':  ('DESPACHANTE (SAIDA)',               'A pagar'),
+    'ipva':             ('IPVA',                             'A pagar'),
+    'taxas_transf_ent': ('TAXAS DE TRANSFERÊNCIA (ENTRADA)', 'A pagar'),
+    'taxas_transf_sai': ('TAXAS DE TRANSFERÊNCIA (SAÍDA)',   'A pagar'),
+    'baixa_gravame':    ('Baixa de gravame',                 'A pagar'),
+    'comunicado_venda': ('Comunicado de venda',              'A pagar'),
+    'multas_nao_abat':  ('Multas não abatidas na compra',    'A pagar'),
+    'garantia_custo':   ('Garantia',                         'A pagar'),
+    'laudo_custo':      ('Laudo cautelar/custo',             'A pagar'),
+    'comissao_venda':   ('Comissão S/ Venda',                'A pagar'),
+    'pos_vendas':       ('PÓS-VENDAS',                       'A pagar'),
+    'salarios':         ('Salários',                         'A pagar'),
+    'refeitorio':       ('Refeitório e Lanches',             'A pagar'),
+    'ferias':           ('Férias',                           'A pagar'),
+    'rescisao':         ('Rescisão',                         'A pagar'),
+    'plano_saude':      ('Plano de Saúde',                   'A pagar'),
+    'datas_com':        ('Datas Comemorativas',              'A pagar'),
+    'aluguel_cond':     ('Aluguéis e Condomínios',           'A pagar'),
+    'copa':             ('Copa e Bar',                       'A pagar'),
+    'cartorio':         ('Despesas com Cartório',            'A pagar'),
+    'mat_aux':          ('Materiais Auxiliares e Consumo',   'A pagar'),
+    'mat_escrit':       ('Material de Escritório',           'A pagar'),
+    'seguros':          ('Seguros e Proteções',              'A pagar'),
+    'contabil':         ('Serviços Contábeis',               'A pagar'),
+    'informatica':      ('Manutenção de sistema / informática', 'A pagar'),
+    'manutencao_loja':  ('Manutenção da Loja',               'A pagar'),
+    'agua':             ('Água e Esgoto',                    'A pagar'),
+    'energia':          ('Energia Elétrica',                 'A pagar'),
+    'telefonia':        ('Telefonia e Internet',             'A pagar'),
+    'limpeza':          ('Materiais de Higiene e Limpeza',   'A pagar'),
+    'emprestimos':      ('Pagamento de Empréstimos - Bancários e de Investidores', 'A pagar'),
+    'maq_equip':        ('Bens de Natureza Permanente',      'A pagar'),
+    'brindes':          ('Brindes e Presentes',              'A pagar'),
+    'publicidade':      ('Propaganda e Publicidade',         'A pagar'),
+    'portais':          ('Portais de anúncio',               'A pagar'),
+    'feirao':           ('Feirão e eventos de marketing',    'A pagar'),
+    'pro_labore':       ('Pró labore',                       'A pagar'),
+    'dividendos':       ('Distribuição de dividendos',       'A pagar'),
+    'aj_saida':         ('Ajuste de saldo - Saida',          'A pagar'),
+    'tarifa_bancaria':  ('Tarifa Bancária',                  'A pagar'),
+    'juros_pagar':      ('Juros a pagar (despesa)',          'A pagar'),
+    'juros_pagar2':     ('Juros a pagar',                    'A pagar'),
+    'associacoes':      ('Associações e Sindicatos',         'A pagar'),
+    'transporte':       ('Transporte',                       'A pagar'),
+    'uniforme':         ('Uniforme',                         'A pagar'),
+}
+_DRE_LOOKUP = {(conta, op): field for field, (conta, op) in _DRE_EXT.items()}
+
+def parse_lv_dre(csv_text, rev):
+    d = defaultdict(float)
+    d['q'] = 0
+    if not csv_text: return d
+    for row in csv.DictReader(io.StringIO(csv_text)):
+        if (row.get('Saida','') or '').strip().lower() == 'total': continue
+        if (row.get('Revenda Saída ID','') or '').strip() != rev: continue
+        tipo = (row.get('Tipo Venda','') or '').strip()
+        sw = tipo != 'Atacado'
+        vb    = parse_num(row.get('Venda Bruta','') or '') if '.' in (row.get('Venda Bruta','') or '') else 0
+        # lucro-venda uses US decimal
+        def pus(s): s=(s or '').strip(); return float(s) if s else 0.0
+        vb    = pus(row.get('Venda Bruta'))
+        desc  = pus(row.get('Valor Desconto'))
+        compra= pus(row.get('Compra'))
+        ret   = pus(row.get('Retorno'))
+        custos= pus(row.get('Custos'))
+        rec_ds= pus(row.get('Receita com Documentos Saída'))
+        rec_se= pus(row.get('Receita com Serviços Agregados Entrada'))
+        rec_ss= pus(row.get('Receita com Serviços Agregados Saída'))
+        if vb <= 0 and compra <= 0: continue
+        d['q'] += 1
+        if sw:
+            d['merch_bruta_sw'] += vb;  d['desc_sw']  += desc;  d['custo_compra_sw'] += compra
+        else:
+            d['merch_bruta_at'] += vb;  d['desc_at']  += desc;  d['custo_compra_at'] += compra
+        d['retorno_fin']   += ret
+        d['custos_prep_lv']+= custos
+        d['rec_doc_sai']   += rec_ds
+        d['rec_svc']       += rec_se + rec_ss
+    return d
+
+def parse_ext_dre(rev, target_mes, target_ano):
+    d = defaultdict(float)
+    target_str = f"{target_mes:02d}/{target_ano}"
+    for (m, ano), csv_text in _extrato_cache.items():
+        if not csv_text: continue
+        for row in csv.DictReader(io.StringIO(csv_text)):
+            if (row.get('Revenda Origem Id','') or '').strip() != rev: continue
+            dc = (row.get('Data Competência','') or '').strip()
+            if not dc or len(dc) < 7 or dc[3:10] != target_str: continue
+            conta = (row.get('Conta Contábil','') or '').strip()
+            op    = (row.get('Operação','') or '').strip()
+            valor = parse_num(row.get('Valor',''))
+            if valor == 0: continue
+            field = _DRE_LOOKUP.get((conta, op))
+            if field:
+                d[field] += valor
+    return d
+
 # ── MAIN ───────────────────────────────────────────────────────────────────
 def main():
     today = date.today()
@@ -323,10 +454,12 @@ def main():
     # ── 1. COMPETÊNCIA (lucro-venda) ──────────────────────────────────────
     print("\n[1/3] Buscando lucro-venda (competência)...")
     comp_mm_raw = {}; comp_bk_raw = {}
+    _lv_cache = {}  # m -> csv_text (reused for DRE)
     for m in active_months:
         print(f"  lucro-venda {m:02d}/{YEAR}...", end=" ", flush=True)
         txt = api_get("relatorio/financeiro/lucro-venda", m, YEAR)
         if txt:
+            _lv_cache[m] = txt
             mm = parse_comp(txt, store_filter='mm')
             bk = parse_comp(txt, store_filter='bk')
             if mm: comp_mm_raw[m] = mm
@@ -415,6 +548,27 @@ def main():
         if merged: cons_fluxo_raw[m] = dict(merged)
     fluxo_cons = build_store_fluxo(cons_fluxo_raw)
 
+    # ── 2b. DRE (lucro-venda por competência + extrato por Data Competência) ─
+    print("\n[2b] Computando DRE...")
+    dre_mm_raw = {}; dre_bk_raw = {}
+    for m in active_months:
+        txt = _lv_cache.get(m, '')
+        lv_mm = parse_lv_dre(txt, REV_MM)
+        lv_bk = parse_lv_dre(txt, REV_BK)
+        ex_mm = parse_ext_dre(REV_MM, m, YEAR)
+        ex_bk = parse_ext_dre(REV_BK, m, YEAR)
+        def merge_dre(a, b):
+            d = dict(a)
+            for k, v2 in b.items(): d[k] = round(d.get(k, 0) + v2, 2)
+            return d
+        dre_mm_raw[str(m)] = merge_dre(lv_mm, ex_mm)
+        dre_bk_raw[str(m)] = merge_dre(lv_bk, ex_bk)
+        print(f"  {m:02d}/{YEAR} MM:{dre_mm_raw[str(m)].get('q',0):.0f}v BK:{dre_bk_raw[str(m)].get('q',0):.0f}v")
+    dre_cons_raw = {}
+    for m in [str(x) for x in active_months]:
+        all_keys = set(dre_mm_raw.get(m,{}).keys()) | set(dre_bk_raw.get(m,{}).keys())
+        dre_cons_raw[m] = {k: round(dre_mm_raw.get(m,{}).get(k,0)+dre_bk_raw.get(m,{}).get(k,0),2) for k in all_keys}
+
     # ── 3. MONTAR FINAL E ATUALIZAR INDEX.HTML ────────────────────────────
     print("\n[3/3] Atualizando index.html...")
 
@@ -443,6 +597,7 @@ def main():
         'gvop':   old_final.get('gvop', {}),
         'acordo': old_final.get('acordo', {}),
         'seguro': seguro_final,
+        'dre':    {'mm': dre_mm_raw, 'bk': dre_bk_raw, 'cons': dre_cons_raw},
     }
 
     new_json = json.dumps(new_final, ensure_ascii=False, separators=(',', ':'))
