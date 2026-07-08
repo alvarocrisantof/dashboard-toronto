@@ -406,6 +406,7 @@ _DRE_EXT = {
     'cursos':           ('Cursos e treinamentos',            'A pagar'),
     'medicina':         ('Medicina do Trabalho - ASO',       'A pagar'),
     'estacionamento':   ('Estacionamento',                   'A pagar'),
+    'iof':              ('IOF',                              'A pagar'),
 }
 _DRE_LOOKUP = {(conta, op): field for field, (conta, op) in _DRE_EXT.items()}
 
@@ -447,6 +448,31 @@ def parse_ext_dre(rev, target_mes, target_ano):
         if not csv_text: continue
         for row in csv.DictReader(io.StringIO(csv_text)):
             if (row.get('Revenda Origem Id','') or '').strip() != rev: continue
+            dc = (row.get('Data Competência','') or '').strip()
+            if not dc or len(dc) < 7 or dc[3:10] != target_str: continue
+            conta = (row.get('Conta Contábil','') or '').strip()
+            op    = (row.get('Operação','') or '').strip()
+            valor = parse_num(row.get('Valor',''))
+            if valor == 0: continue
+            field = _DRE_LOOKUP.get((conta, op))
+            if not field: continue
+            pid = (row.get('Parcela Id','') or '').strip()
+            key = (pid, conta, op, valor) if pid else None
+            if key and key in seen: continue
+            if key: seen.add(key)
+            d[field] += valor
+    return d
+
+def parse_ext_dre_group(target_mes, target_ano):
+    """Captures extrato entries with blank Revenda Origem Id (group-level entries).
+    These are not attributed to a specific store but belong to the consolidated view."""
+    d = defaultdict(float)
+    seen = set()
+    target_str = f"{target_mes:02d}/{target_ano}"
+    for (m, ano), csv_text in _extrato_cache.items():
+        if not csv_text: continue
+        for row in csv.DictReader(io.StringIO(csv_text)):
+            if (row.get('Revenda Origem Id','') or '').strip() != '': continue
             dc = (row.get('Data Competência','') or '').strip()
             if not dc or len(dc) < 7 or dc[3:10] != target_str: continue
             conta = (row.get('Conta Contábil','') or '').strip()
@@ -590,6 +616,10 @@ def main():
     for m in [str(x) for x in active_months]:
         all_keys = set(dre_mm_raw.get(m,{}).keys()) | set(dre_bk_raw.get(m,{}).keys())
         dre_cons_raw[m] = {k: round(dre_mm_raw.get(m,{}).get(k,0)+dre_bk_raw.get(m,{}).get(k,0),2) for k in all_keys}
+        # Add group-level extrato entries (blank Revenda Origem Id) to consolidated only
+        grp = parse_ext_dre_group(int(m), YEAR)
+        for k, v in grp.items():
+            dre_cons_raw[m][k] = round(dre_cons_raw[m].get(k, 0) + v, 2)
         # Consolidated netting: if CONS inter == CONS devf (within 1.0), both are
         # intercompany pass-throughs that cancel at group level → zero all three stores
         cons = dre_cons_raw[m]
