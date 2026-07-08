@@ -311,6 +311,7 @@ def build_store_fluxo(months_data):
 
 # ── DRE: lucro-venda + extrato por Data Competência ───────────────────────
 _DRE_EXT = {
+    'retorno_fin':      ('Retorno de Financiamento',        'A receber'),
     'intermediacao_fin':('Intermediação de financiamento', 'A receber'),
     'laudo_venda':      ('Laudo cautelar/venda',           'A receber'),
     'transf_venda':     ('Transferência - venda',          'A receber'),
@@ -387,6 +388,24 @@ _DRE_EXT = {
     'associacoes':      ('Associações e Sindicatos',         'A pagar'),
     'transporte':       ('Transporte',                       'A pagar'),
     'uniforme':         ('Uniforme',                         'A pagar'),
+    # Receitas adicionais
+    'venda_comiss':     ('Venda Comissionada',               'A receber'),
+    # Resultado financeiro adicional
+    'remuner_bank':     ('Remuneração Bancária - TIME',      'A receber'),
+    'retorno_comiss':   ('Retorno / Comissões / Acordos',    'A receber'),
+    'juros_rec':        ('Juros a receber (receita)',         'A receber'),
+    # Despesas operacionais adicionais
+    'viagens':          ('Viagens e Representações',         'A pagar'),
+    'comissao_c':       ('Comissão c/ venda',                'A pagar'),
+    'aluguel_cond2':    ('Aluguéis e Condominios',           'A pagar'),
+    'consultoria':      ('Serviços Consultoria',             'A pagar'),
+    'juridico':         ('Serviços Advocatícios',            'A pagar'),
+    'churrasco':        ('Churrasco por Meta',               'A pagar'),
+    'almoco_meta':      ('Almoço Meta Diamante',             'A pagar'),
+    'compras_func':     ('Compras - Funcionários',           'A pagar'),
+    'cursos':           ('Cursos e treinamentos',            'A pagar'),
+    'medicina':         ('Medicina do Trabalho - ASO',       'A pagar'),
+    'estacionamento':   ('Estacionamento',                   'A pagar'),
 }
 _DRE_LOOKUP = {(conta, op): field for field, (conta, op) in _DRE_EXT.items()}
 
@@ -416,14 +435,13 @@ def parse_lv_dre(csv_text, rev):
             d['merch_bruta_sw'] += vb;  d['desc_sw']  += desc;  d['custo_compra_sw'] += compra
         else:
             d['merch_bruta_at'] += vb;  d['desc_at']  += desc;  d['custo_compra_at'] += compra
-        d['retorno_fin']   += ret
-        d['custos_prep_lv']+= custos
         d['rec_doc_sai']   += rec_ds
         d['rec_svc']       += rec_se + rec_ss
     return d
 
 def parse_ext_dre(rev, target_mes, target_ano):
     d = defaultdict(float)
+    seen = set()  # dedup: same parcela may appear in multiple monthly extratos
     target_str = f"{target_mes:02d}/{target_ano}"
     for (m, ano), csv_text in _extrato_cache.items():
         if not csv_text: continue
@@ -436,8 +454,18 @@ def parse_ext_dre(rev, target_mes, target_ano):
             valor = parse_num(row.get('Valor',''))
             if valor == 0: continue
             field = _DRE_LOOKUP.get((conta, op))
-            if field:
-                d[field] += valor
+            if not field: continue
+            pid = (row.get('Parcela Id','') or '').strip()
+            key = (pid, conta, op, valor) if pid else None
+            if key and key in seen: continue
+            if key: seen.add(key)
+            d[field] += valor
+    # Net intermediação against its full devolution (cancels out reversed deals)
+    inter = d.get('intermediacao_fin', 0)
+    devf  = d.get('dev_fin', 0)
+    if inter > 0 and devf > 0 and abs(inter - devf) < 1.0:
+        d['intermediacao_fin'] = 0
+        d['dev_fin'] = 0
     return d
 
 # ── MAIN ───────────────────────────────────────────────────────────────────
