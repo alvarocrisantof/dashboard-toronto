@@ -441,7 +441,7 @@ def parse_lv_dre(csv_text, rev):
 
 def parse_ext_dre(rev, target_mes, target_ano):
     d = defaultdict(float)
-    seen = set()  # dedup: same parcela may appear in multiple monthly extratos
+    seen = set()
     target_str = f"{target_mes:02d}/{target_ano}"
     for (m, ano), csv_text in _extrato_cache.items():
         if not csv_text: continue
@@ -460,12 +460,6 @@ def parse_ext_dre(rev, target_mes, target_ano):
             if key and key in seen: continue
             if key: seen.add(key)
             d[field] += valor
-    # Net intermediação against its full devolution (cancels out reversed deals)
-    inter = d.get('intermediacao_fin', 0)
-    devf  = d.get('dev_fin', 0)
-    if inter > 0 and devf > 0 and abs(inter - devf) < 1.0:
-        d['intermediacao_fin'] = 0
-        d['dev_fin'] = 0
     return d
 
 # ── MAIN ───────────────────────────────────────────────────────────────────
@@ -596,6 +590,15 @@ def main():
     for m in [str(x) for x in active_months]:
         all_keys = set(dre_mm_raw.get(m,{}).keys()) | set(dre_bk_raw.get(m,{}).keys())
         dre_cons_raw[m] = {k: round(dre_mm_raw.get(m,{}).get(k,0)+dre_bk_raw.get(m,{}).get(k,0),2) for k in all_keys}
+        # Consolidated netting: if CONS inter == CONS devf (within 1.0), both are
+        # intercompany pass-throughs that cancel at group level → zero all three stores
+        cons = dre_cons_raw[m]
+        ci = cons.get('intermediacao_fin', 0)
+        cd = cons.get('dev_fin', 0)
+        if ci > 0 and cd > 0 and abs(ci - cd) < 1.0:
+            for store in (cons, dre_mm_raw[m], dre_bk_raw[m]):
+                store['intermediacao_fin'] = 0
+                store['dev_fin'] = 0
 
     # ── 3. MONTAR FINAL E ATUALIZAR INDEX.HTML ────────────────────────────
     print("\n[3/3] Atualizando index.html...")
