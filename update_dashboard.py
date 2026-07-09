@@ -407,6 +407,7 @@ _DRE_EXT = {
     'medicina':         ('Medicina do Trabalho - ASO',       'A pagar'),
     'estacionamento':   ('Estacionamento',                   'A pagar'),
     'iof':              ('IOF',                              'A pagar'),
+    'pecld_rec':        ('PECLD Recuperação de perda reconhecida por inadimplência', 'A receber'),
 }
 _DRE_LOOKUP = {(conta, op): field for field, (conta, op) in _DRE_EXT.items()}
 
