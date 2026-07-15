@@ -411,6 +411,29 @@ _DRE_EXT = {
 }
 _DRE_LOOKUP = {(conta, op): field for field, (conta, op) in _DRE_EXT.items()}
 
+# ── CORREÇÕES MANUAIS (sobrescrevem dados da API por mês) ──────────────────
+# 'mm'/'bk': aplicado antes do merge → afeta cons automaticamente
+# 'cons': aplicado após merge (quando não faz sentido dividir entre lojas)
+_DRE_CORR = {
+    'mm': {},
+    'bk': {},
+    'cons': {
+        '1': {'rec_doc_sai': 12518.20, 'rec_svc': 9521.40, 'prep_veiculo': 1000.0},
+        '2': {'rec_doc_sai': 16323.66, 'rec_svc': 5720.0},
+        '3': {'rec_doc_sai': 25043.25, 'rec_svc': 10030.0, 'rec_diversas': 15554.90},
+        '4': {'rec_svc': 7300.0, 'laudo_venda': 9775.90},
+        '5': {'rec_svc': 6314.0},
+        '6': {'rec_doc_sai': 5310.40, 'rec_svc': 7000.0, 'fotos': 4250.0},
+        '7': {'rec_svc': 4550.0, 'aluguel': 9000.0, 'garantia_venda': 1650.0, 'rec_diversas': 15554.90},
+    },
+}
+
+def apply_dre_corrections(raw, store):
+    corr = _DRE_CORR.get(store, {})
+    for mes_str, fixes in corr.items():
+        if mes_str in raw:
+            raw[mes_str].update(fixes)
+
 def parse_lv_dre(csv_text, rev):
     d = defaultdict(float)
     d['q'] = 0
@@ -429,16 +452,18 @@ def parse_lv_dre(csv_text, rev):
         ret   = pus(row.get('Retorno'))
         custos= pus(row.get('Custos'))
         rec_ds= pus(row.get('Receita com Documentos Saída'))
+        rec_de= pus(row.get('Receita com Documentos Entrada'))
         rec_se= pus(row.get('Receita com Serviços Agregados Entrada'))
         rec_ss= pus(row.get('Receita com Serviços Agregados Saída'))
+        rec_sa= pus(row.get('Receita com Serviços Agregados'))
         if vb <= 0 and compra <= 0: continue
         d['q'] += 1
         if sw:
             d['merch_bruta_sw'] += vb;  d['desc_sw']  += desc;  d['custo_compra_sw'] += compra
         else:
             d['merch_bruta_at'] += vb;  d['desc_at']  += desc;  d['custo_compra_at'] += compra
-        d['rec_doc_sai']   += rec_ds
-        d['rec_svc']       += rec_se + rec_ss
+        d['rec_doc_sai']   += rec_ds + rec_de
+        d['rec_svc']       += rec_se + rec_ss + rec_sa
     return d
 
 def parse_ext_dre(rev, target_mes, target_ano):
@@ -456,6 +481,8 @@ def parse_ext_dre(rev, target_mes, target_ano):
             valor = parse_num(row.get('Valor',''))
             if valor == 0: continue
             field = _DRE_LOOKUP.get((conta, op))
+            if not field and conta == 'Venda Comissionada':
+                field = 'venda_comiss'
             if not field: continue
             pid = (row.get('Parcela Id','') or '').strip()
             key = (pid, conta, op, valor) if pid else None
@@ -481,6 +508,8 @@ def parse_ext_dre_group(target_mes, target_ano):
             valor = parse_num(row.get('Valor',''))
             if valor == 0: continue
             field = _DRE_LOOKUP.get((conta, op))
+            if not field and conta == 'Venda Comissionada':
+                field = 'venda_comiss'
             if not field: continue
             pid = (row.get('Parcela Id','') or '').strip()
             key = (pid, conta, op, valor) if pid else None
@@ -613,6 +642,8 @@ def main():
         dre_mm_raw[str(m)] = merge_dre(lv_mm, ex_mm)
         dre_bk_raw[str(m)] = merge_dre(lv_bk, ex_bk)
         print(f"  {m:02d}/{YEAR} MM:{dre_mm_raw[str(m)].get('q',0):.0f}v BK:{dre_bk_raw[str(m)].get('q',0):.0f}v")
+    apply_dre_corrections(dre_mm_raw, 'mm')
+    apply_dre_corrections(dre_bk_raw, 'bk')
     dre_cons_raw = {}
     for m in [str(x) for x in active_months]:
         all_keys = set(dre_mm_raw.get(m,{}).keys()) | set(dre_bk_raw.get(m,{}).keys())
@@ -630,6 +661,7 @@ def main():
             for store in (cons, dre_mm_raw[m], dre_bk_raw[m]):
                 store['intermediacao_fin'] = 0
                 store['dev_fin'] = 0
+    apply_dre_corrections(dre_cons_raw, 'cons')
 
     # ── 3. MONTAR FINAL E ATUALIZAR INDEX.HTML ────────────────────────────
     print("\n[3/3] Atualizando index.html...")
