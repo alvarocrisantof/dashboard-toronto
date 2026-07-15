@@ -771,10 +771,10 @@ window.renderDRE=function(){
     var total_cust=custo_compra+custo_prep+custo_docs+custo_svc;
     var margem=fat_liq-total_cust;
     var desp_vend=v(d,'comissao_venda')+v(d,'comissao_c')+v(d,'pos_vendas')+v(d,'taxas_transf_sai')+v(d,'despachante_sai');
-    var desp_pess=v(d,'salarios')+v(d,'ferias')+v(d,'rescisao')+v(d,'fgts_rescis')+v(d,'plano_saude')+v(d,'datas_com')+v(d,'refeitorio')+v(d,'transporte')+v(d,'uniforme')+v(d,'medicina')+v(d,'compras_func')+v(d,'cursos');
+    var desp_pess=v(d,'salarios')+v(d,'ferias')+v(d,'rescisao')+v(d,'fgts_rescis')+v(d,'plano_saude')+v(d,'datas_com')+v(d,'refeitorio')+v(d,'transporte')+v(d,'uniforme')+v(d,'medicina')+v(d,'compras_func')+v(d,'cursos')+v(d,'churrasco')+v(d,'almoco_meta');
     var desp_adm=v(d,'aluguel_cond')+v(d,'aluguel_cond2')+v(d,'copa')+v(d,'cartorio')+v(d,'mat_aux')+v(d,'mat_escrit')+v(d,'seguros')+v(d,'contabil')+v(d,'informatica')+v(d,'associacoes')+v(d,'consultoria')+v(d,'juridico')+v(d,'viagens')+v(d,'estacionamento');
     var desp_est=v(d,'agua')+v(d,'energia')+v(d,'telefonia')+v(d,'limpeza')+v(d,'manutencao_loja')+v(d,'maq_equip');
-    var desp_mkt=v(d,'publicidade')+v(d,'portais')+v(d,'feirao')+v(d,'brindes')+v(d,'churrasco')+v(d,'almoco_meta');
+    var desp_mkt=v(d,'publicidade')+v(d,'portais')+v(d,'feirao')+v(d,'brindes');
     var desp_soc=v(d,'pro_labore')+v(d,'dividendos');
     var total_desp=desp_vend+desp_pess+desp_adm+desp_est+desp_mkt+desp_soc+v(d,'emprestimos')+v(d,'aj_saida');
     var lucro_op=margem-total_desp;
@@ -810,7 +810,7 @@ window.renderDRE=function(){
       info:v(d,'informatica'),assoc:v(d,'associacoes'),
       agua:v(d,'agua'),energ:v(d,'energia'),tel:v(d,'telefonia'),
       limp:v(d,'limpeza'),manut:v(d,'manutencao_loja'),equip:v(d,'maq_equip'),
-      pub:v(d,'publicidade'),portais:v(d,'portais'),feirao:v(d,'feirao'),brindes:v(d,'brindes'),
+      pub:v(d,'publicidade'),portais:v(d,'portais'),feirao:v(d,'feirao'),brindes:v(d,'brindes'),churrasco:v(d,'churrasco'),almoco:v(d,'almoco_meta'),
       labore:v(d,'pro_labore'),divid:v(d,'dividendos'),emp:v(d,'emprestimos'),
       ret_fin:v(d,'retorno_fin'),ret_ac:v(d,'retorno_acordos'),rend:v(d,'rendimento'),
       tar:v(d,'tarifa_bancaria'),jur:v(d,'juros_pagar')+v(d,'juros_pagar2')
@@ -940,6 +940,8 @@ window.renderDRE=function(){
   html+=row('   ∙ FGTS Rescisório','dre-sub2',function(d){return d.fgts_r;});
   html+=row('   ∙ Plano de Saúde','dre-sub2',function(d){return d.saude;});
   html+=row('   ∙ Refeições/Lanches','dre-sub2',function(d){return d.refeit;});
+  html+=row('   ∙ Churrasco por Meta','dre-sub2',function(d){return d.churrasco;});
+  html+=row('   ∙ Almoço Meta Diamante','dre-sub2',function(d){return d.almoco;});
   html+=row('Despesas Administrativas','dre-sub',function(d){return d.desp_adm;});
   html+=row('   ∙ Aluguéis/Condomínio','dre-sub2',function(d){return d.alug_c;});
   html+=row('   ∙ Copa e Bar','dre-sub2',function(d){return d.copa;});
