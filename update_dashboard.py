@@ -418,13 +418,13 @@ _DRE_CORR = {
     'mm': {},
     'bk': {},
     'cons': {
-        '1': {'rec_doc_sai': 12518.20, 'rec_svc': 9521.40, 'prep_veiculo': 1000.0},
-        '2': {'rec_doc_sai': 16323.66, 'rec_svc': 5720.0},
-        '3': {'rec_doc_sai': 25043.25, 'rec_svc': 10030.0, 'rec_diversas': 15554.90},
-        '4': {'rec_svc': 7300.0, 'laudo_venda': 9775.90},
-        '5': {'rec_svc': 6314.0},
-        '6': {'rec_doc_sai': 5310.40, 'rec_svc': 7000.0, 'fotos': 4250.0},
-        '7': {'rec_svc': 4550.0, 'aluguel': 9000.0, 'garantia_venda': 1650.0, 'rec_diversas': 15554.90},
+        '1': {'rec_doc_sai': 12518.20, 'rec_svc': 9521.40, 'prep_veiculo': 1000.0, 'custo_prep_entrega': 93152.51, 'frete': 130.0, 'multa_veiculo': 0.0, 'despachante_ent': 3770.0, 'taxas_transf_ent': 6395.18, 'comunicado_venda': 293.13, 'laudo_custo': 4072.10, 'despachante_sai': 0.0, 'salarios': 101675.32},
+        '2': {'rec_doc_sai': 16323.66, 'rec_svc': 5720.0, 'desc_sw': 72545.50, 'custo_prep_entrega': 63811.0, 'frete': 600.0, 'despachante_ent': 1460.0, 'ipva': 18414.83, 'taxas_transf_ent': 11702.84, 'baixa_gravame': 40.0, 'laudo_custo': 3025.0, 'despachante_sai': 0.0},
+        '3': {'rec_doc_sai': 25043.25, 'rec_svc': 10030.0, 'rec_diversas': 15554.90, 'desc_sw': 118306.96, 'desc_at': 42900.0, 'custo_prep_entrega': 80624.66, 'frete': 0.0, 'despachante_ent': 2300.0, 'ipva': 30297.31, 'taxas_transf_ent': 5793.22, 'comunicado_venda': 149.90, 'laudo_custo': 2620.20, 'despachante_sai': 0.0},
+        '4': {'rec_svc': 7300.0, 'laudo_venda': 9775.90, 'custo_prep_entrega': 40676.10, 'frete': 0.0, 'despachante_ent': 2150.0, 'ipva': 27580.05, 'taxas_transf_ent': 6938.16, 'multas_nao_abat': 104.13, 'laudo_custo': 5156.70, 'taxas_transf_sai': 14389.08, 'despachante_sai': 0.0, 'compras_func': 0.0},
+        '5': {'rec_svc': 6314.0, 'desc_sw': 125020.01, 'desc_at': 20782.0, 'custo_prep_entrega': 57438.43, 'frete': 80.0, 'despachante_ent': 700.0, 'ipva': 40485.04, 'taxas_transf_ent': 3711.0, 'laudo_custo': 2470.50, 'despachante_sai': 0.0, 'compras_func': 0.0},
+        '6': {'rec_doc_sai': 5310.40, 'rec_svc': 7000.0, 'fotos': 4250.0, 'custo_prep_entrega': 50890.65, 'frete': 0.0, 'despachante_ent': 1200.0, 'ipva': 16883.52, 'taxas_transf_ent': 2306.0, 'laudo_custo': 1977.10, 'despachante_sai': 0.0, 'compras_func': 0.0},
+        '7': {'rec_svc': 4550.0, 'aluguel': 9000.0, 'garantia_venda': 1650.0, 'rec_diversas': 15554.90, 'custo_prep_entrega': 46554.22, 'frete': 0.0, 'despachante_ent': 500.0, 'ipva': 4655.73, 'taxas_transf_ent': 1814.0, 'laudo_custo': 903.30, 'despachante_sai': 0.0, 'compras_func': 0.0, 'medicina': 20.0, 'almoco_meta': 457.44, 'taxas_transf_sai': 11004.06},
     },
 }
 
