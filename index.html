@@ -813,7 +813,8 @@ window.renderDRE=function(){
       pub:v(d,'publicidade'),portais:v(d,'portais'),feirao:v(d,'feirao'),brindes:v(d,'brindes'),churrasco:v(d,'churrasco'),almoco:v(d,'almoco_meta'),
       labore:v(d,'pro_labore'),divid:v(d,'dividendos'),emp:v(d,'emprestimos'),
       ret_fin:v(d,'retorno_fin'),ret_ac:v(d,'retorno_acordos'),rend:v(d,'rendimento'),
-      tar:v(d,'tarifa_bancaria'),jur:v(d,'juros_pagar')+v(d,'juros_pagar2')
+      tar:v(d,'tarifa_bancaria'),jur:v(d,'juros_pagar')+v(d,'juros_pagar2'),
+      aj_saida:v(d,'aj_saida')
     };
   }
   // compute per month and YTD
@@ -965,6 +966,8 @@ window.renderDRE=function(){
   html+=row('   ∙ Pró-Labore','dre-sub2',function(d){return d.labore;});
   html+=row('   ∙ Distribuição Dividendos','dre-sub2',function(d){return d.divid;});
   html+=row('Empréstimos/Financiamentos','dre-sub',function(d){return d.emp;});
+  html+=row('Despesas Variáveis','dre-sub',function(d){return d.aj_saida;});
+  html+=row('   ∙ Ajuste de Saldo – Saída','dre-sub2',function(d){return d.aj_saida;});
   html+=row('Máquinas e Equipamentos','dre-sub',function(d){return d.equip;});
   html+=row('TOTAL DESPESAS OPER.','dre-total',function(d){return d.total_desp;});
   html+=row('= LUCRO OPERACIONAL','dre-result',function(d){return d.lucro_op;});
