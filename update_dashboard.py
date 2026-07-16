@@ -394,6 +394,8 @@ _DRE_EXT = {
     'remuner_bank':     ('Remuneração Bancária - TIME',      'A receber'),
     'retorno_comiss':   ('Retorno / Comissões / Acordos',    'A receber'),
     'juros_rec':        ('Juros a receber (receita)',         'A receber'),
+    'desc_pagar':       ('Descontos a Pagar',                'A receber'),
+    'desc_receber':     ('Descontos a Receber',              'A pagar'),
     # Despesas operacionais adicionais
     'viagens':          ('Viagens e Representações',         'A pagar'),
     'comissao_c':       ('Comissão c/ venda',                'A pagar'),
@@ -418,7 +420,7 @@ _DRE_CORR = {
     'mm': {},
     'bk': {},
     'cons': {
-        '1': {'rec_doc_sai': 12518.20, 'rec_svc': 9521.40, 'prep_veiculo': 1000.0, 'custo_prep_entrega': 93152.51, 'frete': 130.0, 'multa_veiculo': 0.0, 'despachante_ent': 3770.0, 'taxas_transf_ent': 6395.18, 'comunicado_venda': 293.13, 'laudo_custo': 4072.10, 'despachante_sai': 0.0, 'salarios': 101675.32, 'viagens': 40470.68, 'associacoes': 250.0, 'publicidade': 18883.39},
+        '1': {'rec_doc_sai': 12518.20, 'rec_svc': 9521.40, 'prep_veiculo': 1000.0, 'custo_prep_entrega': 93152.51, 'frete': 130.0, 'multa_veiculo': 0.0, 'despachante_ent': 3770.0, 'taxas_transf_ent': 6395.18, 'comunicado_venda': 293.13, 'laudo_custo': 4072.10, 'despachante_sai': 0.0, 'salarios': 101675.32, 'viagens': 40470.68, 'associacoes': 250.0, 'publicidade': 18883.39, 'seguro_rec': 5837.69, 'retorno_comiss': 4493.39, 'juros_rec': 46.88, 'desc_pagar': 27387.42, 'juros_pagar': 14.68, 'desc_receber': 10.50},
         '2': {'rec_doc_sai': 16323.66, 'rec_svc': 5720.0, 'desc_sw': 72545.50, 'custo_prep_entrega': 63811.0, 'frete': 600.0, 'despachante_ent': 1460.0, 'ipva': 18414.83, 'taxas_transf_ent': 11702.84, 'baixa_gravame': 40.0, 'laudo_custo': 3025.0, 'despachante_sai': 0.0},
         '3': {'rec_doc_sai': 25043.25, 'rec_svc': 10030.0, 'rec_diversas': 15554.90, 'desc_sw': 118306.96, 'desc_at': 42900.0, 'custo_prep_entrega': 80624.66, 'frete': 0.0, 'despachante_ent': 2300.0, 'ipva': 30297.31, 'taxas_transf_ent': 5793.22, 'comunicado_venda': 149.90, 'laudo_custo': 2620.20, 'despachante_sai': 0.0, 'cartorio': 366.64, 'pub_adm': 1200.0, 'publicidade': 9349.94},
         '4': {'rec_svc': 7300.0, 'laudo_venda': 9775.90, 'custo_prep_entrega': 40676.10, 'frete': 0.0, 'despachante_ent': 2150.0, 'ipva': 27580.05, 'taxas_transf_ent': 6938.16, 'multas_nao_abat': 104.13, 'laudo_custo': 5156.70, 'taxas_transf_sai': 14389.08, 'despachante_sai': 0.0, 'compras_func': 0.0, 'pub_adm': 1200.0, 'emprestimos': 28130.95, 'publicidade': 10699.00, 'feirao': 18594.66},
