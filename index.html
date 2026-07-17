@@ -804,8 +804,8 @@ window.renderDRE=function(){
     var res_fin_neg=v(d,'tarifa_bancaria')+v(d,'juros_pagar')+v(d,'juros_pagar2')+v(d,'iof')+v(d,'desc_receber');
     var res_fin=res_fin_pos-res_fin_neg;
     var resultado=lucro_op+res_fin;
-    var mb_pct=total_rec>0?margem/total_rec*100:0;
-    var ml_pct=total_rec>0?resultado/total_rec*100:0;
+    var mb_pct=fat_liq>0?margem/fat_liq*100:0;
+    var ml_pct=fat_liq>0?resultado/fat_liq*100:0;
     return {merch,rec_svc,total_rec,desc,imp,dev,total_ded,fat_liq,custo_compra,custo_prep,custo_docs,custo_svc,total_cust,margem,desp_vend,desp_pess,desp_adm,desp_est,desp_mkt,desp_soc,total_desp,lucro_op,res_fin,resultado,mb_pct,ml_pct,
       merch_sw:v(d,'merch_bruta_sw'),merch_at:v(d,'merch_bruta_at'),
       desc_sw:v(d,'desc_sw'),desc_at:v(d,'desc_at'),
@@ -858,8 +858,9 @@ window.renderDRE=function(){
     return n.toLocaleString('pt-BR',{minimumFractionDigits:0,maximumFractionDigits:0});
   }
   function fpct(n){return n.toFixed(1).replace('.',',')+'%';}
-  function row(label,type,getter,cls,fields){
+  function row(label,type,getter,cls,fields,fmt){
     cls=cls||'';
+    var formatter=fmt||fv;
     var clickable=fields?' dre-clickable':'';
     var safeLabel=label.replace(/^\s+/,'').replace(/"/g,'&quot;');
     var attrs=fields?' data-detail="'+fields+'" data-label="'+safeLabel+'" onclick="dreDetail(this)"':'';
@@ -870,7 +871,7 @@ window.renderDRE=function(){
       var vcls='';
       if(val<0)vcls=' class="dre-neg"';
       else if(type==='dre-result'&&val>0)vcls=' class="dre-pos"';
-      tr+='<td'+vcls+'>'+fv(val)+'</td>';
+      tr+='<td'+vcls+'>'+formatter(val)+'</td>';
     });
     // Fill empty months up to 12
     for(var i=months.length;i<12;i++)tr+='<td style="color:#1a3050">—</td>';
@@ -878,7 +879,7 @@ window.renderDRE=function(){
     var ycls='';
     if(ytdVal<0)ycls=' class="dre-neg"';
     else if(type==='dre-result'&&ytdVal>0)ycls=' class="dre-pos"';
-    tr+='<td'+ycls+' class="dre-ytd-cell">'+fv(ytdVal)+'</td>';
+    tr+='<td'+ycls+' class="dre-ytd-cell">'+formatter(ytdVal)+'</td>';
     tr+='</tr>';
     return tr;
   }
@@ -954,7 +955,7 @@ window.renderDRE=function(){
   html+=row('   ∙ Laudo Cautelar','dre-sub2',function(d){return d.laudo_c;},'','laudo_custo');
   html+=row('TOTAL CUSTOS','dre-total',function(d){return d.total_cust;});
   html+=row('= MARGEM BRUTA','dre-result',function(d){return d.margem;});
-  html+=row('  % sobre Receita','dre-sub2',function(d){return d.mb_pct;});
+  html+=row('  % s/ Fat. Líquido','dre-sub2',function(d){return d.mb_pct;},'',null,fpct);
   // DESPESAS OPERACIONAIS
   html+=section('▾ (-) DESPESAS OPERACIONAIS','desp');
   html+=row('Despesas com Vendas','dre-sub',function(d){return d.desp_vend;},'','comissao_venda,comissao_c,pos_vendas,taxas_transf_sai,despachante_sai');
@@ -1018,6 +1019,7 @@ window.renderDRE=function(){
   html+=row('RESULTADO FINANCEIRO','dre-total',function(d){return d.res_fin;});
   // RESULTADO FINAL
   html+=row('= RESULTADO FINAL','dre-result pos',function(d){return d.resultado;});
+  html+=row('  % s/ Fat. Líquido','dre-sub2',function(d){return d.ml_pct;},'',null,fpct);
 
   html+='</tbody></table></div>';
   if(!document.getElementById('dre-modal')){
