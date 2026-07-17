@@ -520,6 +520,43 @@ def parse_ext_dre_group(target_mes, target_ano):
             d[field] += valor
     return d
 
+def parse_lv_txns(csv_text, rev):
+    """Per-vehicle txns from lucro-venda: merch_bruta, custo_compra, desc, rec_doc_sai, rec_svc."""
+    d = defaultdict(list)
+    if not csv_text: return d
+    def pus(s): s=(s or '').strip(); return float(s) if s else 0.0
+    for row in csv.DictReader(io.StringIO(csv_text)):
+        if (row.get('Saida','') or '').strip().lower() == 'total': continue
+        if (row.get('Revenda Saída ID','') or '').strip() != rev: continue
+        tipo   = (row.get('Tipo Venda','') or '').strip()
+        sw     = tipo != 'Atacado'
+        saida  = (row.get('Saida','') or '').strip()
+        marca  = (row.get('Marca','') or '').strip()
+        modelo = (row.get('Modelo','') or '').strip()
+        placa  = (row.get('Placa','') or '').strip()
+        vb     = pus(row.get('Venda Bruta'))
+        desc   = pus(row.get('Valor Desconto'))
+        compra = pus(row.get('Compra'))
+        rec_ds = pus(row.get('Receita com Documentos Saída'))
+        rec_de = pus(row.get('Receita com Documentos Entrada'))
+        rec_se = pus(row.get('Receita com Serviços Agregados Entrada'))
+        rec_ss = pus(row.get('Receita com Serviços Agregados Saída'))
+        if vb <= 0 and compra <= 0: continue
+        ident = f"{marca} {modelo} {placa}".strip()
+        if sw:
+            if vb > 0:     d['merch_bruta_sw'].append({'comp':saida,'liq':saida,'id':ident,'val':vb})
+            if desc > 0:   d['desc_sw'].append({'comp':saida,'liq':saida,'id':ident,'val':desc})
+            if compra > 0: d['custo_compra_sw'].append({'comp':saida,'liq':saida,'id':ident,'val':compra})
+        else:
+            if vb > 0:     d['merch_bruta_at'].append({'comp':saida,'liq':saida,'id':ident,'val':vb})
+            if desc > 0:   d['desc_at'].append({'comp':saida,'liq':saida,'id':ident,'val':desc})
+            if compra > 0: d['custo_compra_at'].append({'comp':saida,'liq':saida,'id':ident,'val':compra})
+        rec_doc = rec_ds + rec_de
+        if rec_doc > 0: d['rec_doc_sai'].append({'comp':saida,'liq':saida,'id':ident,'val':rec_doc})
+        rec_svc = rec_se + rec_ss
+        if rec_svc > 0: d['rec_svc'].append({'comp':saida,'liq':saida,'id':ident,'val':rec_svc})
+    return d
+
 def _parse_txns(rev_filter, target_mes, target_ano):
     """Returns per-transaction list per field: {field: [{comp,liq,id,val}, ...]}"""
     d = defaultdict(list)
@@ -677,15 +714,21 @@ def main():
         dre_mm_raw[str(m)] = merge_dre(lv_mm, ex_mm)
         dre_bk_raw[str(m)] = merge_dre(lv_bk, ex_bk)
         print(f"  {m:02d}/{YEAR} MM:{dre_mm_raw[str(m)].get('q',0):.0f}v BK:{dre_bk_raw[str(m)].get('q',0):.0f}v")
-        # Collect per-transaction data
+        # Collect per-transaction data (extrato-titulos)
         txns_mm  = _parse_txns(REV_MM, m, YEAR)
         txns_bk  = _parse_txns(REV_BK, m, YEAR)
         txns_grp = _parse_txns(None,   m, YEAR)
+        # Add per-vehicle data from lucro-venda (merch, custo_compra, desc, rec_doc, rec_svc)
+        lv_txt = _lv_cache.get(m, '')
+        lv_mm = parse_lv_txns(lv_txt, REV_MM)
+        lv_bk = parse_lv_txns(lv_txt, REV_BK)
+        for f, lst in lv_mm.items(): txns_mm[f] = sorted(lst + txns_mm.get(f,[]), key=lambda x: x['comp'])
+        for f, lst in lv_bk.items(): txns_bk[f] = sorted(lst + txns_bk.get(f,[]), key=lambda x: x['comp'])
         dre_txns_mm[str(m)] = txns_mm
         dre_txns_bk[str(m)] = txns_bk
         merged_cons = {}
         for f in set(txns_mm) | set(txns_bk) | set(txns_grp):
-            merged_cons[f] = txns_mm.get(f,[]) + txns_bk.get(f,[]) + txns_grp.get(f,[])
+            merged_cons[f] = sorted(txns_mm.get(f,[]) + txns_bk.get(f,[]) + txns_grp.get(f,[]), key=lambda x: x['comp'])
         dre_txns_cons[str(m)] = merged_cons
     apply_dre_corrections(dre_mm_raw, 'mm')
     apply_dre_corrections(dre_bk_raw, 'bk')
