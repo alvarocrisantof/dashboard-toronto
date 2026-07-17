@@ -757,7 +757,7 @@ window.renderDRE=function(){
   function v(d,f){return(d&&d[f])||0;}
   function c(d){
     var merch=v(d,'merch_bruta_sw')+v(d,'merch_bruta_at');
-    var rec_svc=v(d,'intermediacao_fin')+v(d,'laudo_venda')+v(d,'transf_venda')+v(d,'fotos')+v(d,'prep_veiculo')+v(d,'gasolina')+v(d,'rec_doc_sai')+v(d,'rec_svc')+v(d,'venda_comiss')+v(d,'garantia_venda')+v(d,'aluguel');
+    var rec_svc=v(d,'intermediacao_fin')+v(d,'laudo_venda')+v(d,'transf_venda')+v(d,'fotos')+v(d,'prep_veiculo')+v(d,'gasolina')+v(d,'rec_doc_sai')+v(d,'rec_svc')+v(d,'venda_comiss')+v(d,'aluguel');
     var total_rec=merch+rec_svc+v(d,'rec_diversas');
     var desc=v(d,'desc_sw')+v(d,'desc_at');
     var imp=v(d,'esocial')+v(d,'fgts')+v(d,'csll_irpj')+v(d,'pis_cofins')+v(d,'icms')+v(d,'iss')+v(d,'alvara')+v(d,'fisc_func')+v(d,'iptu')+v(d,'retencoes')+v(d,'custas')+v(d,'das');
