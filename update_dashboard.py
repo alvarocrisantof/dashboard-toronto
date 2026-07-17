@@ -466,6 +466,10 @@ def parse_lv_dre(csv_text, rev):
         else:
             d['q_proprio'] += 1
         if sw:
+            d['q_sw'] += 1
+        else:
+            d['q_at'] += 1
+        if sw:
             d['merch_bruta_sw'] += vb;  d['desc_sw']  += desc;  d['custo_compra_sw'] += compra
         else:
             d['merch_bruta_at'] += vb;  d['desc_at']  += desc;  d['custo_compra_at'] += compra
