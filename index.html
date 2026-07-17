@@ -806,7 +806,7 @@ window.renderDRE=function(){
     var resultado=lucro_op+res_fin;
     var mb_pct=fat_liq>0?margem/fat_liq*100:0;
     var ml_pct=fat_liq>0?resultado/fat_liq*100:0;
-    return {merch,rec_svc,total_rec,desc,imp,dev,total_ded,fat_liq,custo_compra,custo_prep,custo_docs,custo_svc,total_cust,margem,desp_vend,desp_pess,desp_adm,desp_est,desp_mkt,desp_soc,total_desp,lucro_op,res_fin,resultado,mb_pct,ml_pct,
+    return {merch,rec_svc,total_rec,desc,imp,dev,total_ded,fat_liq,custo_compra,custo_prep,custo_docs,custo_svc,total_cust,margem,desp_vend,desp_pess,desp_adm,desp_est,desp_mkt,desp_soc,total_desp,lucro_op,res_fin,resultado,mb_pct,ml_pct,q:v(d,'q'),
       merch_sw:v(d,'merch_bruta_sw'),merch_at:v(d,'merch_bruta_at'),
       desc_sw:v(d,'desc_sw'),desc_at:v(d,'desc_at'),
       custo_compra_sw:v(d,'custo_compra_sw'),custo_compra_at:v(d,'custo_compra_at'),
@@ -896,6 +896,8 @@ window.renderDRE=function(){
   months.forEach(function(m){html+='<th>'+MONTHS[+m-1]+'</th>';});
   for(var i=months.length;i<12;i++)html+='<th style="color:#1a2a38">'+MONTHS[i]+'</th>';
   html+='<th class="dre-ytd-cell">YTD</th></tr></thead><tbody>';
+  // VOLUME
+  html+=row('Veículos Vendidos','dre-total',function(d){return d.q;});
   // RECEITAS
   html+=section('▾ RECEITAS','rec');
   html+=row('Vendas de Veículos','dre-sub',function(d){return d.merch;},'','merch_bruta_sw,merch_bruta_at');
