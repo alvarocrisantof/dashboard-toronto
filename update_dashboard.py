@@ -459,7 +459,12 @@ def parse_lv_dre(csv_text, rev):
         rec_ss= pus(row.get('Receita com Serviços Agregados Saída'))
         rec_sa= pus(row.get('Receita com Serviços Agregados'))
         if vb <= 0 and compra <= 0: continue
+        estoque = (row.get('Estoque','') or '').strip()
         d['q'] += 1
+        if estoque == 'Consignado':
+            d['q_consig'] += 1
+        else:
+            d['q_proprio'] += 1
         if sw:
             d['merch_bruta_sw'] += vb;  d['desc_sw']  += desc;  d['custo_compra_sw'] += compra
         else:
