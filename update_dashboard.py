@@ -520,6 +520,38 @@ def parse_ext_dre_group(target_mes, target_ano):
             d[field] += valor
     return d
 
+def _parse_txns(rev_filter, target_mes, target_ano):
+    """Returns per-transaction list per field: {field: [{comp,liq,id,val}, ...]}"""
+    d = defaultdict(list)
+    seen = set()
+    target_str = f"{target_mes:02d}/{target_ano}"
+    for (m, ano), csv_text in _extrato_cache.items():
+        if not csv_text: continue
+        for row in csv.DictReader(io.StringIO(csv_text)):
+            rid = (row.get('Revenda Origem Id','') or '').strip()
+            if rev_filter is None:
+                if rid != '': continue      # group-level: blank rid
+            else:
+                if rid != rev_filter: continue
+            dc = (row.get('Data Competência','') or '').strip()
+            if not dc or len(dc) < 7 or dc[3:10] != target_str: continue
+            conta = (row.get('Conta Contábil','') or '').strip()
+            op    = (row.get('Operação','') or '').strip()
+            valor = parse_num(row.get('Valor',''))
+            if valor == 0: continue
+            field = _DRE_LOOKUP.get((conta, op))
+            if not field and conta == 'Venda Comissionada':
+                field = 'venda_comiss'
+            if not field: continue
+            pid = (row.get('Parcela Id','') or '').strip()
+            key = (pid, conta, op, valor) if pid else None
+            if key and key in seen: continue
+            if key: seen.add(key)
+            dl    = (row.get('Data Liquidação','') or '').strip()
+            ident = (row.get('Identificação','') or '').strip()
+            d[field].append({'comp': dc, 'liq': dl, 'id': ident or conta, 'val': valor})
+    return {f: sorted(v, key=lambda x: x['comp']) for f, v in d.items()}
+
 # ── MAIN ───────────────────────────────────────────────────────────────────
 def main():
     today = date.today()
@@ -631,6 +663,7 @@ def main():
     # ── 2b. DRE (lucro-venda por competência + extrato por Data Competência) ─
     print("\n[2b] Computando DRE...")
     dre_mm_raw = {}; dre_bk_raw = {}
+    dre_txns_mm = {}; dre_txns_bk = {}; dre_txns_cons = {}
     for m in active_months:
         txt = _lv_cache.get(m, '')
         lv_mm = parse_lv_dre(txt, REV_MM)
@@ -644,6 +677,16 @@ def main():
         dre_mm_raw[str(m)] = merge_dre(lv_mm, ex_mm)
         dre_bk_raw[str(m)] = merge_dre(lv_bk, ex_bk)
         print(f"  {m:02d}/{YEAR} MM:{dre_mm_raw[str(m)].get('q',0):.0f}v BK:{dre_bk_raw[str(m)].get('q',0):.0f}v")
+        # Collect per-transaction data
+        txns_mm  = _parse_txns(REV_MM, m, YEAR)
+        txns_bk  = _parse_txns(REV_BK, m, YEAR)
+        txns_grp = _parse_txns(None,   m, YEAR)
+        dre_txns_mm[str(m)] = txns_mm
+        dre_txns_bk[str(m)] = txns_bk
+        merged_cons = {}
+        for f in set(txns_mm) | set(txns_bk) | set(txns_grp):
+            merged_cons[f] = txns_mm.get(f,[]) + txns_bk.get(f,[]) + txns_grp.get(f,[])
+        dre_txns_cons[str(m)] = merged_cons
     apply_dre_corrections(dre_mm_raw, 'mm')
     apply_dre_corrections(dre_bk_raw, 'bk')
     dre_cons_raw = {}
@@ -693,7 +736,8 @@ def main():
         'gvop':   old_final.get('gvop', {}),
         'acordo': old_final.get('acordo', {}),
         'seguro': seguro_final,
-        'dre':    {'mm': dre_mm_raw, 'bk': dre_bk_raw, 'cons': dre_cons_raw},
+        'dre':    {'mm': dre_mm_raw, 'bk': dre_bk_raw, 'cons': dre_cons_raw,
+                   'txns': {'mm': dre_txns_mm, 'bk': dre_txns_bk, 'cons': dre_txns_cons}},
     }
 
     new_json = json.dumps(new_final, ensure_ascii=False, separators=(',', ':'))
