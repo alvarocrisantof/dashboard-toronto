@@ -418,7 +418,13 @@ _DRE_LOOKUP = {(conta, op): field for field, (conta, op) in _DRE_EXT.items()}
 # 'cons': aplicado após merge (quando não faz sentido dividir entre lojas)
 _DRE_CORR = {
     'mm': {
-        '1': {'rec_doc_sai': 9728.39,  'rec_svc': 8921.40},
+        '1': {'rec_doc_sai': 9728.39, 'rec_svc': 8921.40,
+              'custo_prep_entrega': 76987.59, 'frete': 130.0,
+              'despachante_ent': 3370.0, 'taxas_transf_ent': 5373.18,
+              'laudo_custo': 3081.60,
+              'retorno_fin': 27013.74,
+              'desc_pagar': 26668.25, 'juros_rec': 46.88,
+              'desc_receber': 0.0, 'juros_pagar': 14.68},
         '2': {'rec_doc_sai': 14241.12, 'rec_svc': 4670.00},
         '3': {'rec_doc_sai': 22639.05, 'rec_svc': 8380.00},
         '4': {'rec_svc': 6950.00},
