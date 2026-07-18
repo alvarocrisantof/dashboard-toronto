@@ -760,6 +760,32 @@ def main():
                 store['dev_fin'] = 0
     apply_dre_corrections(dre_cons_raw, 'cons')
 
+    # ── Redistribute CONS into MM and BK so MM+BK = CONS exactly ─────────
+    # CONS is the reconciled truth; MM and BK receive proportional shares of
+    # each field based on their raw contribution. Count fields stay raw.
+    _COUNT_FIELDS = {'q', 'q_sw', 'q_at', 'q_proprio', 'q_consig'}
+    for m_str in [str(x) for x in active_months]:
+        cons_m = dre_cons_raw[m_str]
+        mm_m   = dre_mm_raw[m_str]
+        bk_m   = dre_bk_raw[m_str]
+        mm_q   = mm_m.get('q', 0) or 0
+        bk_q   = bk_m.get('q', 0) or 0
+        total_q = (mm_q + bk_q) or 1
+        new_mm = {k: mm_m[k] for k in _COUNT_FIELDS if k in mm_m}
+        new_bk = {k: bk_m[k] for k in _COUNT_FIELDS if k in bk_m}
+        for k, cons_val in cons_m.items():
+            if k in _COUNT_FIELDS:
+                continue
+            mm_v = mm_m.get(k, 0)
+            bk_v = bk_m.get(k, 0)
+            raw_total = mm_v + bk_v
+            ratio = (mm_v / raw_total) if raw_total != 0 else (mm_q / total_q)
+            mm_share = round(cons_val * ratio, 2)
+            new_mm[k] = mm_share
+            new_bk[k] = round(cons_val - mm_share, 2)
+        dre_mm_raw[m_str] = new_mm
+        dre_bk_raw[m_str] = new_bk
+
     # ── 3. MONTAR FINAL E ATUALIZAR INDEX.HTML ────────────────────────────
     print("\n[3/3] Atualizando index.html...")
 
