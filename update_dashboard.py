@@ -417,7 +417,14 @@ _DRE_LOOKUP = {(conta, op): field for field, (conta, op) in _DRE_EXT.items()}
 # 'mm'/'bk': aplicado antes do merge → afeta cons automaticamente
 # 'cons': aplicado após merge (quando não faz sentido dividir entre lojas)
 _DRE_CORR = {
-    'mm': {},
+    'mm': {
+        '1': {'rec_doc_sai': 9728.39,  'rec_svc': 8921.40},
+        '2': {'rec_doc_sai': 14241.12, 'rec_svc': 4670.00},
+        '3': {'rec_doc_sai': 22639.05, 'rec_svc': 8380.00},
+        '4': {'rec_svc': 6950.00},
+        '5': {'rec_svc': 5814.00},
+        '6': {'rec_doc_sai': 4534.90,  'fotos': 3500.00},
+    },
     'bk': {},
     'cons': {
         '1': {'rec_doc_sai': 12518.20, 'rec_svc': 9521.40, 'prep_veiculo': 1000.0, 'custo_prep_entrega': 93152.51, 'frete': 130.0, 'multa_veiculo': 0.0, 'despachante_ent': 3770.0, 'taxas_transf_ent': 6395.18, 'comunicado_venda': 293.13, 'laudo_custo': 4072.10, 'despachante_sai': 0.0, 'salarios': 101675.32, 'viagens': 40470.68, 'associacoes': 250.0, 'publicidade': 18883.39, 'seguro_rec': 5837.69, 'retorno_comiss': 4493.39, 'juros_rec': 46.88, 'desc_pagar': 27387.42, 'juros_pagar': 14.68, 'desc_receber': 10.50},
@@ -785,6 +792,15 @@ def main():
             new_bk[k] = round(cons_val - mm_share, 2)
         dre_mm_raw[m_str] = new_mm
         dre_bk_raw[m_str] = new_bk
+
+    # ── MM-specific post-redistribution corrections ───────────────────────
+    # Applied after redistribution so they aren't overwritten.
+    # BK absorbs the remainder (cons - mm) to keep MM+BK=CONS for each field.
+    for m_str, fixes in _DRE_CORR.get('mm', {}).items():
+        if m_str not in dre_cons_raw: continue
+        for k, mm_val in fixes.items():
+            dre_mm_raw[m_str][k] = mm_val
+            dre_bk_raw[m_str][k] = round(dre_cons_raw[m_str].get(k, 0) - mm_val, 2)
 
     # ── 3. MONTAR FINAL E ATUALIZAR INDEX.HTML ────────────────────────────
     print("\n[3/3] Atualizando index.html...")
