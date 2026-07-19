@@ -476,7 +476,7 @@ _DRE_CORR = {
               'custo_prep_entrega': 60518.20, 'frete': 4500.00,
               'despachante_ent': 680.00, 'ipva': 5238.33, 'taxas_transf_ent': 3866.48,
               'comunicado_venda': 138.17, 'garantia_custo': 10290.00, 'laudo_custo': 1133.10,
-              'taxas_transf_sai': 12090.06,
+              'taxas_transf_sai': 12090.06, 'pos_vendas': 8216.00, 'comissao_venda': 500.00,
               # pessoal
               'refeitorio': 234.00, 'salarios': 105272.38, 'transporte': 413.40,
               'medicina': 20.00, 'almoco_meta': 457.44,
@@ -484,6 +484,10 @@ _DRE_CORR = {
               'aluguel_cond2': 9000.00, 'copa': 1129.90, 'cartorio': 435.76,
               'estacionamento': 15.00, 'pub_adm': 1100.00, 'seguros': 721.45,
               'associacoes': 500.00,
+              # estabelecimento
+              'agua': 90.97, 'energia': 628.53, 'limpeza': 470.42, 'telefonia': 727.20,
+              # sócios
+              'pro_labore': 8000.00, 'dividendos': 34000.00,
               # emprest/maq/mkt
               'emprestimos': 14587.21, 'maq_equip': 4265.06,
               'feirao': 8887.44, 'portais': 8044.28,
@@ -512,7 +516,7 @@ _DRE_CORR = {
               'medicina': 20.0, 'almoco_meta': 457.44, 'taxas_transf_sai': 13724.88,
               'pub_adm': 1100.0, 'publicidade': 9999.00, 'seguro_rec': 10261.86,
               'juros_rec': 27.18, 'desc_pagar': 9513.89, 'desc_receber': 2.34,
-              'juros_pagar2': 105.86},
+              'juros_pagar2': 105.86, 'comissao_venda': 500.00},
     },
 }
 
