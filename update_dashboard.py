@@ -465,10 +465,32 @@ _DRE_CORR = {
               'maq_equip': 3176.53, 'associacoes': 250.00, 'portais': 8004.98,
               'desc_pagar': 16763.83, 'juros_rec': 42.34,
               'desc_receber': 263.17, 'juros_pagar2': 5.40},
-        '7': {'merch_bruta_sw': 1512390.0, 'merch_bruta_at': 232500.0,
-              'rec_doc_sai': 0.0, 'rec_svc': 0.0, 'venda_comiss': 183.23,
-              'laudo_venda': 0.0, 'transf_venda': 0.0, 'fotos': 0.0,
-              'prep_veiculo': 0.0, 'aluguel': 0.0, 'rec_diversas': 0.0},
+        '7': {
+              # receitas
+              'merch_bruta_sw': 2253124.00, 'merch_bruta_at': 120500.00,
+              'rec_doc_sai': 6853.12, 'rec_svc': 6300.00, 'venda_comiss': 183.23,
+              'laudo_venda': 3554.90, 'transf_venda': 630.16, 'fotos': 750.00,
+              'prep_veiculo': 8150.00, 'aluguel': 12500.00, 'rec_diversas': 15554.90,
+              # descontos/custos
+              'desc_sw': 19700.00,
+              'custo_prep_entrega': 60518.20, 'frete': 4500.00,
+              'despachante_ent': 680.00, 'ipva': 5238.33, 'taxas_transf_ent': 3866.48,
+              'comunicado_venda': 138.17, 'garantia_custo': 10290.00, 'laudo_custo': 1133.10,
+              'taxas_transf_sai': 12090.06,
+              # pessoal
+              'refeitorio': 234.00, 'salarios': 105272.38, 'transporte': 413.40,
+              'medicina': 20.00, 'almoco_meta': 457.44,
+              # adm
+              'aluguel_cond2': 9000.00, 'copa': 1129.90, 'cartorio': 435.76,
+              'estacionamento': 15.00, 'pub_adm': 1100.00, 'seguros': 721.45,
+              'associacoes': 500.00,
+              # emprest/maq/mkt
+              'emprestimos': 14587.21, 'maq_equip': 4265.06,
+              'feirao': 8887.44, 'portais': 8044.28,
+              # financeiras
+              'retorno_acordos': 6543.35, 'seguro_rec': 10261.86, 'rendimento': 2.56,
+              'desc_pagar': 7959.70, 'juros_rec': 22.65,
+              'desc_receber': 2.34, 'juros_pagar2': 90.75},
     },
     'bk': {},
     'cons': {
@@ -480,11 +502,17 @@ _DRE_CORR = {
         '6': {'rec_doc_sai': 5310.40, 'rec_svc': 7000.0, 'fotos': 4250.0, 'rec_diversas': 18147.16, 'custo_prep_entrega': 50890.65, 'frete': 0.0, 'despachante_ent': 1200.0, 'ipva': 16883.52, 'taxas_transf_ent': 2306.0, 'laudo_custo': 1977.10, 'despachante_sai': 0.0, 'compras_func': 0.0, 'maq_equip': 3471.76, 'seguro_rec': 9546.18, 'juros_rec': 42.35, 'desc_pagar': 17123.50, 'desc_receber': 263.17, 'juros_pagar': 9531.10, 'juros_pagar2': 139.38, 'retorno_fin': 24060.29,
               'associacoes': 250.00, 'portais': 10425.29},
         # m7 Receitas: CONS_new = MM_target + BK_current (preserves BK values, MM corrected post-redistribution)
-        '7': {'merch_bruta_sw': 2111590.0, 'merch_bruta_at': 301500.0,
-              'rec_doc_sai': 130.16, 'rec_svc': 419.89, 'venda_comiss': 183.23,
-              'laudo_venda': 700.0, 'transf_venda': 480.16, 'fotos': 250.0,
-              'prep_veiculo': 0.0, 'aluguel': 0.0, 'rec_diversas': 0.0,
-              'garantia_venda': 1650.0, 'custo_prep_entrega': 51728.21, 'frete': 0.0, 'despachante_ent': 500.0, 'ipva': 5586.73, 'taxas_transf_ent': 2536.32, 'laudo_custo': 958.20, 'despachante_sai': 0.0, 'compras_func': 0.0, 'medicina': 20.0, 'almoco_meta': 457.44, 'taxas_transf_sai': 11004.06, 'pub_adm': 1100.0, 'publicidade': 9999.00, 'seguro_rec': 10105.88, 'juros_rec': 22.64, 'desc_pagar': 7770.95, 'desc_receber': 2.34, 'juros_pagar2': 105.86},
+        '7': {'merch_bruta_sw': 2852324.00, 'merch_bruta_at': 301500.0,
+              'rec_doc_sai': 6983.28, 'rec_svc': 6719.89, 'venda_comiss': 183.23,
+              'laudo_venda': 4254.90, 'transf_venda': 1110.32, 'fotos': 1000.00,
+              'prep_veiculo': 8150.00, 'aluguel': 12500.00, 'rec_diversas': 15554.90,
+              'garantia_venda': 1650.0, 'custo_prep_entrega': 72399.98, 'frete': 4500.00,
+              'despachante_ent': 738.14, 'ipva': 5586.73, 'taxas_transf_ent': 4143.65,
+              'laudo_custo': 1350.89, 'despachante_sai': 0.0, 'compras_func': 0.0,
+              'medicina': 20.0, 'almoco_meta': 457.44, 'taxas_transf_sai': 13724.88,
+              'pub_adm': 1100.0, 'publicidade': 9999.00, 'seguro_rec': 10261.86,
+              'juros_rec': 27.18, 'desc_pagar': 9513.89, 'desc_receber': 2.34,
+              'juros_pagar2': 105.86},
     },
 }
 
