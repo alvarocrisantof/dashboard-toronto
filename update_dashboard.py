@@ -543,6 +543,12 @@ _DRE_CORR_2025 = {
     'cons': {},
 }
 
+_DRE_CORR_2024 = {
+    'mm':   {},
+    'bk':   {},
+    'cons': {},
+}
+
 def apply_dre_corrections(raw, store, corr=None):
     if corr is None: corr = _DRE_CORR
     c = corr.get(store, {})
@@ -906,7 +912,7 @@ def process_year(year, dre_corr, today):
 # ── MAIN ───────────────────────────────────────────────────────────────────
 def main():
     today = date.today()
-    print(f"=== Atualizando dashboard 2026 + 2025 — {today.strftime('%d/%m/%Y')} ===")
+    print(f"=== Atualizando dashboard 2026 + 2025 + 2024 — {today.strftime('%d/%m/%Y')} ===")
 
     with open(INDEX, 'r', encoding='utf-8') as f:
         html = f.read()
@@ -934,9 +940,15 @@ def main():
         data_2025['gvop']   = preserved('2025', 'gvop')
         data_2025['acordo'] = preserved('2025', 'acordo')
 
+    data_2024 = process_year(2024, _DRE_CORR_2024, today)
+    if data_2024:
+        data_2024['gvop']   = preserved('2024', 'gvop')
+        data_2024['acordo'] = preserved('2024', 'acordo')
+
     new_final = {}
     if data_2026: new_final['2026'] = data_2026
     if data_2025: new_final['2025'] = data_2025
+    if data_2024: new_final['2024'] = data_2024
 
     new_json = json.dumps(new_final, ensure_ascii=False, separators=(',', ':'))
     new_html = html[:m_pat.start(1)] + new_json + html[m_pat.end(1):]
@@ -955,6 +967,9 @@ def main():
     if data_2025:
         cc = data_2025['comp']['cons']
         print(f"2025 COMP cons: fin=R${cc['kpi']['fin']:,.0f} ret=R${cc['kpi']['ret']:,.0f} q={cc['kpi']['q']}")
+    if data_2024:
+        cc = data_2024['comp']['cons']
+        print(f"2024 COMP cons: fin=R${cc['kpi']['fin']:,.0f} ret=R${cc['kpi']['ret']:,.0f} q={cc['kpi']['q']}")
 
 if __name__ == '__main__':
     main()
