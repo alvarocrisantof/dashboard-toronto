@@ -504,6 +504,8 @@ _DRE_CORR = {
         '3': {'taxas_transf_ent': 593.07},
         '4': {'despachante_ent': 200.00, 'ipva': 5139.82, 'taxas_transf_ent': 428.00,
               'multas_nao_abat': 104.13, 'laudo_custo': 1086.60},
+        '6': {'rec_doc_sai': 794.73, 'rec_diversas': 46.22,
+              'ipva': 1046.90, 'taxas_transf_ent': 208.00, 'laudo_custo': 839.30},
     },
     'cons': {
         '1': {'rec_doc_sai': 12518.20, 'rec_svc': 9521.40, 'prep_veiculo': 1000.0, 'custo_prep_entrega': 93152.51, 'frete': 130.0, 'multa_veiculo': 0.0, 'despachante_ent': 3770.0, 'taxas_transf_ent': 6395.18, 'comunicado_venda': 293.13, 'laudo_custo': 4072.10, 'despachante_sai': 0.0, 'salarios': 101675.32, 'viagens': 40470.68, 'associacoes': 250.0, 'publicidade': 18883.39, 'seguro_rec': 5837.69, 'retorno_comiss': 4493.39, 'juros_rec': 46.88, 'desc_pagar': 27387.42, 'juros_pagar': 14.68, 'desc_receber': 10.50},
