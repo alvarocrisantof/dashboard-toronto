@@ -506,6 +506,13 @@ _DRE_CORR = {
               'multas_nao_abat': 104.13, 'laudo_custo': 1086.60},
         '6': {'rec_doc_sai': 794.73, 'rec_diversas': 46.22,
               'ipva': 1046.90, 'taxas_transf_ent': 208.00, 'laudo_custo': 839.30},
+        '7': {'merch_bruta_sw': 809100.00, 'merch_bruta_at': 69000.00,
+              'rec_doc_sai': 130.16, 'rec_svc': 500.00, 'laudo_venda': 700.00,
+              'transf_venda': 480.16, 'fotos': 250.00, 'venda_comiss': 0.00,
+              'custo_prep_entrega': 27463.36, 'despachante_ent': 100.00,
+              'ipva': 1295.20, 'taxas_transf_ent': 374.00, 'laudo_custo': 120.00,
+              'desc_pagar': 363.11, 'juros_rec': 0.01, 'juros_pagar2': 0.00,
+              'taxas_transf_sai': 1796.16},
     },
     'cons': {
         '1': {'rec_doc_sai': 12518.20, 'rec_svc': 9521.40, 'prep_veiculo': 1000.0, 'custo_prep_entrega': 93152.51, 'frete': 130.0, 'multa_veiculo': 0.0, 'despachante_ent': 3770.0, 'taxas_transf_ent': 6395.18, 'comunicado_venda': 293.13, 'laudo_custo': 4072.10, 'despachante_sai': 0.0, 'salarios': 101675.32, 'viagens': 40470.68, 'associacoes': 250.0, 'publicidade': 18883.39, 'seguro_rec': 5837.69, 'retorno_comiss': 4493.39, 'juros_rec': 46.88, 'desc_pagar': 27387.42, 'juros_pagar': 14.68, 'desc_receber': 10.50},
