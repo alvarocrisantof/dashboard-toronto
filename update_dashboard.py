@@ -498,7 +498,9 @@ _DRE_CORR = {
               'desc_pagar': 7596.59, 'juros_rec': 22.64,
               'desc_receber': 2.34, 'juros_pagar2': 90.75},
     },
-    'bk': {},
+    'bk': {
+        '1': {'retorno_fin': 7560.40},
+    },
     'cons': {
         '1': {'rec_doc_sai': 12518.20, 'rec_svc': 9521.40, 'prep_veiculo': 1000.0, 'custo_prep_entrega': 93152.51, 'frete': 130.0, 'multa_veiculo': 0.0, 'despachante_ent': 3770.0, 'taxas_transf_ent': 6395.18, 'comunicado_venda': 293.13, 'laudo_custo': 4072.10, 'despachante_sai': 0.0, 'salarios': 101675.32, 'viagens': 40470.68, 'associacoes': 250.0, 'publicidade': 18883.39, 'seguro_rec': 5837.69, 'retorno_comiss': 4493.39, 'juros_rec': 46.88, 'desc_pagar': 27387.42, 'juros_pagar': 14.68, 'desc_receber': 10.50},
         '2': {'rec_doc_sai': 16323.66, 'rec_svc': 5720.0, 'desc_sw': 72545.50, 'custo_prep_entrega': 63811.0, 'frete': 600.0, 'despachante_ent': 1460.0, 'ipva': 18414.83, 'taxas_transf_ent': 11702.84, 'baixa_gravame': 0.0, 'laudo_custo': 3025.0, 'despachante_sai': 0.0, 'seguro_rec': 16862.87, 'juros_rec': 379.35, 'desc_pagar': 15757.74, 'desc_receber': 291.40, 'juros_pagar2': 43.49},
@@ -886,6 +888,15 @@ def main():
         for k, mm_val in fixes.items():
             dre_mm_raw[m_str][k] = mm_val
             dre_bk_raw[m_str][k] = round(dre_cons_raw[m_str].get(k, 0) - mm_val, 2)
+
+    # ── BK-specific post-redistribution corrections ───────────────────────
+    # Applied after MM corrections. CONS is recalculated as MM+BK to keep invariant.
+    for m_str, fixes in _DRE_CORR.get('bk', {}).items():
+        if m_str not in dre_cons_raw: continue
+        for k, bk_val in fixes.items():
+            dre_bk_raw[m_str][k] = bk_val
+            mm_val = dre_mm_raw[m_str].get(k, 0) or 0
+            dre_cons_raw[m_str][k] = round(mm_val + bk_val, 2)
 
     # ── 3. MONTAR FINAL E ATUALIZAR INDEX.HTML ────────────────────────────
     print("\n[3/3] Atualizando index.html...")
