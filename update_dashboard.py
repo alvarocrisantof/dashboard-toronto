@@ -537,9 +537,16 @@ _DRE_CORR = {
     },
 }
 
-def apply_dre_corrections(raw, store):
-    corr = _DRE_CORR.get(store, {})
-    for mes_str, fixes in corr.items():
+_DRE_CORR_2025 = {
+    'mm':   {},
+    'bk':   {},
+    'cons': {},
+}
+
+def apply_dre_corrections(raw, store, corr=None):
+    if corr is None: corr = _DRE_CORR
+    c = corr.get(store, {})
+    for mes_str, fixes in c.items():
         if mes_str in raw:
             raw[mes_str].update(fixes)
 
@@ -705,37 +712,34 @@ def _parse_txns(rev_filter, target_mes, target_ano):
             d[field].append({'comp': dc, 'liq': dl, 'id': ident or conta, 'val': valor})
     return {f: sorted(v, key=lambda x: x['comp']) for f, v in d.items()}
 
-# ── MAIN ───────────────────────────────────────────────────────────────────
-def main():
-    today = date.today()
-    # months to fetch: all months up to current
-    active_months = [m for m in range(1, 13) if date(YEAR, m, 1) <= today]
+# ── PROCESS ONE CALENDAR YEAR ──────────────────────────────────────────────
+def process_year(year, dre_corr, today):
+    """Fetch and process all DRE/COMP/FLUXO data for a single year."""
+    active_months = [m for m in range(1, 13) if date(year, m, 1) <= today]
     if not active_months:
-        print("Sem meses ativos."); return
+        return None
 
-    print(f"=== Atualizando dashboard {YEAR} — {len(active_months)} meses ===")
-    print(f"Data atual: {today.strftime('%d/%m/%Y')}")
+    print(f"\n=== [{year}] {len(active_months)} meses ===")
 
     # ── 1. COMPETÊNCIA (lucro-venda) ──────────────────────────────────────
-    print("\n[1/3] Buscando lucro-venda (competência)...")
+    print(f"[1] lucro-venda {year}...")
     comp_mm_raw = {}; comp_bk_raw = {}
-    _lv_cache = {}  # m -> csv_text (reused for DRE)
+    _lv_cache = {}
     for m in active_months:
-        print(f"  lucro-venda {m:02d}/{YEAR}...", end=" ", flush=True)
-        txt = api_get("relatorio/financeiro/lucro-venda", m, YEAR)
+        print(f"  {m:02d}/{year}...", end=" ", flush=True)
+        txt = api_get("relatorio/financeiro/lucro-venda", m, year)
         if txt:
             _lv_cache[m] = txt
             mm = parse_comp(txt, store_filter='mm')
             bk = parse_comp(txt, store_filter='bk')
             if mm: comp_mm_raw[m] = mm
             if bk: comp_bk_raw[m] = bk
-            print(f"MM:{sum(v['q'] for v in mm.values())}veic BK:{sum(v['q'] for v in bk.values())}veic")
+            print(f"MM:{sum(v['q'] for v in mm.values())}v BK:{sum(v['q'] for v in bk.values())}v")
         else:
             print("sem dados")
 
     comp_mm   = build_store_comp(comp_mm_raw)
     comp_bk   = build_store_comp(comp_bk_raw)
-    # cons = mm + bk merged
     cons_comp_raw = {}
     for m in active_months:
         mm = comp_mm_raw.get(m, {}); bk = comp_bk_raw.get(m, {})
@@ -752,33 +756,30 @@ def main():
     comp_cons = build_store_comp(cons_comp_raw)
 
     # ── 2. FLUXO DE CAIXA (extrato-titulos) ──────────────────────────────
-    print("\n[2/3] Buscando extrato-titulos (fluxo de caixa)...")
-    # Fetch all months into cache
-    fetch_all_extratos(YEAR, active_months)
-    # Also fetch previous month (entries de mês anterior liquidadas no mês atual)
+    print(f"[2] extrato-titulos {year}...")
+    fetch_all_extratos(year, active_months)
     if active_months[0] > 1:
-        fetch_all_extratos(YEAR, [active_months[0] - 1])
-    if YEAR > 2024:
-        fetch_all_extratos(YEAR - 1, [12])
+        fetch_all_extratos(year, [active_months[0] - 1])
+    if year > 2024:
+        fetch_all_extratos(year - 1, [12])
 
     fluxo_mm_raw = {}; fluxo_bk_raw = {}
     for m in active_months:
-        print(f"  Agregando fluxo {m:02d}/{YEAR} (MM)...", end=" ", flush=True)
-        mm = parse_fluxo_month(m, YEAR, store_filter='mm')
-        bk = parse_fluxo_month(m, YEAR, store_filter='bk')
+        print(f"  fluxo {m:02d}/{year}...", end=" ", flush=True)
+        mm = parse_fluxo_month(m, year, store_filter='mm')
+        bk = parse_fluxo_month(m, year, store_filter='bk')
         if mm: fluxo_mm_raw[m] = mm
         if bk: fluxo_bk_raw[m] = bk
         tf = sum(v['fin'] for v in mm.values())
         print(f"fin=R${tf:,.0f} q={sum(v['q'] for v in mm.values())}")
 
-    fluxo_mm   = build_store_fluxo(fluxo_mm_raw)
-    fluxo_bk   = build_store_fluxo(fluxo_bk_raw)
+    fluxo_mm  = build_store_fluxo(fluxo_mm_raw)
+    fluxo_bk  = build_store_fluxo(fluxo_bk_raw)
 
-    # Seguro: parse Comissão de Seguro (extrato já em cache)
     seguro_mm_raw = {}; seguro_bk_raw = {}
     for m in active_months:
-        mm_s = parse_seguro_month(m, YEAR, store_filter='mm')
-        bk_s = parse_seguro_month(m, YEAR, store_filter='bk')
+        mm_s = parse_seguro_month(m, year, store_filter='mm')
+        bk_s = parse_seguro_month(m, year, store_filter='bk')
         if mm_s: seguro_mm_raw[str(m)] = mm_s
         if bk_s: seguro_bk_raw[str(m)] = bk_s
 
@@ -786,17 +787,11 @@ def main():
     all_seg_months = set(seguro_mm_raw) | set(seguro_bk_raw)
     for mes in all_seg_months:
         merged = defaultdict(float)
-        for b, v in seguro_mm_raw.get(mes, {}).items():
-            merged[b] += v
-        for b, v in seguro_bk_raw.get(mes, {}).items():
-            merged[b] += v
+        for b, v in seguro_mm_raw.get(mes, {}).items(): merged[b] += v
+        for b, v in seguro_bk_raw.get(mes, {}).items(): merged[b] += v
         seguro_cons_raw[mes] = {b: round(v, 2) for b, v in merged.items()}
 
-    seguro_final = {
-        'mm':   seguro_mm_raw,
-        'bk':   seguro_bk_raw,
-        'cons': seguro_cons_raw,
-    }
+    seguro_final = {'mm': seguro_mm_raw, 'bk': seguro_bk_raw, 'cons': seguro_cons_raw}
 
     cons_fluxo_raw = {}
     for m in active_months:
@@ -813,28 +808,26 @@ def main():
         if merged: cons_fluxo_raw[m] = dict(merged)
     fluxo_cons = build_store_fluxo(cons_fluxo_raw)
 
-    # ── 2b. DRE (lucro-venda por competência + extrato por Data Competência) ─
-    print("\n[2b] Computando DRE...")
+    # ── 2b. DRE ──────────────────────────────────────────────────────────
+    print(f"[2b] DRE {year}...")
     dre_mm_raw = {}; dre_bk_raw = {}
     dre_txns_mm = {}; dre_txns_bk = {}; dre_txns_cons = {}
     for m in active_months:
         txt = _lv_cache.get(m, '')
         lv_mm = parse_lv_dre(txt, REV_MM)
         lv_bk = parse_lv_dre(txt, REV_BK)
-        ex_mm = parse_ext_dre(REV_MM, m, YEAR)
-        ex_bk = parse_ext_dre(REV_BK, m, YEAR)
+        ex_mm = parse_ext_dre(REV_MM, m, year)
+        ex_bk = parse_ext_dre(REV_BK, m, year)
         def merge_dre(a, b):
             d = dict(a)
             for k, v2 in b.items(): d[k] = round(d.get(k, 0) + v2, 2)
             return d
         dre_mm_raw[str(m)] = merge_dre(lv_mm, ex_mm)
         dre_bk_raw[str(m)] = merge_dre(lv_bk, ex_bk)
-        print(f"  {m:02d}/{YEAR} MM:{dre_mm_raw[str(m)].get('q',0):.0f}v BK:{dre_bk_raw[str(m)].get('q',0):.0f}v")
-        # Collect per-transaction data (extrato-titulos)
-        txns_mm  = _parse_txns(REV_MM, m, YEAR)
-        txns_bk  = _parse_txns(REV_BK, m, YEAR)
-        txns_grp = _parse_txns(None,   m, YEAR)
-        # Add per-vehicle data from lucro-venda (merch, custo_compra, desc, rec_doc, rec_svc)
+        print(f"  {m:02d}/{year} MM:{dre_mm_raw[str(m)].get('q',0):.0f}v BK:{dre_bk_raw[str(m)].get('q',0):.0f}v")
+        txns_mm  = _parse_txns(REV_MM, m, year)
+        txns_bk  = _parse_txns(REV_BK, m, year)
+        txns_grp = _parse_txns(None,   m, year)
         lv_txt = _lv_cache.get(m, '')
         lv_mm = parse_lv_txns(lv_txt, REV_MM)
         lv_bk = parse_lv_txns(lv_txt, REV_BK)
@@ -846,18 +839,16 @@ def main():
         for f in set(txns_mm) | set(txns_bk) | set(txns_grp):
             merged_cons[f] = sorted(txns_mm.get(f,[]) + txns_bk.get(f,[]) + txns_grp.get(f,[]), key=lambda x: x['comp'])
         dre_txns_cons[str(m)] = merged_cons
-    apply_dre_corrections(dre_mm_raw, 'mm')
-    apply_dre_corrections(dre_bk_raw, 'bk')
+
+    apply_dre_corrections(dre_mm_raw, 'mm', dre_corr)
+    apply_dre_corrections(dre_bk_raw, 'bk', dre_corr)
     dre_cons_raw = {}
     for m in [str(x) for x in active_months]:
         all_keys = set(dre_mm_raw.get(m,{}).keys()) | set(dre_bk_raw.get(m,{}).keys())
         dre_cons_raw[m] = {k: round(dre_mm_raw.get(m,{}).get(k,0)+dre_bk_raw.get(m,{}).get(k,0),2) for k in all_keys}
-        # Add group-level extrato entries (blank Revenda Origem Id) to consolidated only
-        grp = parse_ext_dre_group(int(m), YEAR)
+        grp = parse_ext_dre_group(int(m), year)
         for k, v in grp.items():
             dre_cons_raw[m][k] = round(dre_cons_raw[m].get(k, 0) + v, 2)
-        # Consolidated netting: if CONS inter == CONS devf (within 1.0), both are
-        # intercompany pass-throughs that cancel at group level → zero all three stores
         cons = dre_cons_raw[m]
         ci = cons.get('intermediacao_fin', 0)
         cd = cons.get('dev_fin', 0)
@@ -865,11 +856,8 @@ def main():
             for store in (cons, dre_mm_raw[m], dre_bk_raw[m]):
                 store['intermediacao_fin'] = 0
                 store['dev_fin'] = 0
-    apply_dre_corrections(dre_cons_raw, 'cons')
+    apply_dre_corrections(dre_cons_raw, 'cons', dre_corr)
 
-    # ── Redistribute CONS into MM and BK so MM+BK = CONS exactly ─────────
-    # CONS is the reconciled truth; MM and BK receive proportional shares of
-    # each field based on their raw contribution. Count fields stay raw.
     _COUNT_FIELDS = {'q', 'q_sw', 'q_at', 'q_proprio', 'q_consig'}
     for m_str in [str(x) for x in active_months]:
         cons_m = dre_cons_raw[m_str]
@@ -881,8 +869,7 @@ def main():
         new_mm = {k: mm_m[k] for k in _COUNT_FIELDS if k in mm_m}
         new_bk = {k: bk_m[k] for k in _COUNT_FIELDS if k in bk_m}
         for k, cons_val in cons_m.items():
-            if k in _COUNT_FIELDS:
-                continue
+            if k in _COUNT_FIELDS: continue
             mm_v = mm_m.get(k, 0)
             bk_v = bk_m.get(k, 0)
             raw_total = mm_v + bk_v
@@ -893,72 +880,81 @@ def main():
         dre_mm_raw[m_str] = new_mm
         dre_bk_raw[m_str] = new_bk
 
-    # ── MM-specific post-redistribution corrections ───────────────────────
-    # Applied after redistribution so they aren't overwritten.
-    # BK absorbs the remainder (cons - mm) to keep MM+BK=CONS for each field.
-    for m_str, fixes in _DRE_CORR.get('mm', {}).items():
+    for m_str, fixes in dre_corr.get('mm', {}).items():
         if m_str not in dre_cons_raw: continue
         for k, mm_val in fixes.items():
             dre_mm_raw[m_str][k] = mm_val
             dre_bk_raw[m_str][k] = round(dre_cons_raw[m_str].get(k, 0) - mm_val, 2)
 
-    # ── BK-specific post-redistribution corrections ───────────────────────
-    # Applied after MM corrections. CONS is recalculated as MM+BK to keep invariant.
-    for m_str, fixes in _DRE_CORR.get('bk', {}).items():
+    for m_str, fixes in dre_corr.get('bk', {}).items():
         if m_str not in dre_cons_raw: continue
         for k, bk_val in fixes.items():
             dre_bk_raw[m_str][k] = bk_val
             mm_val = dre_mm_raw[m_str].get(k, 0) or 0
             dre_cons_raw[m_str][k] = round(mm_val + bk_val, 2)
 
-    # ── 3. MONTAR FINAL E ATUALIZAR INDEX.HTML ────────────────────────────
-    print("\n[3/3] Atualizando index.html...")
-
-    with open(INDEX, 'r', encoding='utf-8') as f:
-        html = f.read()
-
-    m = re.search(r'var FINAL=(\{.*?\});', html, re.DOTALL)
-    if not m:
-        print("ERRO: var FINAL não encontrado em index.html"); return
-
-    old_final = json.loads(m.group(1))
-
-    # Preserve gvop / acordo / seguro (não vêm do lucro-venda nem extrato)
-    new_final = {
+    return {
         'generated': today.strftime('%d/%m/%Y'),
-        'comp': {
-            'mm':   comp_mm,
-            'bk':   comp_bk,
-            'cons': comp_cons,
-        },
-        'fluxo': {
-            'mm':   fluxo_mm,
-            'bk':   fluxo_bk,
-            'cons': fluxo_cons,
-        },
-        'gvop':   old_final.get('gvop', {}),
-        'acordo': old_final.get('acordo', {}),
+        'comp':   {'mm': comp_mm,   'bk': comp_bk,   'cons': comp_cons},
+        'fluxo':  {'mm': fluxo_mm,  'bk': fluxo_bk,  'cons': fluxo_cons},
         'seguro': seguro_final,
         'dre':    {'mm': dre_mm_raw, 'bk': dre_bk_raw, 'cons': dre_cons_raw,
                    'txns': {'mm': dre_txns_mm, 'bk': dre_txns_bk, 'cons': dre_txns_cons}},
     }
 
-    new_json = json.dumps(new_final, ensure_ascii=False, separators=(',', ':'))
-    new_html = html[:m.start(1)] + new_json + html[m.end(1):]
 
+# ── MAIN ───────────────────────────────────────────────────────────────────
+def main():
+    today = date.today()
+    print(f"=== Atualizando dashboard 2026 + 2025 — {today.strftime('%d/%m/%Y')} ===")
+
+    with open(INDEX, 'r', encoding='utf-8') as f:
+        html = f.read()
+    m_pat = re.search(r'var FINAL=(\{.*?\});', html, re.DOTALL)
+    if not m_pat:
+        print("ERRO: var FINAL não encontrado em index.html"); return
+    old_final = json.loads(m_pat.group(1))
+
+    def preserved(year_key, field):
+        """Preserve gvop/acordo from old FINAL (handles flat→keyed migration)."""
+        if year_key in old_final:
+            return old_final[year_key].get(field, {})
+        # Old flat format (pre-multi-year): treat as 2026
+        if year_key == '2026':
+            return old_final.get(field, {})
+        return {}
+
+    data_2026 = process_year(2026, _DRE_CORR, today)
+    if data_2026:
+        data_2026['gvop']   = preserved('2026', 'gvop')
+        data_2026['acordo'] = preserved('2026', 'acordo')
+
+    data_2025 = process_year(2025, _DRE_CORR_2025, today)
+    if data_2025:
+        data_2025['gvop']   = preserved('2025', 'gvop')
+        data_2025['acordo'] = preserved('2025', 'acordo')
+
+    new_final = {}
+    if data_2026: new_final['2026'] = data_2026
+    if data_2025: new_final['2025'] = data_2025
+
+    new_json = json.dumps(new_final, ensure_ascii=False, separators=(',', ':'))
+    new_html = html[:m_pat.start(1)] + new_json + html[m_pat.end(1):]
     with open(INDEX, 'w', encoding='utf-8') as f:
         f.write(new_html)
 
-    print(f"✓ index.html atualizado — gerado em {today.strftime('%d/%m/%Y')}")
-    print(f"\nResumo COMP (cons):")
-    print(f"  Total financiado: R${comp_cons['kpi']['fin']:,.2f}")
-    print(f"  Total retorno:    R${comp_cons['kpi']['ret']:,.2f}")
-    print(f"  Total veículos:   {comp_cons['kpi']['q']}")
-    print(f"\nResumo FLUXO (mm):")
-    for m_num in active_months:
-        fd = fluxo_mm['monthly'].get(str(m_num), {})
-        if fd:
-            print(f"  Mês {m_num:02d}: fin=R${fd.get('fin',0):,.0f} ret=R${fd.get('ret',0):,.0f} q={fd.get('q',0)}")
+    print(f"\n✓ index.html atualizado")
+    if data_2026:
+        cc = data_2026['comp']['cons']
+        print(f"2026 COMP cons: fin=R${cc['kpi']['fin']:,.0f} ret=R${cc['kpi']['ret']:,.0f} q={cc['kpi']['q']}")
+        fm = data_2026['fluxo']['mm']['monthly']
+        print("2026 FLUXO mm:")
+        for mn in sorted(fm, key=int):
+            fd = fm[mn]
+            print(f"  Mês {mn:>2}: fin=R${fd.get('fin',0):,.0f} ret=R${fd.get('ret',0):,.0f} q={fd.get('q',0)}")
+    if data_2025:
+        cc = data_2025['comp']['cons']
+        print(f"2025 COMP cons: fin=R${cc['kpi']['fin']:,.0f} ret=R${cc['kpi']['ret']:,.0f} q={cc['kpi']['q']}")
 
 if __name__ == '__main__':
     main()
