@@ -413,6 +413,33 @@ _DRE_EXT = {
 }
 _DRE_LOOKUP = {(conta, op): field for field, (conta, op) in _DRE_EXT.items()}
 
+# ── COMP MANUAL: entradas de financiamento ausentes na API ─────────────────
+# Estrutura: {year: {'mm': {mes: {banco: {fin,ret,q}}}, 'bk': {...}}}
+# Aplicado ANTES de build_store_comp; valores somados ao existente.
+_COMP_MANUAL = {
+    2026: {
+        'mm': {
+            7: {
+                'Itaú': {'fin': 32900.00, 'ret': 0, 'q': 1},  # BCO ITAÚ BBA S.A. ausente na API
+            }
+        },
+        'bk': {},
+    },
+}
+
+def apply_comp_manual(comp_raw, store_key, year):
+    manual = _COMP_MANUAL.get(year, {}).get(store_key, {})
+    for mes, banks in manual.items():
+        if mes not in comp_raw:
+            comp_raw[mes] = {}
+        for bank, v in banks.items():
+            if bank in comp_raw[mes]:
+                comp_raw[mes][bank]['fin'] += v['fin']
+                comp_raw[mes][bank]['ret'] += v.get('ret', 0)
+                comp_raw[mes][bank]['q']   += v.get('q', 0)
+            else:
+                comp_raw[mes][bank] = {k: v2 for k, v2 in v.items()}
+
 # ── CORREÇÕES MANUAIS (sobrescrevem dados da API por mês) ──────────────────
 # 'mm'/'bk': aplicado antes do merge → afeta cons automaticamente
 # 'cons': aplicado após merge (quando não faz sentido dividir entre lojas)
@@ -744,6 +771,8 @@ def process_year(year, dre_corr, today):
         else:
             print("sem dados")
 
+    apply_comp_manual(comp_mm_raw, 'mm', year)
+    apply_comp_manual(comp_bk_raw, 'bk', year)
     comp_mm   = build_store_comp(comp_mm_raw)
     comp_bk   = build_store_comp(comp_bk_raw)
     cons_comp_raw = {}
