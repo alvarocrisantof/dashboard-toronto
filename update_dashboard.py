@@ -588,9 +588,11 @@ _DRE_CORR = {
 }
 
 _DRE_CORR_2025 = {
-    'mm': {
+    'mm':   {},
+    'bk':   {},
+    'cons': {
         '1': {
-            # RECEITAS
+            # RECEITAS — consolidado AutoConf jan/2025
             'merch_bruta_sw':   3599849.49,
             'merch_bruta_at':         0.00,
             'rec_doc_sai':         5938.95,
@@ -657,7 +659,7 @@ _DRE_CORR_2025 = {
             'juros_pagar2':        2187.45,
         },
         '2': {
-            # RECEITAS
+            # RECEITAS — consolidado AutoConf fev/2025
             'merch_bruta_sw':   1946550.00,
             'merch_bruta_at':         0.00,
             'rec_doc_sai':         1936.17,
@@ -726,7 +728,7 @@ _DRE_CORR_2025 = {
             'juros_pagar2':         108.41,
         },
         '3': {
-            # RECEITAS
+            # RECEITAS — consolidado AutoConf mar/2025
             'merch_bruta_sw':   2286833.87,
             'merch_bruta_at':    266800.00,
             'rec_doc_sai':        12127.04,
@@ -797,8 +799,6 @@ _DRE_CORR_2025 = {
             'juros_pagar2':        1193.92,
         },
     },
-    'bk':   {},
-    'cons': {},
 }
 
 _DRE_CORR_2024 = {
