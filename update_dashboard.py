@@ -695,7 +695,9 @@ _DRE_CORR_2025 = {
             'comissao_c':         12325.39,
             'pos_vendas':          6676.39,
             'taxas_transf_sai':     208.00,
-            'salarios':           83836.79,  # Salários (80776.04) + Adm/Dem (2235.37) + Desp.Pessoal (825.38)
+            'salarios':           80776.04,
+            'desp_adm_dem':        2235.37,
+            'desp_pessoal_var':     825.38,
             'refeitorio':          1651.98,
             'transporte':           503.80,
             'uniforme':            1029.40,
@@ -766,7 +768,9 @@ _DRE_CORR_2025 = {
             'pos_vendas':          5790.49,
             'taxas_transf_sai':     220.00,
             'despachante_sai':        0.00,
-            'salarios':           60477.00,  # Salários (58162.63) + Adm/Dem (1401.69) + Desp.Pessoal (912.68)
+            'salarios':           58162.63,
+            'desp_adm_dem':        1401.69,
+            'desp_pessoal_var':     912.68,
             'refeitorio':           908.48,
             'transporte':           668.67,
             'uniforme':              70.00,
