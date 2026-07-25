@@ -588,7 +588,57 @@ _DRE_CORR = {
 }
 
 _DRE_CORR_2025 = {
-    'mm':   {},
+    'mm': {
+        '1': {
+            # RECEITAS
+            'merch_bruta_sw':   3599849.49,
+            'rec_doc_sai':         5938.95,
+            'rec_svc':            30832.50,  # Receita Serviços Agregados (10050) + Venda de Serviços (20782.50)
+            'transf_venda':         966.00,
+            'intermediacao_fin':  49500.00,
+            'venda_comiss':        7170.44,
+            # DEDUÇÕES
+            'desc_sw':            25200.00,
+            'dev_fin':            49500.00,
+            # CUSTOS
+            'custo_compra_sw':  3189562.98,
+            'custo_prep_entrega': 72715.69,
+            'frete':               4350.00,
+            'multa_veiculo':          0.00,
+            'despachante_ent':     2350.00,
+            'ipva':                7080.29,
+            'taxas_transf_ent':   17276.32,
+            'garantia_custo':      9850.00,
+            'laudo_custo':         7863.60,
+            # DESP. OPERACIONAIS
+            'comissao_venda':       768.13,  # Outras despesas com vendas
+            'comissao_c':          3020.44,
+            'pos_vendas':         22960.48,
+            'salarios':           75529.81,  # Salários (67701.06) + Adm/Dem (2183.95) + Desp.Pessoal (5644.80)
+            'aluguel_cond2':      30825.80,
+            'agua':                 397.22,
+            'energia':             2845.21,
+            'limpeza':              706.86,
+            'manutencao_loja':      250.00,
+            'mat_aux':              336.28,
+            'mat_escrit':           264.32,
+            'publicidade':        14565.94,
+            'seguros':             1094.33,
+            'contabil':           60574.88,  # Impostos e Taxas
+            'juridico':           12664.15,  # Serviços de Terceiros
+            'telefonia':            720.23,
+            'pro_labore':          6000.00,
+            'emprestimos':        23204.23,
+            # RES. FINANCEIRO
+            'retorno_comiss':     30881.98,
+            'rendimento':           453.41,
+            'desc_pagar':         15588.54,
+            'juros_rec':           2018.44,
+            'tarifa_bancaria':      815.24,
+            'desc_receber':         380.22,
+            'juros_pagar2':        2187.45,
+        },
+    },
     'bk':   {},
     'cons': {},
 }
