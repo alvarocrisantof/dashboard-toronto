@@ -329,6 +329,7 @@ _DRE_EXT = {
     'retorno_acordos':  ('Retorno (Acordos e Plus)',         'A receber'),
     'rendimento':       ('Rendimento de aplicação',          'A receber'),
     'seguro_rec':       ('Comissão de Seguro',               'A receber'),
+    'venda_svc':        ('Venda de serviços',                'A receber'),
     'devolucao':        ('Devolução',                        'A pagar'),
     'dev_fin':          ('Devolução - intermediação de financiamento', 'A pagar'),
     'esocial':          ('Darf E-social (INSS e IR)',        'A pagar'),
@@ -596,7 +597,8 @@ _DRE_CORR_2025 = {
             'merch_bruta_sw':   3599849.49,
             'merch_bruta_at':     15000.00,
             'rec_doc_sai':         5938.95,
-            'rec_svc':            30832.50,  # Receita Serviços Agregados (10050) + Venda de Serviços (20782.50)
+            'rec_svc':            10050.00,
+            'venda_svc':          20782.50,
             'laudo_venda':         6565.00,
             'transf_venda':         966.00,
             'intermediacao_fin':  49500.00,
@@ -663,7 +665,8 @@ _DRE_CORR_2025 = {
             'merch_bruta_sw':   1946550.00,
             'merch_bruta_at':         0.00,
             'rec_doc_sai':         1936.17,
-            'rec_svc':            41737.86,  # Serviços Agregados (7546) + Venda de Serviços (34191.86)
+            'rec_svc':             7546.00,
+            'venda_svc':          34191.86,
             'laudo_venda':         4289.11,
             'transf_venda':         300.00,
             'intermediacao_fin':      0.00,
@@ -732,7 +735,8 @@ _DRE_CORR_2025 = {
             'merch_bruta_sw':   2286833.87,
             'merch_bruta_at':    266800.00,
             'rec_doc_sai':        12127.04,
-            'rec_svc':            30943.03,  # Serviços Agregados (9015) + Venda de Serviços (21928.03)
+            'rec_svc':             9015.00,
+            'venda_svc':          21928.03,
             'laudo_venda':         4950.00,
             'transf_venda':         635.38,
             'intermediacao_fin':      0.00,
