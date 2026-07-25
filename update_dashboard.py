@@ -592,16 +592,20 @@ _DRE_CORR_2025 = {
         '1': {
             # RECEITAS
             'merch_bruta_sw':   3599849.49,
+            'merch_bruta_at':         0.00,
             'rec_doc_sai':         5938.95,
             'rec_svc':            30832.50,  # Receita Serviços Agregados (10050) + Venda de Serviços (20782.50)
+            'laudo_venda':            0.00,
             'transf_venda':         966.00,
             'intermediacao_fin':  49500.00,
             'venda_comiss':        7170.44,
+            'rec_diversas':           0.00,
             # DEDUÇÕES
             'desc_sw':            25200.00,
             'dev_fin':            49500.00,
             # CUSTOS
             'custo_compra_sw':  3189562.98,
+            'custo_compra_at':        0.00,
             'custo_prep_entrega': 72715.69,
             'frete':               4350.00,
             'multa_veiculo':          0.00,
@@ -614,8 +618,15 @@ _DRE_CORR_2025 = {
             'comissao_venda':       768.13,  # Outras despesas com vendas
             'comissao_c':          3020.44,
             'pos_vendas':         22960.48,
+            'taxas_transf_sai':       0.00,
             'salarios':           75529.81,  # Salários (67701.06) + Adm/Dem (2183.95) + Desp.Pessoal (5644.80)
+            'refeitorio':           600.00,
+            'transporte':           461.25,
+            'uniforme':               0.00,
             'aluguel_cond2':      30825.80,
+            'copa':                   0.00,
+            'cartorio':               0.00,
+            'estacionamento':         0.00,
             'agua':                 397.22,
             'energia':             2845.21,
             'limpeza':              706.86,
@@ -623,10 +634,16 @@ _DRE_CORR_2025 = {
             'mat_aux':              336.28,
             'mat_escrit':           264.32,
             'publicidade':        14565.94,
+            'brindes':                0.00,
             'seguros':             1094.33,
             'contabil':           60574.88,  # Impostos e Taxas
+            'consultoria':            0.00,
             'juridico':           12664.15,  # Serviços de Terceiros
+            'viagens':                0.00,
             'telefonia':            720.23,
+            'maq_equip':              0.00,
+            'aj_saida':               0.00,
+            'dividendos':             0.00,
             'pro_labore':          6000.00,
             'emprestimos':        23204.23,
             # RES. FINANCEIRO
@@ -636,7 +653,77 @@ _DRE_CORR_2025 = {
             'juros_rec':           2018.44,
             'tarifa_bancaria':      815.24,
             'desc_receber':         380.22,
+            'juros_pagar':            0.00,
             'juros_pagar2':        2187.45,
+        },
+        '2': {
+            # RECEITAS
+            'merch_bruta_sw':   1946550.00,
+            'merch_bruta_at':         0.00,
+            'rec_doc_sai':         1936.17,
+            'rec_svc':            41737.86,  # Serviços Agregados (7546) + Venda de Serviços (34191.86)
+            'laudo_venda':         4289.11,
+            'transf_venda':         300.00,
+            'intermediacao_fin':      0.00,
+            'venda_comiss':        9825.39,
+            'rec_diversas':        3000.00,  # Ajuste de saldo – Entrada
+            # DEDUÇÕES
+            'desc_sw':            15700.00,
+            'desc_at':                0.00,
+            'custas':               134.35,
+            'dev_fin':                0.00,
+            # CUSTOS
+            'custo_compra_sw':  1659880.00,
+            'custo_compra_at':        0.00,
+            'custo_prep_entrega':  53685.77,
+            'frete':               1450.00,
+            'multa_veiculo':          0.00,
+            'despachante_ent':     4460.00,
+            'ipva':               13363.20,
+            'taxas_transf_ent':   13653.44,
+            'garantia_custo':      8650.00,
+            'laudo_custo':         6760.20,
+            # DESP. OPERACIONAIS
+            'comissao_venda':     21804.19,  # Comissão S/ Venda (17806.90) + Outras (3997.29)
+            'comissao_c':         12325.39,
+            'pos_vendas':          6676.39,
+            'taxas_transf_sai':     208.00,
+            'salarios':           83836.79,  # Salários (80776.04) + Adm/Dem (2235.37) + Desp.Pessoal (825.38)
+            'refeitorio':          1651.98,
+            'transporte':           503.80,
+            'uniforme':            1029.40,
+            'aluguel_cond2':      30825.80,
+            'copa':                2059.55,
+            'cartorio':             469.75,
+            'estacionamento':        15.00,
+            'mat_aux':              206.06,
+            'mat_escrit':           415.40,
+            'seguros':             2299.03,
+            'contabil':           79038.42,  # Impostos e Taxas
+            'juridico':            3829.50,  # Serviços de Terceiros
+            'consultoria':         4500.00,
+            'viagens':            19557.04,
+            'agua':                 267.73,
+            'energia':                0.00,
+            'limpeza':                0.00,
+            'manutencao_loja':        0.00,
+            'telefonia':            694.39,
+            'publicidade':         9898.46,
+            'brindes':              265.00,
+            'maq_equip':           1200.63,
+            'aj_saida':           15849.51,
+            'emprestimos':        24059.54,
+            'dividendos':         49660.09,
+            'pro_labore':          9707.37,
+            # RES. FINANCEIRO
+            'retorno_comiss':     27994.74,
+            'rendimento':           119.03,
+            'desc_pagar':         11836.76,
+            'juros_rec':            558.97,
+            'tarifa_bancaria':      783.49,
+            'desc_receber':        1935.00,
+            'juros_pagar':            0.00,
+            'juros_pagar2':         108.41,
         },
     },
     'bk':   {},
