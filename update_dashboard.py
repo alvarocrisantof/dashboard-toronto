@@ -427,18 +427,36 @@ _COMP_MANUAL = {
     },
 }
 
-def apply_comp_manual(comp_raw, store_key, year):
-    manual = _COMP_MANUAL.get(year, {}).get(store_key, {})
+# Mesma estrutura que _COMP_MANUAL mas para o fluxo de caixa (liquidação)
+_FLUXO_MANUAL = {
+    2026: {
+        'mm': {
+            7: {
+                'Itaú': {'fin': 32900.00, 'ret': 0, 'q': 1},  # BCO ITAÚ BBA S.A. ausente na API
+            }
+        },
+        'bk': {},
+    },
+}
+
+def _apply_manual(raw, store_key, year, manual_dict):
+    manual = manual_dict.get(year, {}).get(store_key, {})
     for mes, banks in manual.items():
-        if mes not in comp_raw:
-            comp_raw[mes] = {}
+        if mes not in raw:
+            raw[mes] = {}
         for bank, v in banks.items():
-            if bank in comp_raw[mes]:
-                comp_raw[mes][bank]['fin'] += v['fin']
-                comp_raw[mes][bank]['ret'] += v.get('ret', 0)
-                comp_raw[mes][bank]['q']   += v.get('q', 0)
+            if bank in raw[mes]:
+                raw[mes][bank]['fin'] += v['fin']
+                raw[mes][bank]['ret'] += v.get('ret', 0)
+                raw[mes][bank]['q']   += v.get('q', 0)
             else:
-                comp_raw[mes][bank] = {k: v2 for k, v2 in v.items()}
+                raw[mes][bank] = {k: v2 for k, v2 in v.items()}
+
+def apply_comp_manual(comp_raw, store_key, year):
+    _apply_manual(comp_raw, store_key, year, _COMP_MANUAL)
+
+def apply_fluxo_manual(fluxo_raw, store_key, year):
+    _apply_manual(fluxo_raw, store_key, year, _FLUXO_MANUAL)
 
 # ── CORREÇÕES MANUAIS (sobrescrevem dados da API por mês) ──────────────────
 # 'mm'/'bk': aplicado antes do merge → afeta cons automaticamente
@@ -808,6 +826,8 @@ def process_year(year, dre_corr, today):
         tf = sum(v['fin'] for v in mm.values())
         print(f"fin=R${tf:,.0f} q={sum(v['q'] for v in mm.values())}")
 
+    apply_fluxo_manual(fluxo_mm_raw, 'mm', year)
+    apply_fluxo_manual(fluxo_bk_raw, 'bk', year)
     fluxo_mm  = build_store_fluxo(fluxo_mm_raw)
     fluxo_bk  = build_store_fluxo(fluxo_bk_raw)
 
