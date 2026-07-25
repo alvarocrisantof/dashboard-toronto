@@ -609,7 +609,7 @@ _DRE_CORR_2025 = {
             'dev_fin':            49500.00,
             # CUSTOS
             'custo_compra_sw':  3189562.98,
-            'custo_compra_at':        0.00,
+            'custo_compra_at':    10000.00,
             'custo_prep_entrega': 72715.69,
             'frete':               4350.00,
             'multa_veiculo':          0.00,
@@ -623,13 +623,15 @@ _DRE_CORR_2025 = {
             'comissao_c':          3020.44,
             'pos_vendas':         22960.48,
             'taxas_transf_sai':       0.00,
-            'salarios':           75529.81,  # Salários (67701.06) + Adm/Dem (2183.95) + Desp.Pessoal (5644.80)
+            'salarios':           67701.06,
+            'desp_adm_dem':        2183.95,
+            'desp_pessoal_var':    5644.80,
             'refeitorio':           600.00,
             'transporte':           461.25,
             'uniforme':               0.00,
             'aluguel_cond2':      30825.80,
-            'copa':                   0.00,
-            'cartorio':               0.00,
+            'copa':                  47.95,
+            'cartorio':             409.27,
             'estacionamento':         0.00,
             'agua':                 397.22,
             'energia':             2845.21,
@@ -641,13 +643,13 @@ _DRE_CORR_2025 = {
             'brindes':                0.00,
             'seguros':             1094.33,
             'contabil':           60574.88,  # Impostos e Taxas
-            'consultoria':            0.00,
+            'consultoria':         4695.00,  # Serviços Consultoria
             'juridico':           12664.15,  # Serviços de Terceiros
-            'viagens':                0.00,
+            'viagens':            26516.04,
             'telefonia':            720.23,
-            'maq_equip':              0.00,
-            'aj_saida':               0.00,
-            'dividendos':             0.00,
+            'maq_equip':           1054.82,  # Bens de Natureza Permanente
+            'aj_saida':             213.13,
+            'dividendos':         59704.77,
             'pro_labore':          6000.00,
             'emprestimos':        23204.23,
             # RES. FINANCEIRO
