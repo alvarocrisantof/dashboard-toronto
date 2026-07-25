@@ -44,9 +44,14 @@ BANK_MAP = {
     'BANCO PAN':                     'Pan',
     'BCO COOPERATIVO SICREDI S.A.':  'Sicredi',
     'BCO DO BRASIL S.A.':            'Banco do Brasil',
+    'BANCO CREDICARRO S.A.':         'Credicarro',
+    'BANCO CREDICARRO':              'Credicarro',
+    'Banco Credicarro S.A.':         'Credicarro',
+    'Banco Credicarro':              'Credicarro',
+    'CREDICARRO':                    'Credicarro',
     'IDEALY CORRETORA DE SEGURO':    'Idealy Corretora',
 }
-BANK_KEYS = ['VOTORANTIM','SANTANDER','SAFRA','BRADESCO','C6 S.A','CARBANK','ITAÚ','ITAU','BANCO PAN','SICREDI','DO BRASIL S.A']
+BANK_KEYS = ['VOTORANTIM','SANTANDER','SAFRA','BRADESCO','C6 S.A','CARBANK','ITAÚ','ITAU','BANCO PAN','SICREDI','DO BRASIL S.A','CREDICARRO']
 
 def norm_bank(b):
     b = b.strip()
@@ -432,7 +437,7 @@ _FLUXO_MANUAL = {
     2026: {
         'mm': {
             7: {
-                'Itaú': {'fin': 32900.00, 'ret': 0, 'q': 1},  # BCO ITAÚ BBA S.A. ausente na API
+                'Itaú':       {'fin': 32900.00, 'ret': 0, 'q': 1},  # BCO ITAÚ BBA S.A. ausente na API
             }
         },
         'bk': {},
