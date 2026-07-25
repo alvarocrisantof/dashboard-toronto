@@ -2,6 +2,9 @@ name: Atualizar Dashboard
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 9 * * *'   # 06:00 BRT — após liquidações noturnas
+    - cron: '0 21 * * *'  # 18:00 BRT — fechamento do dia
 
 permissions:
   contents: write
