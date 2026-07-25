@@ -594,10 +594,10 @@ _DRE_CORR_2025 = {
         '1': {
             # RECEITAS — consolidado AutoConf jan/2025
             'merch_bruta_sw':   3599849.49,
-            'merch_bruta_at':         0.00,
+            'merch_bruta_at':     15000.00,
             'rec_doc_sai':         5938.95,
             'rec_svc':            30832.50,  # Receita Serviços Agregados (10050) + Venda de Serviços (20782.50)
-            'laudo_venda':            0.00,
+            'laudo_venda':         6565.00,
             'transf_venda':         966.00,
             'intermediacao_fin':  49500.00,
             'venda_comiss':        7170.44,
