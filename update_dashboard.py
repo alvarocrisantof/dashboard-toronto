@@ -23,7 +23,7 @@ TOKEN = "ZU1DsPDbRbva9ccEDF8eRjv7BrkkSwqj96lfrt1z"
 AUTH  = "vyOhX5a2LbXG9B2LHDK0I5JUQe51m63rkRlP7crsQHAKIbi4Sugl4z2hSozDl4iakm79HMtIlwRIw3RdZ0ZZ4ZdXTQ0iJnE3qc1HMRbLLZDHKS43TdcrPbwYeqn932PLKCdKOJTw3PJQE8NmUjGSpuT74FxQsJ59R6IaprxVLxX6YG8OmOJOD5dpEY0Y9TqsvwLGZvAnN7Fl2sjQ5v2AnAiAjn0FEdlE3hVp69oENti8hStYmkCstXIuvtz0PpNM"
 BASE  = "https://api.autoconf.com.br/api/v1"
 YEAR  = 2026
-INDEX = "/Users/alvarocrisanto/projetos/dashboard-toronto/index.html"
+INDEX = __import__('os').path.join(__import__('os').path.dirname(__import__('os').path.abspath(__file__)), 'index.html')
 
 # Revenda IDs
 REV_MM = "185"   # Toronto Corretora E Locadora (Multimarcas)
