@@ -470,8 +470,8 @@ def apply_fluxo_manual(fluxo_raw, store_key, year):
 _DRE_CORR = {
     'mm': {
         '1': {'rec_doc_sai': 9728.39, 'rec_svc': 8921.40,
-              'custo_prep_entrega': 76987.59, 'frete': 130.0,
-              'despachante_ent': 3370.0, 'taxas_transf_ent': 5373.18,
+              'custo_prep_entrega': 83987.59, 'frete': 130.0,
+              'despachante_ent': 3370.0, 'taxas_transf_ent': 5633.18,
               'laudo_custo': 3081.60,
               'retorno_fin': 27013.74,
               'desc_pagar': 26668.25, 'juros_rec': 46.88,
