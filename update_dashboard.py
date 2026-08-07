@@ -426,7 +426,8 @@ _COMP_MANUAL = {
     2026: {
         'mm': {
             7: {
-                'Itaú': {'fin': 32900.00, 'ret': 0, 'q': 1},  # BCO ITAÚ BBA S.A. ausente na API
+                'Itaú':      {'fin': 32900.00, 'ret': 0, 'q': 1},  # BCO ITAÚ BBA S.A. ausente na API
+                'Santander': {'fin': 10000.00, 'ret': 0, 'q': 1},  # pago 31/07 ausente na API
             }
         },
         'bk': {},
@@ -438,7 +439,8 @@ _FLUXO_MANUAL = {
     2026: {
         'mm': {
             7: {
-                'Itaú':       {'fin': 32900.00, 'ret': 0, 'q': 1},  # BCO ITAÚ BBA S.A. ausente na API
+                'Itaú':      {'fin': 32900.00, 'ret': 0, 'q': 1},  # BCO ITAÚ BBA S.A. ausente na API
+                'Santander': {'fin': 10000.00, 'ret': 0, 'q': 1},  # pago 31/07 ausente na API
             }
         },
         'bk': {},
