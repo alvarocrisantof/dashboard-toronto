@@ -425,6 +425,9 @@ _DRE_LOOKUP = {(conta, op): field for field, (conta, op) in _DRE_EXT.items()}
 _COMP_MANUAL = {
     2026: {
         'mm': {
+            6: {
+                'Santander': {'fin': 68000.00, 'ret': 0, 'q': 2},  # #692828 VW Virtus QOY7E47 R$28k + #694161 Ford Ka QTU1A94 R$40k ausentes no lucro-venda
+            },
             7: {
                 'Itaú':      {'fin': 32900.00, 'ret': 0, 'q': 1},  # BCO ITAÚ BBA S.A. ausente na API
                 'Santander': {'fin': 10000.00, 'ret': 0, 'q': 1},  # pago 31/07 ausente na API
@@ -440,10 +443,11 @@ _FLUXO_MANUAL = {
     2026: {
         'mm': {
             6: {
-                'Itaú':      {'fin': 32900.00, 'ret': 0, 'q': 1},  # liquidado em junho (competência julho)
+                'Itaú':      {'fin':  32900.00, 'ret': 0, 'q':  1},  # liquidado em junho (competência julho)
+                'Santander': {'fin': -65900.00, 'ret': 0, 'q': -1},  # LTW9I01 liquidado em julho, remove de junho
             },
             7: {
-                'Santander': {'fin': 10000.00, 'ret': 0, 'q': 1},  # pago 31/07 ausente na API
+                'Santander': {'fin': 75900.00, 'ret': 0, 'q': 2},   # LTW9I01 R$65.900 (liquidado jul) + R$10.000 pago 31/07
             },
             8: {
                 'Pan':        {'fin': 34311.90, 'ret': 0, 'q': 1},  # Negociação #756596, liquidado ago (competência jul)
