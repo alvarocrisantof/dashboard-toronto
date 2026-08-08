@@ -1,0 +1,149 @@
+name: Auditoria Fluxo vs Competencia
+
+on:
+  workflow_dispatch:
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Instalar dependencias
+        run: pip install requests
+      - name: Auditar jan-ago 2026
+        run: |
+          python3 - <<'PYEOF'
+          import csv, io, requests
+          from collections import defaultdict
+
+          TOKEN = "ZU1DsPDbRbva9ccEDF8eRjv7BrkkSwqj96lfrt1z"
+          AUTH  = "vyOhX5a2LbXG9B2LHDK0I5JUQe51m63rkRlP7crsQHAKIbi4Sugl4z2hSozDl4iakm79HMtIlwRIw3RdZ0ZZ4ZdXTQ0iJnE3qc1HMRbLLZDHKS43TdcrPbwYeqn932PLKCdKOJTw3PJQE8NmUjGSpuT74FxQsJ59R6IaprxVLxX6YG8OmOJOD5dpEY0Y9TqsvwLGZvAnN7Fl2sjQ5v2AnAiAjn0FEdlE3hVp69oENti8hStYmkCstXIuvtz0PpNM"
+          BASE  = "https://api.autoconf.com.br/api/v1"
+          ANO   = 2026
+          MESES = list(range(1, 9))
+          REV_MM = "185"
+
+          BANK_MAP = {
+              'BANCO VOTORANTIM S.A.': 'Votorantim', 'BCO VOTORANTIM S.A.': 'Votorantim',
+              'BCO SANTANDER (BRASIL) S.A.': 'Santander', 'BCO BRADESCO S.A.': 'Bradesco',
+              'BCO BRADESCO FINANC. S.A.': 'Bradesco', 'BCO SAFRA S.A.': 'Safra',
+              'CARBANK AUTOMOVEIS': 'Carbank', 'ITAU UNIBANCO S.A.': 'Itau',
+              'ITAÚ UNIBANCO S.A.': 'Itau', 'BCO ITAÚ BBA S.A.': 'Itau',
+              'BCO ITAU BBA S.A.': 'Itau', 'BANCO PAN': 'Pan',
+              'BCO COOPERATIVO SICREDI S.A.': 'Sicredi', 'BCO DO BRASIL S.A.': 'BancoBrasil',
+              'BCO C6 S.A.': 'C6', 'BANCO CREDICARRO S.A.': 'Credicarro',
+              'BANCO CREDICARRO': 'Credicarro',
+          }
+          BANK_KEYS = ['VOTORANTIM','SANTANDER','SAFRA','BRADESCO','C6 S','CARBANK','ITAU','BANCO PAN','SICREDI','DO BRASIL S.A','CREDICARRO']
+
+          def norm(b):
+              b = b.strip()
+              return BANK_MAP.get(b, b)
+          def is_bank(s): return any(k in s.upper() for k in BANK_KEYS)
+          def pn(s):
+              if not s: return 0.0
+              try: return float(str(s).strip().replace('.','').replace(',','.'))
+              except: return 0.0
+          def get(ep, m):
+              r = requests.get(f"{BASE}/{ep}",
+                  params={'mes': f"{m:02d}", 'ano': str(ANO), 'token': TOKEN},
+                  headers={'authorization': AUTH}, timeout=60)
+              return r.text if r.ok and not r.text.startswith('{') else None
+
+          # 1. Competencia: placa → {banco, fin, mes_comp}
+          print("=== Buscando lucro-venda jan-ago 2026 (MM) ===")
+          comp_veics = {}
+          for m in MESES:
+              txt = get("relatorio/financeiro/lucro-venda", m)
+              if not txt: print(f"  {m:02d}: sem dados"); continue
+              cnt = 0
+              for row in csv.DictReader(io.StringIO(txt)):
+                  if (row.get('Saida','') or '').strip().lower() == 'total': continue
+                  rev = (row.get('Revenda Saída ID','') or row.get('Revenda Saida ID','') or '').strip()
+                  if rev != REV_MM: continue
+                  banco_raw = (row.get('Banco') or '').strip()
+                  if not banco_raw: continue
+                  try: float(banco_raw); continue
+                  except: pass
+                  fin = pn(row.get('Valor Financiado'))
+                  if fin == 0: continue
+                  placa = (row.get('Placa') or '').strip()
+                  if not placa: continue
+                  banco = norm(banco_raw)
+                  comp_veics[placa] = {'banco': banco, 'fin': fin, 'mes_comp': m,
+                                       'saida': (row.get('Saida') or '').strip()}
+                  cnt += 1
+              print(f"  {m:02d}/2026: {cnt} veiculos financiados")
+
+          # 2. Extrato: placa (da Identificacao) → mes_liq
+          print("\n=== Buscando extrato-titulos jan-set 2026 (MM) ===")
+          liq_by_placa = {}   # placa → mes_liq
+          liq_by_val   = {}   # (round(fin,2), banco) → mes_liq  (fallback)
+
+          for m in MESES + [9]:
+              txt = get("relatorio/financeiro/extrato-titulos", m)
+              if not txt: continue
+              for row in csv.DictReader(io.StringIO(txt)):
+                  if (row.get('Status','') or '').strip() != 'Liquidado': continue
+                  data_liq = (row.get('Data Liquidação','') or row.get('Data Liquidacao','') or '').strip()
+                  if not data_liq or len(data_liq) < 10: continue
+                  try:
+                      mes_liq = int(data_liq[3:5])
+                      ano_liq = int(data_liq[6:10])
+                  except: continue
+                  if ano_liq != ANO: continue
+                  conta = (row.get('Conta Contábil','') or row.get('Conta Contabil','') or '').strip()
+                  op    = (row.get('Operação','') or row.get('Operacao','') or '').strip()
+                  ident = (row.get('Identificação','') or row.get('Identificacao','') or '').strip()
+                  cli   = (row.get('Cliente Fornecedor','') or '').strip()
+                  rev   = (row.get('Revenda Origem Id','') or '').strip()
+                  valor = pn(row.get('Valor',''))
+                  if op != 'A receber': continue
+                  if not is_bank(cli): continue
+                  if rev != REV_MM: continue
+                  is_fin = (conta == 'Vendas de Mercadorias' and 'Financiamento' in ident and 'Retorno' not in ident) \
+                           or conta == 'Intermediação de financiamento' \
+                           or conta == 'Intermediacao de financiamento'
+                  if not is_fin: continue
+                  banco = norm(cli)
+                  # Extrair placa: ultimo token do ident que parece placa (7 chars alfanum)
+                  for tok in reversed(ident.split()):
+                      if len(tok) >= 7 and tok.replace('-','').isalnum():
+                          liq_by_placa[tok] = mes_liq
+                          break
+                  liq_by_val[(round(valor,2), banco)] = mes_liq
+              print(f"  extrato {m:02d}/2026: ok")
+
+          # 3. Cruzar
+          print("\n" + "="*75)
+          print("DIVERGENCIAS: mes competencia != mes liquidacao (MM 2026)")
+          print("="*75)
+          print(f"{'Placa':<10} {'Banco':<12} {'Fin':>12}  Comp->Liq  Obs")
+          print("-"*75)
+          divs = []
+          nao_enc = []
+          for placa, v in sorted(comp_veics.items(), key=lambda x: x[1]['mes_comp']):
+              mc = v['mes_comp']
+              banco = v['banco']
+              fin = v['fin']
+              ml = liq_by_placa.get(placa) or liq_by_val.get((round(fin,2), banco))
+              if ml is None:
+                  nao_enc.append((placa, banco, fin, mc))
+              elif ml != mc:
+                  divs.append((placa, banco, fin, mc, ml))
+
+          if divs:
+              for placa, banco, fin, mc, ml in divs:
+                  print(f"{placa:<10} {banco:<12} R${fin:>10,.2f}   {mc:02d} -> {ml:02d}")
+          else:
+              print("  Nenhuma divergencia encontrada!")
+
+          print(f"\nTotal divergencias: {len(divs)}")
+          if nao_enc:
+              print(f"\nNao encontrados no extrato ({len(nao_enc)} veiculos):")
+              for placa, banco, fin, mc in nao_enc:
+                  print(f"  {placa:<10} {banco:<12} R${fin:>10,.2f}  comp={mc:02d}")
+          PYEOF

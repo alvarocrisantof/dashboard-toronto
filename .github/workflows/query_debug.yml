@@ -50,14 +50,14 @@ jobs:
 
           rows = list(csv.DictReader(io.StringIO(r.text)))
           filtrado = [row for row in rows if BANCO.upper() in (row.get('Banco') or '').upper()]
-          print(f"\n=== {BANCO} — {MES}/{ANO} ({len(filtrado)} veículos) ===")
+          print(f"\n=== {BANCO} — {MES}/{ANO} ({len(filtrado)} veiculos) ===")
           total_fin = total_ret = 0
           for row in filtrado:
               placa = (row.get('Placa') or '').strip()
               saida = (row.get('Saida') or '').strip()
               fin   = pn(row.get('Valor Financiado'))
               ret   = pn(row.get('Retorno'))
-              rev   = (row.get('Revenda Saída ID') or '').strip()
+              rev   = (row.get('Revenda Saida ID') or row.get('Revenda Saída ID') or '').strip()
               loja  = 'MM' if rev == '185' else ('BK' if rev == '726' else rev)
               total_fin += fin; total_ret += ret
               print(f"  [{loja}] {placa:<10} | {saida:<40} | fin=R${fin:>10,.2f} | ret=R${ret:>8,.2f}")
