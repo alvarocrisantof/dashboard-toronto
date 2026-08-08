@@ -444,7 +444,9 @@ _FLUXO_MANUAL = {
             },
             7: {
                 'Santander': {'fin': 10000.00, 'ret': 0, 'q': 1},  # pago 31/07 ausente na API
-                'Pan':        {'fin': 34311.90, 'ret': 0, 'q': 1},  # Negociação #756596 31/07 ausente na API
+            },
+            8: {
+                'Pan':        {'fin': 34311.90, 'ret': 0, 'q': 1},  # Negociação #756596, liquidado ago (competência jul)
             }
         },
         'bk': {},
