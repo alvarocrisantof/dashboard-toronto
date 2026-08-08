@@ -439,8 +439,10 @@ _COMP_MANUAL = {
 _FLUXO_MANUAL = {
     2026: {
         'mm': {
+            6: {
+                'Itaú':      {'fin': 32900.00, 'ret': 0, 'q': 1},  # liquidado em junho (competência julho)
+            },
             7: {
-                'Itaú':      {'fin': 32900.00, 'ret': 0, 'q': 1},  # BCO ITAÚ BBA S.A. ausente na API
                 'Santander': {'fin': 10000.00, 'ret': 0, 'q': 1},  # pago 31/07 ausente na API
                 'Pan':        {'fin': 34311.90, 'ret': 0, 'q': 1},  # Negociação #756596 31/07 ausente na API
             }
