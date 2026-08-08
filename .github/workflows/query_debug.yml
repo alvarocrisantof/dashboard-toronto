@@ -42,8 +42,8 @@ jobs:
               except: return 0.0
 
           r = requests.get(f"{BASE}/relatorio/financeiro/lucro-venda",
-              params={'mes': MES, 'ano': ANO},
-              headers={'token': TOKEN, 'Authorization': AUTH}, timeout=60)
+              params={'mes': MES.zfill(2), 'ano': ANO, 'token': TOKEN},
+              headers={'authorization': AUTH}, timeout=60)
           print("status:", r.status_code)
           if r.status_code != 200:
               print(r.text[:200]); exit(1)
