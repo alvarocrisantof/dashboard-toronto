@@ -439,6 +439,9 @@ _COMP_MANUAL = {
 _FLUXO_MANUAL = {
     2026: {
         'mm': {
+            1: {
+                'Safra':     {'fin': 34900.00, 'ret': 0, 'q': 1},  # #577912 Ford Ranger PKI9427 - Ajuste de saldo não capturado pelo script
+            },
             6: {
                 'Itaú':      {'fin': 32900.00, 'ret': 0, 'q': 1},  # liquidado em junho (competência julho)
             },
