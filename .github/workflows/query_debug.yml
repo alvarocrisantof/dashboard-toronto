@@ -35,11 +35,17 @@ jobs:
           TOKEN = "ZU1DsPDbRbva9ccEDF8eRjv7BrkkSwqj96lfrt1z"
           AUTH  = "vyOhX5a2LbXG9B2LHDK0I5JUQe51m63rkRlP7crsQHAKIbi4Sugl4z2hSozDl4iakm79HMtIlwRIw3RdZ0ZZ4ZdXTQ0iJnE3qc1HMRbLLZDHKS43TdcrPbwYeqn932PLKCdKOJTw3PJQE8NmUjGSpuT74FxQsJ59R6IaprxVLxX6YG8OmOJOD5dpEY0Y9TqsvwLGZvAnN7Fl2sjQ5v2AnAiAjn0FEdlE3hVp69oENti8hStYmkCstXIuvtz0PpNM"
           BASE   = "https://api.autoconf.com.br/api/v1"
+          import unicodedata
           BANCO  = os.environ['BANCO'].upper()
           MES    = os.environ['MES']
           ANO    = os.environ['ANO']
           FONTE  = os.environ.get('FONTE', 'comp')
           REV_MM = "185"
+
+          def norm(s):
+              return unicodedata.normalize('NFD', s).encode('ascii','ignore').decode().upper()
+
+          BANCO_N = norm(BANCO)
 
           def pn(s):
               if not s: return 0.0
@@ -56,7 +62,7 @@ jobs:
               txt = get("relatorio/financeiro/lucro-venda")
               if not txt: print("sem dados"); exit(1)
               rows = [r for r in csv.DictReader(io.StringIO(txt))
-                      if BANCO in (r.get('Banco') or '').upper()
+                      if BANCO_N in norm(r.get('Banco') or '')
                       and (r.get('Revenda Saída ID','') or r.get('Revenda Saida ID','')).strip() == REV_MM]
               print(f"\n=== COMPETENCIA {BANCO} — {MES}/{ANO} ({len(rows)} veiculos) ===")
               total = 0
@@ -86,7 +92,7 @@ jobs:
                       data_liq = (row.get('Data Liquidação','') or row.get('Data Liquidacao','') or '').strip()
                       if not data_liq or data_liq[3:10] != target: continue
                       cli = (row.get('Cliente Fornecedor','') or '').strip()
-                      if BANCO not in cli.upper(): continue
+                      if BANCO_N not in norm(cli): continue
                       rev = (row.get('Revenda Origem Id','') or '').strip()
                       if rev != REV_MM: continue
                       conta = (row.get('Conta Contábil','') or row.get('Conta Contabil','') or '').strip()
