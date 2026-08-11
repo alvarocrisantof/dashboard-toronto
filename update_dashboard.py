@@ -442,6 +442,9 @@ _FLUXO_MANUAL = {
             1: {
                 'Safra':     {'fin': 34900.00, 'ret': 0, 'q': 1},  # #577912 Ford Ranger PKI9427 - Ajuste de saldo não capturado pelo script
             },
+            3: {
+                'Bradesco':  {'fin': 84953.00, 'ret': 0, 'q': 1},  # #622927 Consórcio BRADESCO CONS. LTDA. 26/03 — filtro exige 'Financiamento' no ident
+            },
             7: {
                 'Santander': {'fin': 10000.00, 'ret': 0, 'q': 1},  # pago 31/07 ausente na API (LTW9I01 já está no extrato jul)
             },
