@@ -12,6 +12,10 @@ on:
       ano:
         description: 'Ano (ex: 2026)'
         required: true
+      fonte:
+        description: 'Fonte: comp (lucro-venda) ou fluxo (extrato liquidado)'
+        required: true
+        default: 'comp'
 
 jobs:
   query:
@@ -30,40 +34,84 @@ jobs:
 
           TOKEN = "ZU1DsPDbRbva9ccEDF8eRjv7BrkkSwqj96lfrt1z"
           AUTH  = "vyOhX5a2LbXG9B2LHDK0I5JUQe51m63rkRlP7crsQHAKIbi4Sugl4z2hSozDl4iakm79HMtIlwRIw3RdZ0ZZ4ZdXTQ0iJnE3qc1HMRbLLZDHKS43TdcrPbwYeqn932PLKCdKOJTw3PJQE8NmUjGSpuT74FxQsJ59R6IaprxVLxX6YG8OmOJOD5dpEY0Y9TqsvwLGZvAnN7Fl2sjQ5v2AnAiAjn0FEdlE3hVp69oENti8hStYmkCstXIuvtz0PpNM"
-          BASE  = "https://api.autoconf.com.br/api/v1"
-
-          BANCO = os.environ['BANCO']
-          MES   = os.environ['MES']
-          ANO   = os.environ['ANO']
+          BASE   = "https://api.autoconf.com.br/api/v1"
+          BANCO  = os.environ['BANCO'].upper()
+          MES    = os.environ['MES']
+          ANO    = os.environ['ANO']
+          FONTE  = os.environ.get('FONTE', 'comp')
+          REV_MM = "185"
 
           def pn(s):
               if not s: return 0.0
               try: return float(str(s).strip().replace('.','').replace(',','.'))
               except: return 0.0
 
-          r = requests.get(f"{BASE}/relatorio/financeiro/lucro-venda",
-              params={'mes': MES.zfill(2), 'ano': ANO, 'token': TOKEN},
-              headers={'authorization': AUTH}, timeout=60)
-          print("status:", r.status_code)
-          if r.status_code != 200:
-              print(r.text[:200]); exit(1)
+          def get(ep, m=MES):
+              r = requests.get(f"{BASE}/{ep}",
+                  params={'mes': str(m).zfill(2), 'ano': ANO, 'token': TOKEN},
+                  headers={'authorization': AUTH}, timeout=60)
+              return r.text if r.ok and not r.text.startswith('{') else None
 
-          rows = list(csv.DictReader(io.StringIO(r.text)))
-          filtrado = [row for row in rows if BANCO.upper() in (row.get('Banco') or '').upper()]
-          print(f"\n=== {BANCO} — {MES}/{ANO} ({len(filtrado)} veiculos) ===")
-          total_fin = total_ret = 0
-          for row in filtrado:
-              placa = (row.get('Placa') or '').strip()
-              saida = (row.get('Saida') or '').strip()
-              fin   = pn(row.get('Valor Financiado'))
-              ret   = pn(row.get('Retorno'))
-              rev   = (row.get('Revenda Saida ID') or row.get('Revenda Saída ID') or '').strip()
-              loja  = 'MM' if rev == '185' else ('BK' if rev == '726' else rev)
-              total_fin += fin; total_ret += ret
-              print(f"  [{loja}] {placa:<10} | {saida:<40} | fin=R${fin:>10,.2f} | ret=R${ret:>8,.2f}")
-          print(f"\n  TOTAL: fin=R${total_fin:,.2f} | ret=R${total_ret:,.2f} | qtd={len(filtrado)}")
+          if FONTE == 'comp':
+              txt = get("relatorio/financeiro/lucro-venda")
+              if not txt: print("sem dados"); exit(1)
+              rows = [r for r in csv.DictReader(io.StringIO(txt))
+                      if BANCO in (r.get('Banco') or '').upper()
+                      and (r.get('Revenda Saída ID','') or r.get('Revenda Saida ID','')).strip() == REV_MM]
+              print(f"\n=== COMPETENCIA {BANCO} — {MES}/{ANO} ({len(rows)} veiculos) ===")
+              total = 0
+              for row in rows:
+                  placa = (row.get('Placa') or '').strip()
+                  saida = (row.get('Saida') or '').strip()
+                  fin   = pn(row.get('Valor Financiado'))
+                  ret   = pn(row.get('Retorno'))
+                  total += fin
+                  print(f"  {placa:<10} | {saida:<12} | fin=R${fin:>10,.2f} | ret=R${ret:>8,.2f}")
+              print(f"\n  TOTAL: R${total:,.2f} | qtd={len(rows)}")
+
+          else:  # fluxo
+              target = f"{MES.zfill(2)}/{ANO}"
+              # Busca extratos de meses adjacentes para capturar liquidacoes do mes alvo
+              meses_busca = [int(MES)-1, int(MES), int(MES)+1]
+              meses_busca = [m for m in meses_busca if 1 <= m <= 12]
+              rows_out = []
+              seen = set()
+              BANK_KEYS = ['VOTORANTIM','SANTANDER','SAFRA','BRADESCO','C6 S','CARBANK','ITAU','BANCO PAN','SICREDI','DO BRASIL S.A','CREDICARRO']
+              def is_bank(s): return any(k in s.upper() for k in BANK_KEYS)
+              for m in meses_busca:
+                  txt = get("relatorio/financeiro/extrato-titulos", m)
+                  if not txt: continue
+                  for row in csv.DictReader(io.StringIO(txt)):
+                      if (row.get('Status','') or '').strip() != 'Liquidado': continue
+                      data_liq = (row.get('Data Liquidação','') or row.get('Data Liquidacao','') or '').strip()
+                      if not data_liq or data_liq[3:10] != target: continue
+                      cli = (row.get('Cliente Fornecedor','') or '').strip()
+                      if BANCO not in cli.upper(): continue
+                      rev = (row.get('Revenda Origem Id','') or '').strip()
+                      if rev != REV_MM: continue
+                      conta = (row.get('Conta Contábil','') or row.get('Conta Contabil','') or '').strip()
+                      op    = (row.get('Operação','') or row.get('Operacao','') or '').strip()
+                      ident = (row.get('Identificação','') or row.get('Identificacao','') or '').strip()
+                      valor = pn(row.get('Valor',''))
+                      part  = (row.get('Parcela Id','') or '').strip()
+                      if op != 'A receber': continue
+                      is_fin = (conta == 'Vendas de Mercadorias' and 'Financiamento' in ident and 'Retorno' not in ident) \
+                               or 'Intermediação de financiamento' in conta or 'Intermediacao de financiamento' in conta
+                      if not is_fin: continue
+                      key = (part, round(valor,2)) if part else (ident[:60], round(valor,2))
+                      if key in seen: continue
+                      seen.add(key)
+                      rows_out.append({'data_liq': data_liq, 'ident': ident, 'valor': valor})
+
+              print(f"\n=== FLUXO {BANCO} liquidado em {MES}/{ANO} ({len(rows_out)} entradas) ===")
+              total = 0
+              for r in sorted(rows_out, key=lambda x: x['data_liq']):
+                  total += r['valor']
+                  print(f"  {r['data_liq']}  R${r['valor']:>10,.2f}  {r['ident'][:70]}")
+              print(f"\n  TOTAL: R${total:,.2f} | qtd={len(rows_out)}")
           EOF
         env:
           BANCO: ${{ github.event.inputs.banco }}
           MES: ${{ github.event.inputs.mes }}
           ANO: ${{ github.event.inputs.ano }}
+          FONTE: ${{ github.event.inputs.fonte }}
