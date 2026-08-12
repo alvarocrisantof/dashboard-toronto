@@ -487,7 +487,7 @@ _DRE_CORR = {
               'desc_receber': 0.0, 'juros_pagar': 14.68},
         '2': {'rec_doc_sai': 14241.12, 'rec_svc': 4670.00,
               'desc_sw': 48327.50,
-              'custo_prep_entrega': 59383.84, 'frete': 100.0,
+              'custo_prep_entrega': 61226.86, 'frete': 100.0,
               'despachante_ent': 1160.0, 'ipva': 12568.52,
               'taxas_transf_ent': 4298.24, 'laudo_custo': 2545.0,
               'retorno_fin': 23911.52,
