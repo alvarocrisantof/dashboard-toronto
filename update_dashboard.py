@@ -530,12 +530,13 @@ _DRE_CORR = {
               'desc_pagar': 16763.83, 'juros_rec': 42.34,
               'desc_receber': 263.17, 'juros_pagar2': 5.40},
         '7': {
-              # QGR0B62 (31/07) excluido pelo AutoConf — override com valores AC
+              # QGR0B62 (31/07) excluido pelo AutoConf — overrides com valores AC
               'merch_bruta_sw': 2656259.00,
-              'custo_compra_sw': 2236422.52,  # API 2293422.52 - QGR0B62 compra 57000
-              'rec_doc_sai': 8438.73,
-              'rec_svc': 10250.00,
-              'laudo_venda': 4604.90,
+              'custo_compra_sw': 2236422.52,
+              'rec_doc_sai': 8438.73, 'rec_svc': 10250.00, 'laudo_venda': 4604.90,
+              # custos: QGR0B62 incluso no extrato mas excluido pelo AC em julho
+              'custo_prep_entrega': 59705.19, 'despachante_ent': 830.00,
+              'ipva': 5559.27, 'taxas_transf_ent': 6302.77, 'laudo_custo': 2891.10,
               },
         '8': {
               'custo_compra_sw': 657971.65, 'custo_compra_at': 44350.00,
