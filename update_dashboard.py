@@ -521,6 +521,7 @@ _DRE_CORR = {
               'desc_pagar': 10595.14, 'juros_rec': 370.02,
               'desc_receber': 1000.00, 'juros_pagar2': 145.38},
         '6': {'rec_doc_sai': 4534.90, 'fotos': 3500.00, 'rec_diversas': 18147.16,
+              'custo_compra_sw': 2037930.46,
               'custo_prep_entrega': 38338.32, 'frete': 0.00,
               'despachante_ent': 1100.00, 'ipva': 17403.55,
               'taxas_transf_ent': 2052.00, 'laudo_custo': 1442.20,
@@ -561,6 +562,7 @@ _DRE_CORR = {
               'desc_pagar': 7596.59, 'juros_rec': 22.64,
               'desc_receber': 2.34, 'juros_pagar2': 90.75},
         '8': {
+              'custo_compra_sw': 657971.65, 'custo_compra_at': 44350.00,
               'custo_prep_entrega': 8593.23, 'frete': 0.00,
               'despachante_ent': 1640.00, 'ipva': 8830.15,
               'taxas_transf_ent': 1142.00, 'laudo_custo': 109.80},
