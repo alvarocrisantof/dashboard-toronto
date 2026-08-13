@@ -535,9 +535,9 @@ _DRE_CORR = {
               'prep_veiculo': 8150.00, 'aluguel': 12500.00, 'rec_diversas': 15554.90,
               # descontos/custos
               'desc_sw': 9800.00,
-              'custo_prep_entrega': 33054.84, 'frete': 0.00,
-              'despachante_ent': 580.00, 'ipva': 3943.13, 'taxas_transf_ent': 3492.48,
-              'comunicado_venda': 124.17, 'garantia_custo': 8640.00, 'laudo_custo': 1013.10,
+              'custo_prep_entrega': 59705.19, 'frete': 0.00,
+              'despachante_ent': 830.00, 'ipva': 5559.27, 'taxas_transf_ent': 6302.77,
+              'comunicado_venda': 138.17, 'garantia_custo': 9040.00, 'laudo_custo': 2891.10,
               'taxas_transf_sai': 10293.90, 'pos_vendas': 0.00, 'comissao_venda': 500.00,
               # pessoal
               'refeitorio': 218.00, 'salarios': 84538.84, 'transporte': 299.00,
@@ -559,6 +559,10 @@ _DRE_CORR = {
               'retorno_acordos': 5943.35, 'seguro_rec': 10261.86, 'rendimento': 1.58,
               'desc_pagar': 7596.59, 'juros_rec': 22.64,
               'desc_receber': 2.34, 'juros_pagar2': 90.75},
+        '8': {
+              'custo_prep_entrega': 8593.23, 'frete': 0.00,
+              'despachante_ent': 1640.00, 'ipva': 8830.15,
+              'taxas_transf_ent': 1142.00, 'laudo_custo': 109.80},
     },
     'bk': {
         '1': {'retorno_fin': 7560.40},
