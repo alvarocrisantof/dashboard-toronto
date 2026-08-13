@@ -530,6 +530,7 @@ _DRE_CORR = {
         '7': {
               # receitas
               'merch_bruta_sw': 1444024.00, 'merch_bruta_at': 51500.00,
+              'custo_compra_sw': 2236422.52, 'custo_compra_at': 284023.40,
               'rec_doc_sai': 6722.96, 'rec_svc': 5800.00, 'venda_comiss': 0.00,
               'laudo_venda': 2854.90, 'transf_venda': 150.00, 'fotos': 500.00,
               'prep_veiculo': 8150.00, 'aluguel': 12500.00, 'rec_diversas': 15554.90,
