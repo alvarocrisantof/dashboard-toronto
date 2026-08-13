@@ -508,7 +508,7 @@ _DRE_CORR = {
               'custo_prep_entrega': 38110.65,
               'despachante_ent': 2050.00, 'ipva': 23060.09,
               'taxas_transf_ent': 6828.16, 'baixa_gravame': 400.00,
-              'comunicado_venda': 81.90, 'garantia_custo': 6260.00,
+              'comunicado_venda': 81.90, 'multas_nao_abat': 0.00, 'garantia_custo': 6260.00,
               'laudo_custo': 4264.70,
               'pub_adm': 1200.00, 'publicidade': 9299.00, 'feirao': 13105.96,
               'desc_pagar': 9679.23, 'juros_rec': 201.14,
