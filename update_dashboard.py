@@ -529,7 +529,14 @@ _DRE_CORR = {
               'maq_equip': 3176.53, 'associacoes': 250.00, 'portais': 8004.98,
               'desc_pagar': 16763.83, 'juros_rec': 42.34,
               'desc_receber': 263.17, 'juros_pagar2': 5.40},
-        '7': {},
+        '7': {
+              # QGR0B62 (31/07) excluido pelo AutoConf — override com valores AC
+              'merch_bruta_sw': 2656259.00,
+              'custo_compra_sw': 2236422.52,  # API 2293422.52 - QGR0B62 compra 57000
+              'rec_doc_sai': 8438.73,
+              'rec_svc': 10250.00,
+              'laudo_venda': 4604.90,
+              },
         '8': {
               'custo_compra_sw': 657971.65, 'custo_compra_at': 44350.00,
               'custo_prep_entrega': 8593.23, 'frete': 0.00,
