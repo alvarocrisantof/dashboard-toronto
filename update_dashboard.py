@@ -529,39 +529,7 @@ _DRE_CORR = {
               'maq_equip': 3176.53, 'associacoes': 250.00, 'portais': 8004.98,
               'desc_pagar': 16763.83, 'juros_rec': 42.34,
               'desc_receber': 263.17, 'juros_pagar2': 5.40},
-        '7': {
-              # receitas
-              'merch_bruta_sw': 1444024.00, 'merch_bruta_at': 51500.00,
-              'custo_compra_sw': 2236422.52, 'custo_compra_at': 284023.40,
-              'rec_doc_sai': 6722.96, 'rec_svc': 5800.00, 'venda_comiss': 0.00,
-              'laudo_venda': 2854.90, 'transf_venda': 150.00, 'fotos': 500.00,
-              'prep_veiculo': 8150.00, 'aluguel': 12500.00, 'rec_diversas': 15554.90,
-              # descontos/custos
-              'desc_sw': 9800.00,
-              'custo_prep_entrega': 59705.19, 'frete': 0.00,
-              'despachante_ent': 830.00, 'ipva': 5559.27, 'taxas_transf_ent': 6302.77,
-              'comunicado_venda': 138.17, 'garantia_custo': 9040.00, 'laudo_custo': 2891.10,
-              'taxas_transf_sai': 10293.90, 'pos_vendas': 0.00, 'comissao_venda': 500.00,
-              # pessoal
-              'refeitorio': 218.00, 'salarios': 84538.84, 'transporte': 299.00,
-              'medicina': 0.00, 'plano_saude': 91.80, 'churrasco': 1913.53, 'almoco_meta': 252.02,
-              # adm
-              'aluguel_cond2': 0.00, 'copa': 825.00, 'cartorio': 413.00,
-              'estacionamento': 0.00, 'mat_aux': 54.50, 'mat_escrit': 730.00,
-              'pub_adm': 0.00, 'seguros': 0.00, 'consultoria': 750.00,
-              'associacoes': 250.00, 'informatica': 863.90,
-              # estabelecimento
-              'agua': 0.00, 'energia': 295.11, 'limpeza': 296.07, 'telefonia': 559.99,
-              # sócios
-              'pro_labore': 0.00, 'dividendos': 30000.00,
-              # emprest/maq/mkt
-              'brindes': 350.41, 'publicidade': 9999.00,
-              'emprestimos': 13917.21, 'maq_equip': 3953.98,
-              'feirao': 8395.54, 'portais': 7444.28,
-              # financeiras
-              'retorno_acordos': 5943.35, 'seguro_rec': 10261.86, 'rendimento': 1.58,
-              'desc_pagar': 7596.59, 'juros_rec': 22.64,
-              'desc_receber': 2.34, 'juros_pagar2': 90.75},
+        '7': {},
         '8': {
               'custo_compra_sw': 657971.65, 'custo_compra_at': 44350.00,
               'custo_prep_entrega': 8593.23, 'frete': 0.00,
