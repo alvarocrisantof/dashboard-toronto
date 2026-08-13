@@ -521,6 +521,7 @@ _DRE_CORR = {
               'desc_pagar': 10595.14, 'juros_rec': 370.02,
               'desc_receber': 1000.00, 'juros_pagar2': 145.38},
         '6': {'rec_doc_sai': 4534.90, 'fotos': 3500.00, 'rec_diversas': 18147.16,
+              'merch_bruta_sw': 2333278.00,
               'custo_compra_sw': 2037930.46,
               'custo_prep_entrega': 38338.32, 'frete': 0.00,
               'despachante_ent': 1100.00, 'ipva': 17403.55,
