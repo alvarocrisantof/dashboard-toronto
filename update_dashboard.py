@@ -520,7 +520,7 @@ _DRE_CORR = {
               'taxas_transf_ent': 3594.00, 'laudo_custo': 2106.00,
               'desc_pagar': 10595.14, 'juros_rec': 370.02,
               'desc_receber': 1000.00, 'juros_pagar2': 145.38},
-        '6': {'rec_doc_sai': 4534.90, 'fotos': 3500.00, 'rec_diversas': 18147.16,
+        '6': {'rec_doc_sai': 4060.69, 'rec_svc': 7000.00, 'fotos': 3500.00, 'rec_diversas': 18147.16,
               'merch_bruta_sw': 2333278.00,
               'custo_compra_sw': 2037930.46,
               'custo_prep_entrega': 38338.32, 'frete': 0.00,
