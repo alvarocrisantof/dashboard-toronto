@@ -537,7 +537,7 @@ _DRE_CORR = {
               # custos: QGR0B62 incluso no extrato mas excluido pelo AC em julho
               'custo_prep_entrega': 59705.19, 'frete': 0.00, 'despachante_ent': 830.00,
               'ipva': 5559.27, 'taxas_transf_ent': 6302.77, 'laudo_custo': 2891.10,
-              'despachante_sai': 0.00, 'compras_func': 0.00,
+              'despachante_sai': 0.00, 'compras_func': 0.00, 'garantia_venda': 0.00,
               # desp operacionais: ausentes na API
               'consultoria': 750.00, 'aj_saida': 5894.12,
               # financeiras: ausentes/diferentes na API
