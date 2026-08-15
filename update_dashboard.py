@@ -547,11 +547,7 @@ _DRE_CORR = {
               'seguro_rec': 10261.86, 'desc_pagar': 8088.33, 'juros_rec': 29.10,
               'desc_receber': 343.59, 'juros_pagar2': 90.75,
               },
-        '8': {
-              'custo_compra_sw': 657971.65, 'custo_compra_at': 44350.00,
-              'custo_prep_entrega': 8593.23, 'frete': 0.00,
-              'despachante_ent': 1640.00, 'ipva': 8830.15,
-              'taxas_transf_ent': 1142.00, 'laudo_custo': 109.80},
+        '8': {},
     },
     'bk': {
         '1': {'retorno_fin': 7560.40},
