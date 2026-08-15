@@ -429,7 +429,10 @@ _COMP_MANUAL = {
                 'Itaú':      {'fin': 32900.00, 'ret': 0, 'q': 1},  # BCO ITAÚ BBA S.A. ausente na API
                 'Santander': {'fin': 10000.00, 'ret': 0, 'q': 1},  # pago 31/07 ausente na API
                 'Pan':        {'fin': 34311.90, 'ret': 0, 'q': 1},  # Negociação #756596 31/07 ausente na API
-            }
+            },
+            8: {
+                'Itaú': {'fin': 60000.00, 'ret': 0, 'q': 1},  # Intermediação #6505 BCO ITAÚ BBA S.A. liq 12/08 ausente no lucro-venda
+            },
         },
         'bk': {},
     },
