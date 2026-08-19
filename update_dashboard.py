@@ -537,6 +537,9 @@ _DRE_CORR = {
               'merch_bruta_sw': 2785159.00, 'merch_bruta_at': 344264.00,
               'custo_compra_sw': 2353922.52, 'custo_compra_at': 284023.40,
               'rec_doc_sai': 8438.73, 'rec_svc': 10250.00,
+              'laudo_venda': 4659.80, 'transf_venda': 280.16, 'venda_comiss': 0.00,
+              'fotos': 1000.00, 'prep_veiculo': 8800.00, 'aluguel': 15500.00,
+              'rec_diversas': 33552.44,
               # desp operacionais: ausentes na API
               'consultoria': 750.00, 'aj_saida': 5894.12,
               # financeiras: ausentes/diferentes na API
