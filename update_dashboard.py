@@ -534,8 +534,8 @@ _DRE_CORR = {
               'desc_receber': 263.17, 'juros_pagar2': 5.40},
         '7': {
               # RQL3G14 (31/07) excluido pelo AutoConf — overrides com valores AC
-              'merch_bruta_sw': 2785159.00,
-              'custo_compra_sw': 2353922.52,
+              'merch_bruta_sw': 2785159.00, 'merch_bruta_at': 344264.00,
+              'custo_compra_sw': 2353922.52, 'custo_compra_at': 284023.40,
               'rec_doc_sai': 8438.73, 'rec_svc': 10250.00,
               # desp operacionais: ausentes na API
               'consultoria': 750.00, 'aj_saida': 5894.12,
