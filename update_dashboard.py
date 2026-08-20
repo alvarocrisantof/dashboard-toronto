@@ -546,7 +546,41 @@ _DRE_CORR = {
               'seguro_rec': 10261.86, 'desc_pagar': 8088.33, 'juros_rec': 29.10,
               'desc_receber': 343.59, 'juros_pagar2': 90.75,
               },
-        '8': {},
+        '8': {
+              # lucro-venda 01-19/ago
+              'merch_bruta_sw': 1225858.85, 'merch_bruta_at': 137660.00,
+              'custo_compra_sw': 1028971.65, 'custo_compra_at': 117850.00,
+              'rec_doc_sai': 11887.23, 'rec_svc': 4914.90,
+              # receitas serviço (extrato comp 08/2026)
+              'laudo_venda': 2100.00, 'transf_venda': 1161.00,
+              'fotos': 250.00, 'prep_veiculo': 400.00,
+              'garantia_venda': 190.65, 'aluguel': 9000.00,
+              'rec_diversas': 15500.00, 'venda_comiss': 10000.00,
+              # custos (extrato comp 08/2026)
+              'custo_prep_entrega': 39934.35, 'despachante_ent': 2120.00,
+              'despachante_sai': 2340.00, 'ipva': 19424.07,
+              'taxas_transf_ent': 3952.00, 'taxas_transf_sai': 8468.45,
+              'comunicado_venda': 89.90, 'multas_nao_abat': 703.51,
+              'garantia_custo': 1300.00, 'laudo_custo': 878.40,
+              'comissao_venda': 1200.00, 'pos_vendas': 385.00,
+              # financeiras (extrato comp 08/2026)
+              'retorno_fin': 19991.52, 'intermediacao_fin': 160000.00,
+              'dev_fin': 329900.00, 'retorno_acordos': 28907.96,
+              'seguro_rec': 1340.22, 'rendimento': 5.05,
+              # desp operacionais (extrato comp 08/2026)
+              'salarios': 83986.73, 'aluguel_cond': 25550.00,
+              'dividendos': 55758.94, 'emprestimos': 22356.27,
+              'icms': 23640.62, 'iss': 5854.29, 'iptu': 2143.92,
+              'das': 3000.00, 'publicidade': 9999.00, 'portais': 8444.28,
+              'brindes': 2492.00, 'contabil': 2000.00,
+              'informatica': 863.90, 'manutencao_loja': 800.00,
+              'energia': 314.97, 'telefonia': 574.44, 'limpeza': 263.99,
+              'transporte': 270.40, 'cartorio': 361.00, 'mat_escrit': 217.90,
+              'refeitorio': 180.00, 'plano_saude': 93.67, 'copa': 81.69,
+              'maq_equip': 31.87, 'medicina': 40.00,
+              'tarifa_bancaria': 16.90, 'associacoes': 250.00,
+              'consultoria': 750.00, 'comissao_c': 500.00,
+              },
     },
     'bk': {
         '1': {'retorno_fin': 7560.40},
