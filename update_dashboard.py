@@ -545,6 +545,11 @@ _DRE_CORR = {
               # financeiras: ausentes/diferentes na API
               'seguro_rec': 10261.86, 'desc_pagar': 8088.33, 'juros_rec': 29.10,
               'desc_receber': 343.59, 'juros_pagar2': 90.75,
+              # deduções: desc API incompleto; impostos corretos mas redistrib sobrescreve
+              'desc_sw': 36088.10, 'desc_at': 36080.00,
+              'esocial': 3433.27, 'fgts': 4213.06, 'pis_cofins': 12990.59,
+              'icms': 21659.17, 'iss': 7463.83, 'alvara': 199.38,
+              'iptu': 2143.92, 'custas': 1211.18, 'das': 4590.75,
               },
         '8': {
               # lucro-venda 01-19/ago
