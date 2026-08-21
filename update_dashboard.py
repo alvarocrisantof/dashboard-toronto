@@ -542,6 +542,11 @@ _DRE_CORR = {
               'laudo_venda': 4659.80, 'transf_venda': 280.16, 'venda_comiss': 0.00,
               'fotos': 1000.00, 'prep_veiculo': 8800.00, 'aluguel': 15500.00,
               'rec_diversas': 33552.44,
+              # custos prep/docs/serviços (AutoConf jul — cons redistrib sobrescreve)
+              'custo_prep_entrega': 59705.19, 'frete': 4500.00,
+              'despachante_ent': 830.00, 'ipva': 5559.27,
+              'taxas_transf_ent': 6302.77, 'laudo_custo': 2891.10,
+              'garantia_custo': 9040.00,
               # desp operacionais: ausentes na API
               'consultoria': 750.00, 'aj_saida': 5894.12,
               # financeiras: ausentes/diferentes na API
