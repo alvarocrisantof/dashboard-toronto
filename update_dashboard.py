@@ -542,13 +542,9 @@ _DRE_CORR = {
               'laudo_venda': 4659.80, 'transf_venda': 280.16, 'venda_comiss': 0.00,
               'fotos': 1000.00, 'prep_veiculo': 8800.00, 'aluguel': 15500.00,
               'rec_diversas': 33552.44,
-              # custos prep/docs/serviços (AutoConf jul — cons redistrib sobrescreve)
-              'custo_prep_entrega': 59705.19, 'frete': 4500.00,
-              'despachante_ent': 830.00, 'ipva': 5559.27,
-              'taxas_transf_ent': 6302.77, 'laudo_custo': 2891.10,
-              'garantia_custo': 9040.00,
-              # desp operacionais: ausentes na API
-              'consultoria': 750.00, 'aj_saida': 5894.12,
+              # custos fluem da API via Data Competência (parse_ext_dre multi-extrato)
+              # desp operacionais
+              'aj_saida': 5894.12,
               # financeiras: ausentes/diferentes na API
               'seguro_rec': 10261.86, 'desc_pagar': 8088.33, 'juros_rec': 29.10,
               'desc_receber': 343.59, 'juros_pagar2': 90.75,
@@ -558,41 +554,7 @@ _DRE_CORR = {
               'icms': 21659.17, 'iss': 7463.83, 'alvara': 199.38,
               'iptu': 2143.92, 'custas': 1211.18, 'das': 4590.75,
               },
-        '8': {
-              # lucro-venda 01-19/ago
-              'merch_bruta_sw': 1225858.85, 'merch_bruta_at': 137660.00,
-              'custo_compra_sw': 1028971.65, 'custo_compra_at': 117850.00,
-              'rec_doc_sai': 11887.23, 'rec_svc': 4914.90,
-              # receitas serviço (extrato comp 08/2026)
-              'laudo_venda': 2100.00, 'transf_venda': 1161.00,
-              'fotos': 250.00, 'prep_veiculo': 400.00,
-              'garantia_venda': 190.65, 'aluguel': 9000.00,
-              'rec_diversas': 15500.00, 'venda_comiss': 10000.00,
-              # custos (extrato comp 08/2026)
-              'custo_prep_entrega': 39934.35, 'despachante_ent': 2120.00,
-              'despachante_sai': 2340.00, 'ipva': 19424.07,
-              'taxas_transf_ent': 3952.00, 'taxas_transf_sai': 8468.45,
-              'comunicado_venda': 89.90, 'multas_nao_abat': 703.51,
-              'garantia_custo': 1300.00, 'laudo_custo': 878.40,
-              'comissao_venda': 1200.00, 'pos_vendas': 385.00,
-              # financeiras (extrato comp 08/2026)
-              'retorno_fin': 19991.52, 'intermediacao_fin': 160000.00,
-              'dev_fin': 329900.00, 'retorno_acordos': 28907.96,
-              'seguro_rec': 1340.22, 'rendimento': 5.05,
-              # desp operacionais (extrato comp 08/2026)
-              'salarios': 83986.73, 'aluguel_cond': 25550.00,
-              'dividendos': 55758.94, 'emprestimos': 22356.27,
-              'icms': 23640.62, 'iss': 5854.29, 'iptu': 2143.92,
-              'das': 3000.00, 'publicidade': 9999.00, 'portais': 8444.28,
-              'brindes': 2492.00, 'contabil': 2000.00,
-              'informatica': 863.90, 'manutencao_loja': 800.00,
-              'energia': 314.97, 'telefonia': 574.44, 'limpeza': 263.99,
-              'transporte': 270.40, 'cartorio': 361.00, 'mat_escrit': 217.90,
-              'refeitorio': 180.00, 'plano_saude': 93.67, 'copa': 81.69,
-              'maq_equip': 31.87, 'medicina': 40.00,
-              'tarifa_bancaria': 16.90, 'associacoes': 250.00,
-              'consultoria': 750.00, 'comissao_c': 500.00,
-              },
+        '8': {},  # agosto aberto — API via Data Competência atualiza dinamicamente
     },
     'bk': {
         '1': {'retorno_fin': 7560.40},
@@ -618,18 +580,7 @@ _DRE_CORR = {
         '5': {'rec_svc': 6314.0, 'desc_sw': 125020.01, 'desc_at': 20782.0, 'custo_prep_entrega': 57438.43, 'frete': 80.0, 'despachante_ent': 700.0, 'ipva': 40485.04, 'taxas_transf_ent': 3711.0, 'laudo_custo': 2470.50, 'despachante_sai': 0.0, 'compras_func': 0.0, 'viagens': 4810.74, 'seguro_rec': 4091.67, 'retorno_comiss': 652.16, 'juros_rec': 9679.03, 'desc_pagar': 10896.69, 'desc_receber': 2651.00, 'iof': 4.56, 'juros_pagar2': 238.98},
         '6': {'rec_doc_sai': 5310.40, 'rec_svc': 7000.0, 'fotos': 4250.0, 'rec_diversas': 18147.16, 'custo_prep_entrega': 50890.65, 'frete': 0.0, 'despachante_ent': 1200.0, 'ipva': 16883.52, 'taxas_transf_ent': 2306.0, 'laudo_custo': 1977.10, 'despachante_sai': 0.0, 'compras_func': 0.0, 'maq_equip': 3471.76, 'seguro_rec': 9546.18, 'juros_rec': 42.35, 'desc_pagar': 17123.50, 'desc_receber': 263.17, 'juros_pagar': 9531.10, 'juros_pagar2': 139.38, 'retorno_fin': 24060.29,
               'associacoes': 250.00, 'portais': 10425.29},
-        # m7 Receitas: CONS_new = MM_target + BK_current (preserves BK values, MM corrected post-redistribution)
-        '7': {'merch_bruta_sw': 2852324.00, 'merch_bruta_at': 301500.0,
-              'rec_doc_sai': 6983.28, 'rec_svc': 6719.89, 'venda_comiss': 183.23,
-              'laudo_venda': 4254.90, 'transf_venda': 1110.32, 'fotos': 1000.00,
-              'prep_veiculo': 8150.00, 'aluguel': 12500.00, 'rec_diversas': 15554.90,
-              'garantia_venda': 1650.0, 'custo_prep_entrega': 72399.98, 'frete': 4500.00,
-              'despachante_ent': 738.14, 'ipva': 5586.73, 'taxas_transf_ent': 4143.65,
-              'laudo_custo': 1350.89, 'despachante_sai': 0.0, 'compras_func': 0.0,
-              'medicina': 20.0, 'almoco_meta': 457.44, 'taxas_transf_sai': 13724.88,
-              'pub_adm': 1100.0, 'publicidade': 9999.00, 'seguro_rec': 10261.86,
-              'juros_rec': 27.18, 'desc_pagar': 9513.89, 'desc_receber': 2.34,
-              'juros_pagar2': 105.86, 'comissao_venda': 500.00},
+        '7': {},  # limpo — cons = MM+BK natural, redistribuição vira identidade
     },
 }
 
