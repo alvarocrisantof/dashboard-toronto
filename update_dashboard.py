@@ -548,6 +548,8 @@ _DRE_CORR = {
               'taxas_transf_ent': 6302.77, 'baixa_gravame': 530.16,
               'comunicado_venda': 138.17, 'multas_nao_abat': 595.77,
               'garantia_custo': 20950.00, 'laudo_custo': 3150.80,
+              # pessoal
+              'medicina': 60.00,
               # desp operacionais
               'aj_saida': 5894.12,
               # financeiras: ausentes/diferentes na API
