@@ -543,7 +543,7 @@ _DRE_CORR = {
               'fotos': 1000.00, 'prep_veiculo': 8800.00, 'aluguel': 15500.00,
               'rec_diversas': 33552.44,
               # custos: API inclui veículos ainda não vendidos; AutoConf filtra por venda do mês
-              'custo_prep_entrega': 60947.19,
+              'custo_prep_entrega': 60947.19, 'frete': 0.00,
               'despachante_ent': 830.00, 'ipva': 5559.27,
               'taxas_transf_ent': 6302.77, 'baixa_gravame': 530.16,
               'comunicado_venda': 138.17, 'multas_nao_abat': 595.77,
