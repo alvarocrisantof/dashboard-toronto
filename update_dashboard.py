@@ -551,7 +551,7 @@ _DRE_CORR = {
               # pessoal
               'medicina': 60.00,
               # desp operacionais
-              'aj_saida': 5894.12,
+              'consultoria': 750.00, 'associacoes': 250.00, 'aj_saida': 5894.12,
               # financeiras: ausentes/diferentes na API
               'seguro_rec': 10261.86, 'desc_pagar': 8088.33, 'juros_rec': 29.10,
               'desc_receber': 343.59, 'juros_pagar2': 90.75,
