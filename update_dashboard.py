@@ -566,6 +566,10 @@ _DRE_CORR = {
         '8': {
               # pessoal: API incompleta pra Data Competência 08/2026
               'salarios': 108822.77, 'refeitorio': 839.72, 'transporte': 790.40,
+              # administrativas: API incompleta pra Data Competência 08/2026
+              'copa': 550.29, 'cartorio': 878.98, 'mat_aux': 626.20, 'mat_escrit': 315.07,
+              'seguros': 5237.03, 'contabil': 3203.00, 'informatica': 3216.26,
+              'associacoes': 500.00,
               },
     },
     'bk': {
