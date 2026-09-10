@@ -562,7 +562,10 @@ _DRE_CORR = {
               'icms': 21659.17, 'iss': 7463.83, 'alvara': 199.38,
               'iptu': 2143.92, 'custas': 1211.18, 'das': 4590.75,
               },
-        '8': {},  # agosto aberto — API via Data Competência atualiza dinamicamente
+        '8': {
+              # pessoal: API incompleta pra Data Competência 08/2026
+              'salarios': 108822.77, 'refeitorio': 839.72, 'transporte': 790.40,
+              },
     },
     'bk': {
         '1': {'retorno_fin': 7560.40},
