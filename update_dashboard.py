@@ -451,7 +451,9 @@ _FLUXO_MANUAL = {
             7: {
                 'Santander': {'fin': 10000.00, 'ret': 0, 'q': 1},  # pago 31/07 ausente na API (LTW9I01 já está no extrato jul)
             },
-            8: {}
+            8: {
+                'Pan':       {'fin': 87160.00, 'ret': 0, 'q': 1},  # #783983 Fiat Toro QGM1A96, liquidado 25/08 — parcela ausente na API (Retorno 2285,57 já capturado)
+            }
         },
         'bk': {},
     },
@@ -490,7 +492,7 @@ _DRE_CORR = {
               'desc_receber': 0.0, 'juros_pagar': 14.68},
         '2': {'rec_doc_sai': 14241.12, 'rec_svc': 4670.00,
               'desc_sw': 48327.50,
-              'custo_prep_entrega': 61226.86, 'frete': 100.0,
+              'custo_prep_entrega': 59404.98, 'frete': 100.0,
               'despachante_ent': 1160.0, 'ipva': 12568.52,
               'taxas_transf_ent': 4298.24, 'laudo_custo': 2545.0,
               'retorno_fin': 23911.52,
@@ -512,7 +514,7 @@ _DRE_CORR = {
               'despachante_ent': 2050.00, 'ipva': 23060.09,
               'taxas_transf_ent': 6828.16, 'baixa_gravame': 400.00,
               'comunicado_venda': 81.90, 'multas_nao_abat': 0.00, 'garantia_custo': 6260.00,
-              'laudo_custo': 4264.70,
+              'laudo_custo': 4319.60,
               'pub_adm': 1200.00, 'publicidade': 9299.00, 'feirao': 13105.96,
               'desc_pagar': 9679.23, 'juros_rec': 201.14,
               'desc_receber': 116.44, 'juros_pagar2': 244.17},
@@ -536,8 +538,9 @@ _DRE_CORR = {
               'desc_receber': 263.17, 'juros_pagar2': 5.40},
         '7': {
               # RQL3G14 (31/07) excluido pelo AutoConf — overrides com valores AC
-              'merch_bruta_sw': 2785159.00, 'merch_bruta_at': 344264.00,
-              'custo_compra_sw': 2353922.52, 'custo_compra_at': 284023.40,
+              # RQF3H74 Caoa Chery Tiggo (venda 30/07, R$128.900,00) recompetenciado p/ agosto no AutoConf — excluido de julho
+              'merch_bruta_sw': 2656259.00, 'merch_bruta_at': 344264.00,
+              'custo_compra_sw': 2236422.52, 'custo_compra_at': 284023.40,
               'rec_doc_sai': 8438.73, 'rec_svc': 10250.00,
               'laudo_venda': 4659.80, 'transf_venda': 280.16, 'venda_comiss': 0.00,
               'fotos': 1000.00, 'prep_veiculo': 8800.00, 'aluguel': 15500.00,
