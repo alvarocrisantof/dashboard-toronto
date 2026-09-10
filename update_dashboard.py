@@ -451,9 +451,7 @@ _FLUXO_MANUAL = {
             7: {
                 'Santander': {'fin': 10000.00, 'ret': 0, 'q': 1},  # pago 31/07 ausente na API (LTW9I01 já está no extrato jul)
             },
-            8: {
-                'Pan':       {'fin': 87160.00, 'ret': 0, 'q': 1},  # #783983 Fiat Toro QGM1A96, liquidado 25/08 — parcela ausente na API (Retorno 2285,57 já capturado)
-            }
+            8: {}
         },
         'bk': {},
     },
