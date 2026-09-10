@@ -844,7 +844,7 @@ window.renderDRE=function(){
       res_fin_pos,res_fin_neg,
       retorno_comiss:v(d,'retorno_comiss'),remuner_bank:v(d,'remuner_bank'),
       juros_rec:v(d,'juros_rec'),iof:v(d,'iof'),
-      desc_pagar:v(d,'desc_pagar'),desc_receber:v(d,'desc_receber')
+      desc_pagar:v(d,'desc_pagar'),desc_receber:v(d,'desc_receber'),pecld:v(d,'pecld_rec')
     };
   }
   // compute per month and YTD
@@ -1036,6 +1036,7 @@ window.renderDRE=function(){
   html+=row('   ∙ Remuneração Bancária – TIME','dre-sub2',function(d){return d.remuner_bank;},'','remuner_bank');
   html+=row('   ∙ Descontos a Pagar','dre-sub2',function(d){return d.desc_pagar;},'','desc_pagar');
   html+=row('   ∙ Juros a Receber','dre-sub2',function(d){return d.juros_rec;},'','juros_rec');
+  html+=row('   ∙ Recuperação PECLD','dre-sub2',function(d){return d.pecld;},'','pecld_rec');
   html+=row('Despesas Financeiras','dre-sub',function(d){return d.res_fin_neg;},'','tarifa_bancaria,juros_pagar,juros_pagar2,iof,desc_receber');
   html+=row('   ∙ Tarifa Bancária','dre-sub2',function(d){return d.tar;},'','tarifa_bancaria');
   html+=row('   ∙ IOF','dre-sub2',function(d){return d.iof;},'','iof');
