@@ -833,7 +833,7 @@ window.renderDRE=function(){
       refeit:v(d,'refeitorio'),transp:v(d,'transporte'),unif:v(d,'uniforme'),medic:v(d,'medicina'),
       alug_c:v(d,'aluguel_cond'),copa:v(d,'copa'),cart:v(d,'cartorio'),
       mat:v(d,'mat_aux')+v(d,'mat_escrit'),seg:v(d,'seguros'),cont:v(d,'contabil'),
-      info:v(d,'informatica'),assoc:v(d,'associacoes'),
+      info:v(d,'informatica'),assoc:v(d,'associacoes'),consult:v(d,'consultoria'),viag:v(d,'viagens'),adv:v(d,'juridico'),estac:v(d,'estacionamento'),alugc:v(d,'aluguel_cond2'),
       agua:v(d,'agua'),energ:v(d,'energia'),tel:v(d,'telefonia'),
       limp:v(d,'limpeza'),manut:v(d,'manutencao_loja'),equip:v(d,'maq_equip'),
       pub:v(d,'publicidade'),portais:v(d,'portais'),feirao:v(d,'feirao'),brindes:v(d,'brindes'),churrasco:v(d,'churrasco'),almoco:v(d,'almoco_meta'),
@@ -997,6 +997,12 @@ window.renderDRE=function(){
   html+=row('   ∙ Seguros e Proteções','dre-sub2',function(d){return d.seg;},'','seguros');
   html+=row('   ∙ Serviços Contábeis','dre-sub2',function(d){return d.cont;},'','contabil');
   html+=row('   ∙ Informática','dre-sub2',function(d){return d.info;},'','informatica');
+  html+=row('   ∙ Serviços Consultoria','dre-sub2',function(d){return d.consult;},'','consultoria');
+  html+=row('   ∙ Viagens e Representações','dre-sub2',function(d){return d.viag;},'','viagens');
+  html+=row('   ∙ Serviços Advocatícios','dre-sub2',function(d){return d.adv;},'','juridico');
+  html+=row('   ∙ Associações e Sindicatos','dre-sub2',function(d){return d.assoc;},'','associacoes');
+  html+=row('   ∙ Estacionamento','dre-sub2',function(d){return d.estac;},'','estacionamento');
+  html+=row('   ∙ Aluguéis e Condomínios','dre-sub2',function(d){return d.alugc;},'','aluguel_cond2');
   html+=row('Despesas Estabelecimento','dre-sub',function(d){return d.desp_est;},'','aluguel_cond,agua,energia,telefonia,limpeza,manutencao_loja');
   html+=row('   ∙ Aluguéis/Condomínios','dre-sub2',function(d){return d.alug_c;},'','aluguel_cond');
   html+=row('   ∙ Água e Esgoto','dre-sub2',function(d){return d.agua;},'','agua');
