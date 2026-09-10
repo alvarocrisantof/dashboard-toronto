@@ -485,6 +485,7 @@ _DRE_CORR = {
               'despachante_ent': 3370.0, 'taxas_transf_ent': 5633.18,
               'laudo_custo': 3081.60,
               'salarios': 83976.32,
+              'associacoes': 250.00,
               'retorno_fin': 27013.74,
               'desc_pagar': 26668.25, 'juros_rec': 46.88,
               'desc_receber': 0.0, 'juros_pagar': 14.68},
