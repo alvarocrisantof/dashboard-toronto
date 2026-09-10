@@ -830,7 +830,7 @@ window.renderDRE=function(){
       txs_sai:v(d,'taxas_transf_sai'),desp_sai:v(d,'despachante_sai'),
       salarios:v(d,'salarios'),desp_adm_dem:v(d,'desp_adm_dem'),desp_pessoal_var:v(d,'desp_pessoal_var'),ferias:v(d,'ferias'),rescisao:v(d,'rescisao'),
       fgts_r:v(d,'fgts_rescis'),saude:v(d,'plano_saude'),datas:v(d,'datas_com'),
-      refeit:v(d,'refeitorio'),transp:v(d,'transporte'),unif:v(d,'uniforme'),
+      refeit:v(d,'refeitorio'),transp:v(d,'transporte'),unif:v(d,'uniforme'),medic:v(d,'medicina'),
       alug_c:v(d,'aluguel_cond'),copa:v(d,'copa'),cart:v(d,'cartorio'),
       mat:v(d,'mat_aux')+v(d,'mat_escrit'),seg:v(d,'seguros'),cont:v(d,'contabil'),
       info:v(d,'informatica'),assoc:v(d,'associacoes'),
@@ -986,8 +986,8 @@ window.renderDRE=function(){
   html+=row('   ∙ Plano de Saúde','dre-sub2',function(d){return d.saude;},'','plano_saude');
   html+=row('   ∙ Refeições/Lanches','dre-sub2',function(d){return d.refeit;},'','refeitorio');
   html+=row('   ∙ Transporte','dre-sub2',function(d){return d.transp;},'','transporte');
-  html+=row('   ∙ Uniforme','dre-sub2',function(d){return d.uniforme||0;},'','uniforme');
-  html+=row('   ∙ Medicina do Trabalho - ASO','dre-sub2',function(d){return d.medicina||0;},'','medicina');
+  html+=row('   ∙ Uniforme','dre-sub2',function(d){return d.unif;},'','uniforme');
+  html+=row('   ∙ Medicina do Trabalho - ASO','dre-sub2',function(d){return d.medic;},'','medicina');
   html+=row('   ∙ Churrasco por Meta','dre-sub2',function(d){return d.churrasco;},'','churrasco');
   html+=row('   ∙ Almoço Meta Diamante','dre-sub2',function(d){return d.almoco;},'','almoco_meta');
   html+=row('Despesas Administrativas','dre-sub',function(d){return d.desp_adm;},'','aluguel_cond2,copa,cartorio,mat_aux,mat_escrit,seguros,contabil,informatica,associacoes,consultoria,juridico,viagens,estacionamento,pub_adm');
