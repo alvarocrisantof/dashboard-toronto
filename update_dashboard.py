@@ -493,7 +493,7 @@ _DRE_CORR = {
               'desc_sw': 48327.50,
               'custo_prep_entrega': 59404.98, 'frete': 100.0,
               'despachante_ent': 1160.0, 'ipva': 12568.52,
-              'taxas_transf_ent': 4298.24, 'laudo_custo': 2545.0,
+              'taxas_transf_ent': 4452.24, 'laudo_custo': 2545.0,
               'retorno_fin': 22028.78,
               'desc_pagar': 15489.14, 'juros_rec': 379.35,
               'desc_receber': 291.40, 'juros_pagar2': 43.49},
