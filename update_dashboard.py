@@ -570,6 +570,8 @@ _DRE_CORR = {
               'rec_doc_sai': 15123.44, 'rec_svc': 8460.00,
               # API traz Intermediação Financ. de R$160.000 que não existe no relatório AutoConf de agosto
               'intermediacao_fin': 0.00,
+              # API traz Devolução - intermediação de financiamento indevida; AutoConf mostra Devoluções = 0
+              'dev_fin': 0.00,
               # pessoal: API incompleta pra Data Competência 08/2026
               'salarios': 108822.77, 'refeitorio': 839.72, 'transporte': 790.40,
               # administrativas: API incompleta pra Data Competência 08/2026
