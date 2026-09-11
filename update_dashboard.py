@@ -607,7 +607,7 @@ _DRE_CORR = {
               'custo_prep_entrega': 27463.36, 'despachante_ent': 100.00,
               'ipva': 1295.20, 'taxas_transf_ent': 374.00, 'laudo_custo': 120.00,
               'desc_pagar': 366.71, 'juros_rec': 0.01, 'juros_pagar2': 0.01,
-              'taxas_transf_sai': 1796.16},
+              'taxas_transf_sai': 2569.82, 'despachante_sai': 0.00, 'pos_vendas': 14558.35},
         '8': {'desc_pagar': 290.26, 'juros_rec': 0.01, 'desc_receber': 12.00,
               'juros_pagar2': 132.40},
     },
