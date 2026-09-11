@@ -572,6 +572,9 @@ _DRE_CORR = {
               'copa': 550.29, 'cartorio': 878.98, 'mat_aux': 626.20, 'mat_escrit': 315.07,
               'seguros': 5237.03, 'contabil': 3203.00, 'informatica': 3216.26,
               'associacoes': 500.00,
+              # financeiras: API incompleta pra Data Competência 08/2026
+              'retorno_fin': 30517.41, 'seguro_rec': 1464.86,
+              'desc_pagar': 5878.40, 'juros_rec': 200.10, 'juros_pagar2': 4301.64,
               },
     },
     'bk': {
