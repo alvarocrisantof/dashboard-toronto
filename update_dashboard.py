@@ -605,7 +605,7 @@ _DRE_CORR = {
               'transf_venda': 480.16, 'fotos': 250.00, 'venda_comiss': 0.00,
               'custo_prep_entrega': 27463.36, 'despachante_ent': 100.00,
               'ipva': 1295.20, 'taxas_transf_ent': 374.00, 'laudo_custo': 120.00,
-              'desc_pagar': 363.11, 'juros_rec': 0.01, 'juros_pagar2': 0.00,
+              'desc_pagar': 366.71, 'juros_rec': 0.01, 'juros_pagar2': 0.01,
               'taxas_transf_sai': 1796.16},
     },
     'cons': {
