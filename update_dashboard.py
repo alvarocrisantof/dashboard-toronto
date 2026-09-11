@@ -539,9 +539,9 @@ _DRE_CORR = {
         '7': {
               # RQL3G14 (31/07) excluido pelo AutoConf — overrides com valores AC
               # RQF3H74 Caoa Chery Tiggo (venda 30/07, R$128.900,00) recompetenciado p/ agosto no AutoConf — excluido de julho
-              'merch_bruta_sw': 2656259.00, 'merch_bruta_at': 344264.00,
+              'merch_bruta_sw': 2650159.00, 'merch_bruta_at': 344264.00,
               'custo_compra_sw': 2229822.52, 'custo_compra_at': 284023.40,
-              'rec_doc_sai': 8438.73, 'rec_svc': 10250.00,
+              'rec_doc_sai': 8438.73, 'rec_svc': 10050.00,
               'laudo_venda': 4659.80, 'transf_venda': 280.16, 'venda_comiss': 0.00,
               'fotos': 1000.00, 'prep_veiculo': 8800.00, 'aluguel': 15500.00,
               'rec_diversas': 33552.44,
