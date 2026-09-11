@@ -589,7 +589,8 @@ _DRE_CORR = {
     },
     'bk': {
         '1': {'retorno_fin': 7560.40},
-        '2': {'baixa_gravame': 40.00, 'laudo_custo': 780.00},
+        '2': {'baixa_gravame': 40.00, 'laudo_custo': 780.00,
+              'custo_prep_entrega': 4427.16, 'taxas_transf_ent': 7404.60},
         '3': {'taxas_transf_ent': 593.07},
         '4': {'despachante_ent': 200.00, 'ipva': 5139.82, 'taxas_transf_ent': 428.00,
               'multas_nao_abat': 104.13, 'laudo_custo': 1086.60},
