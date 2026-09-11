@@ -504,7 +504,7 @@ _DRE_CORR = {
               'taxas_transf_ent': 5914.31, 'baixa_gravame': 11376.29,
               'comunicado_venda': 135.90, 'multas_nao_abat': 131.46,
               'garantia_custo': 9690.00, 'laudo_custo': 2375.40,
-              'dev_fin': 205900.00,
+              'dev_fin': 205900.00, 'intermediacao_fin': 216876.29,
               'refeitorio': 704.44,
               'pub_adm': 1200.0, 'publicidade': 7949.94,
               'retorno_fin': 24137.05, 'desc_pagar': 11879.93,
