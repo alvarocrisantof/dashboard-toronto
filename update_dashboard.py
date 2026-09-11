@@ -579,7 +579,7 @@ _DRE_CORR = {
               'despachante_ent': 3660.00, 'ipva': 20108.20,
               'taxas_transf_ent': 3186.00, 'laudo_custo': 988.20,
               # administrativas: API incompleta pra Data Competência 08/2026 (valores AutoConf atualizados)
-              'copa': 158.25, 'cartorio': 722.00, 'mat_aux': 428.71, 'mat_escrit': 290.68,
+              'copa': 158.25, 'cartorio': 646.00, 'mat_aux': 428.71, 'mat_escrit': 290.68,
               'seguros': 4515.58, 'contabil': 2000.00, 'informatica': 3119.31,
               'associacoes': 250.00,
               # financeiras: API incompleta pra Data Competência 08/2026
