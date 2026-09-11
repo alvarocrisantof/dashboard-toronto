@@ -570,6 +570,8 @@ _DRE_CORR = {
               'rec_doc_sai': 15123.44, 'rec_svc': 8460.00,
               # API traz Intermediação Financ. de R$160.000 que não existe no relatório AutoConf de agosto
               'intermediacao_fin': 0.00,
+              # API traz Despachante Saída indevido; ausente do relatório AutoConf de Despesas com Vendas
+              'despachante_sai': 0.00,
               # API traz Devolução - intermediação de financiamento indevida; AutoConf mostra Devoluções = 0
               'dev_fin': 0.00,
               # custos: API incompleta pra Data Competência 08/2026
