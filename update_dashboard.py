@@ -566,6 +566,8 @@ _DRE_CORR = {
               'iptu': 2143.92, 'custas': 1211.18, 'das': 4590.75,
               },
         '8': {
+              # receitas: API incompleta pra Data Competência 08/2026
+              'rec_doc_sai': 15123.44, 'rec_svc': 8460.00,
               # pessoal: API incompleta pra Data Competência 08/2026
               'salarios': 108822.77, 'refeitorio': 839.72, 'transporte': 790.40,
               # administrativas: API incompleta pra Data Competência 08/2026
