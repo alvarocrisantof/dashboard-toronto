@@ -596,6 +596,8 @@ _DRE_CORR = {
               'comunicado_venda': 28.00, 'laudo_custo': 299.70},
         '4': {'despachante_ent': 200.00, 'ipva': 6373.77, 'taxas_transf_ent': 428.00,
               'multas_nao_abat': 104.13, 'laudo_custo': 1141.50, 'custo_prep_entrega': 2668.21},
+        '5': {'custo_prep_entrega': 14641.71, 'despachante_ent': 100.00, 'ipva': 23582.30,
+              'taxas_transf_ent': 246.00, 'laudo_custo': 419.40},
         '6': {'rec_doc_sai': 794.73, 'rec_diversas': 46.22,
               'ipva': 1046.90, 'taxas_transf_ent': 208.00, 'laudo_custo': 839.30},
         '7': {'merch_bruta_sw': 809100.00, 'merch_bruta_at': 69000.00,
