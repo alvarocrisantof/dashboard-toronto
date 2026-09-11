@@ -540,18 +540,18 @@ _DRE_CORR = {
               # RQL3G14 (31/07) excluido pelo AutoConf — overrides com valores AC
               # RQF3H74 Caoa Chery Tiggo (venda 30/07, R$128.900,00) recompetenciado p/ agosto no AutoConf — excluido de julho
               'merch_bruta_sw': 2656259.00, 'merch_bruta_at': 344264.00,
-              'custo_compra_sw': 2236422.52, 'custo_compra_at': 284023.40,
+              'custo_compra_sw': 2229822.52, 'custo_compra_at': 284023.40,
               'rec_doc_sai': 8438.73, 'rec_svc': 10250.00,
               'laudo_venda': 4659.80, 'transf_venda': 280.16, 'venda_comiss': 0.00,
               'fotos': 1000.00, 'prep_veiculo': 8800.00, 'aluguel': 15500.00,
               'rec_diversas': 33552.44,
               # custos: API inclui veículos ainda não vendidos; AutoConf filtra por venda do mês
-              'custo_prep_entrega': 60947.19, 'frete': 0.00,
-              'despachante_ent': 830.00, 'despachante_sai': 0.00, 'ipva': 5559.27,
+              'custo_prep_entrega': 66330.00, 'frete': 0.00,
+              'despachante_ent': 830.00, 'despachante_sai': 0.00, 'ipva': 9825.83,
               'taxas_transf_sai': 17169.45,
-              'taxas_transf_ent': 6302.77, 'baixa_gravame': 530.16,
+              'taxas_transf_ent': 7226.93, 'baixa_gravame': 530.16,
               'comunicado_venda': 138.17, 'multas_nao_abat': 595.77,
-              'garantia_custo': 20950.00, 'laudo_custo': 3150.80,
+              'garantia_custo': 20950.00, 'laudo_custo': 3634.90,
               # pessoal
               'medicina': 60.00,
               # desp operacionais
