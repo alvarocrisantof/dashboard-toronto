@@ -836,7 +836,7 @@ window.renderDRE=function(){
       info:v(d,'informatica'),assoc:v(d,'associacoes'),consult:v(d,'consultoria'),viag:v(d,'viagens'),adv:v(d,'juridico'),estac:v(d,'estacionamento'),alugc:v(d,'aluguel_cond2'),pubadm:v(d,'pub_adm'),
       agua:v(d,'agua'),energ:v(d,'energia'),tel:v(d,'telefonia'),
       limp:v(d,'limpeza'),manut:v(d,'manutencao_loja'),equip:v(d,'maq_equip'),
-      pub:v(d,'publicidade'),portais:v(d,'portais'),feirao:v(d,'feirao'),brindes:v(d,'brindes'),churrasco:v(d,'churrasco'),almoco:v(d,'almoco_meta'),
+      pub:v(d,'publicidade'),portais:v(d,'portais'),feirao:v(d,'feirao'),brindes:v(d,'brindes'),churrasco:v(d,'churrasco'),almoco:v(d,'almoco_meta'),cursos:v(d,'cursos'),
       labore:v(d,'pro_labore'),divid:v(d,'dividendos'),emp:v(d,'emprestimos'),
       ret_fin:v(d,'retorno_fin'),ret_ac:v(d,'retorno_acordos'),rend:v(d,'rendimento'),
       tar:v(d,'tarifa_bancaria'),jur:v(d,'juros_pagar')+v(d,'juros_pagar2'),
@@ -991,6 +991,7 @@ window.renderDRE=function(){
   html+=row('   ∙ Medicina do Trabalho - ASO','dre-sub2',function(d){return d.medic;},'','medicina');
   html+=row('   ∙ Churrasco por Meta','dre-sub2',function(d){return d.churrasco;},'','churrasco');
   html+=row('   ∙ Almoço Meta Diamante','dre-sub2',function(d){return d.almoco;},'','almoco_meta');
+  html+=row('   ∙ Cursos e Treinamentos','dre-sub2',function(d){return d.cursos;},'','cursos');
   html+=row('Despesas Administrativas','dre-sub',function(d){return d.desp_adm;},'','aluguel_cond2,copa,cartorio,mat_aux,mat_escrit,seguros,contabil,informatica,associacoes,consultoria,juridico,viagens,estacionamento,pub_adm');
   html+=row('   ∙ Copa e Bar','dre-sub2',function(d){return d.copa;},'','copa');
   html+=row('   ∙ Cartório','dre-sub2',function(d){return d.cart;},'','cartorio');
