@@ -551,7 +551,7 @@ _DRE_CORR = {
               'taxas_transf_sai': 17169.45,
               'taxas_transf_ent': 7226.93, 'baixa_gravame': 530.16,
               'comunicado_venda': 138.17, 'multas_nao_abat': 595.77,
-              'garantia_custo': 20950.00, 'laudo_custo': 3634.90,
+              'garantia_custo': 20950.00, 'laudo_custo': 3580.00,
               # pessoal
               'medicina': 60.00,
               # desp operacionais
