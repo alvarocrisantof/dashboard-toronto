@@ -548,6 +548,7 @@ _DRE_CORR = {
               # custos: API inclui veículos ainda não vendidos; AutoConf filtra por venda do mês
               'custo_prep_entrega': 60947.19, 'frete': 0.00,
               'despachante_ent': 830.00, 'despachante_sai': 0.00, 'ipva': 5559.27,
+              'taxas_transf_sai': 17169.45,
               'taxas_transf_ent': 6302.77, 'baixa_gravame': 530.16,
               'comunicado_venda': 138.17, 'multas_nao_abat': 595.77,
               'garantia_custo': 20950.00, 'laudo_custo': 3150.80,
