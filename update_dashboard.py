@@ -578,10 +578,10 @@ _DRE_CORR = {
               'taxas_transf_ent': 3186.00, 'laudo_custo': 988.20,
               # pessoal: API incompleta pra Data Competência 08/2026
               'salarios': 108822.77, 'refeitorio': 839.72, 'transporte': 790.40,
-              # administrativas: API incompleta pra Data Competência 08/2026
-              'copa': 550.29, 'cartorio': 878.98, 'mat_aux': 626.20, 'mat_escrit': 315.07,
-              'seguros': 5237.03, 'contabil': 3203.00, 'informatica': 3216.26,
-              'associacoes': 500.00,
+              # administrativas: API incompleta pra Data Competência 08/2026 (valores AutoConf atualizados)
+              'copa': 158.25, 'cartorio': 722.00, 'mat_aux': 428.71, 'mat_escrit': 290.68,
+              'seguros': 4515.58, 'contabil': 2000.00, 'informatica': 3119.31,
+              'associacoes': 250.00,
               # financeiras: API incompleta pra Data Competência 08/2026
               'retorno_fin': 30517.41, 'seguro_rec': 1464.86,
               'desc_pagar': 5878.40, 'juros_rec': 200.10, 'juros_pagar2': 4301.64,
