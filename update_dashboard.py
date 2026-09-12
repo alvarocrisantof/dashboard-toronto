@@ -605,7 +605,7 @@ _DRE_CORR = {
               'rec_doc_sai': 790.48, 'rec_svc': 2650.00, 'laudo_venda': 1119.90,
               'transf_venda': 480.16, 'fotos': 600.00, 'venda_comiss': 2078.38,
               'custo_prep_entrega': 28679.17, 'frete': 4500.00, 'despachante_ent': 400.00,
-              'ipva': 5346.83, 'taxas_transf_ent': 1210.00, 'laudo_custo': 524.40,
+              'ipva': 5346.83, 'taxas_transf_ent': 1210.00, 'laudo_custo': 594.30,
               'desc_pagar': 366.71, 'juros_rec': 0.01, 'juros_pagar2': 0.01,
               'taxas_transf_sai': 2569.82, 'despachante_sai': 0.00, 'pos_vendas': 14558.35},
         '8': {'desc_pagar': 290.26, 'juros_rec': 0.01, 'desc_receber': 12.00,
