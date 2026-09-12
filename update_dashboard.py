@@ -613,7 +613,7 @@ _DRE_CORR = {
               'salarios': 24836.04, 'copa': 392.04, 'cartorio': 156.98, 'agua': 90.97,
               'despachante_sai': 0.00, 'rec_doc_sai': 1720.27,
               'custo_prep_entrega': 10805.20, 'frete': 4000.00, 'despachante_ent': 380.00,
-              'ipva': 2930.43, 'taxas_transf_ent': 1042.28, 'laudo_custo': 359.40,
+              'ipva': 2930.43, 'taxas_transf_ent': 1042.28, 'laudo_custo': 349.50,
               'multas_nao_abat': 0.00},
     },
     'cons': {
