@@ -610,7 +610,7 @@ _DRE_CORR = {
               'taxas_transf_sai': 2569.82, 'despachante_sai': 0.00, 'pos_vendas': 14558.35},
         '8': {'desc_pagar': 290.26, 'juros_rec': 0.01, 'desc_receber': 12.00,
               'juros_pagar2': 132.40,
-              'salarios': 24836.04, 'copa': 392.04, 'cartorio': 156.98, 'agua': 90.97,
+              'salarios': 24836.04, 'copa': 725.96, 'cartorio': 232.98, 'agua': 90.97,
               'despachante_sai': 0.00, 'rec_doc_sai': 1720.27,
               'custo_prep_entrega': 10805.20, 'frete': 4000.00, 'despachante_ent': 380.00,
               'ipva': 2930.43, 'taxas_transf_ent': 1042.28, 'laudo_custo': 349.50,
