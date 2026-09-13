@@ -494,12 +494,10 @@ function renderBI(){
   document.getElementById('pg-visaogeral').innerHTML=html;html='';
 
   // ── Profit side by side
-  html+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px">';
   html+=section('Lucro Bruto Mensal','Receita – Deduções – Custos Diretos',
-    svgBar(lbVals,mnAll,{color:'#4a9be8',h:170}));
+    svgBar(lbVals,mnAll,{color:'#4a9be8',h:300}));
   html+=section('Resultado Líquido Mensal','Lucro bruto – Desp. operacionais + Financeiro',
-    svgLine([{vals:resVals,color:clr(totRes)}],mnAll,{h:175,showVals:true}));
-  html+='</div>';
+    svgLine([{vals:resVals,color:clr(totRes)}],mnAll,{h:300,showVals:true}));
 
   // ── Margin evolution (line chart)
   var pLBm=d.rec.map(function(r,i){return r>0?d.lb[i]/r*100:null;});
@@ -511,7 +509,7 @@ function renderBI(){
     svgLine([
       {vals:pLBm,color:'#4a9be8',label:'Margem Bruta'},
       {vals:pResm,color:clr(totRes),label:'Margem Líquida'}
-    ],mnAll,{h:180})
+    ],mnAll,{h:280})
     +'<div style="display:flex;gap:18px;margin-top:10px;font-size:11px;color:#6b7f96">'
     +'<span><span style="display:inline-block;width:20px;height:2px;background:#4a9be8;margin-right:6px;vertical-align:middle;border-radius:2px"></span>Margem Bruta (média: '+pLB.toFixed(1)+'%)</span>'
     +'<span><span style="display:inline-block;width:20px;height:2px;background:'+clr(totRes)+';margin-right:6px;vertical-align:middle;border-radius:2px"></span>Margem Líquida (média: '+pRes.toFixed(1)+'%)</span>'
@@ -521,7 +519,7 @@ function renderBI(){
   
   var custoAq=d.rec.map(function(r,i){var ca=(d.cshow[i]||0)+(d.catac[i]||0);return ca>0?ca:Math.max(0,r-(d.lb[i]||0));});
   html+=section('Faturamento vs Lucro Bruto por Mês','Barras agrupadas: custo de aquisição (escuro) × lucro bruto (azul)',
-    svgGroupBar([custoAq.slice(0,12),lbVals.slice(0,12)],['Custo de Aquisição','Lucro Bruto'],['#1e3a6e','#4a9be8'],mnAll,{h:210,showVals:true}));
+    svgGroupBar([custoAq.slice(0,12),lbVals.slice(0,12)],['Custo de Aquisição','Lucro Bruto'],['#1e3a6e','#4a9be8'],mnAll,{h:320,showVals:true}));
   document.getElementById('pg-resultado').innerHTML=html;html='';
 
 
