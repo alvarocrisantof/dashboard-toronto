@@ -586,6 +586,13 @@ _DRE_CORR = {
               'retorno_fin': 30517.41, 'seguro_rec': 1464.86,
               'desc_pagar': 5878.40, 'juros_rec': 200.10, 'juros_pagar2': 4301.64,
               },
+        '9': {'rec_doc_sai': 6497.01, 'rec_svc': 3740.00,
+              'custo_prep_entrega': 9319.76, 'despachante_ent': 260.00,
+              'ipva': 4581.02, 'taxas_transf_ent': 1086.16, 'laudo_custo': 54.90,
+              'despachante_sai': 0.00, 'publicidade': 9999.00,
+              'maq_equip': 31.89, 'aj_saida': 0.00,
+              'desc_pagar': 9487.67, 'juros_rec': 1.98,
+              'desc_receber': 250.01, 'juros_pagar2': 22.68},
     },
     'bk': {
         '1': {'retorno_fin': 7560.40},
