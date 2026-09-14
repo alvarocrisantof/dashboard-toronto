@@ -590,7 +590,7 @@ _DRE_CORR = {
               'custo_prep_entrega': 9319.76, 'despachante_ent': 260.00,
               'ipva': 4581.02, 'taxas_transf_ent': 1086.16, 'laudo_custo': 54.90,
               'despachante_sai': 0.00, 'publicidade': 9999.00,
-              'maq_equip': 31.89, 'aj_saida': 0.00,
+              'maq_equip': 31.89,
               'desc_pagar': 9487.67, 'juros_rec': 1.98,
               'desc_receber': 250.01, 'juros_pagar2': 22.68},
     },
