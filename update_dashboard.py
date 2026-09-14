@@ -671,6 +671,18 @@ _DRE_CORR_2025 = {
             'retorno_comiss': 6289.79, 'desc_pagar': 0.00, 'juros_rec': 291.18,
             'desc_receber': 0.00, 'juros_pagar2': 0.00,
         },
+        '3': {
+            # RECEITAS/CUSTOS
+            'venda_svc': 2566.00, 'custo_prep_entrega': 265.00, 'laudo_custo': 404.90,
+            # DESPESAS OPERACIONAIS
+            'comissao_c': 1659.20, 'comissao_venda': 0.00,
+            'desp_adm_dem': 0.00, 'desp_pessoal_var': 0.00,
+            'agua': 56.44, 'juridico': 100.00, 'contabil': 0.00, 'emprestimos': 0.00,
+            # RES. FINANCEIRO
+            'retorno_comiss': 848.85, 'rendimento': 4.84, 'desc_pagar': 0.01,
+            'juros_rec': 0.00, 'desc_receber': 0.00, 'juros_pagar': 19.91,
+            'juros_pagar2': 0.00,
+        },
     },
     'cons': {
         '1': {
