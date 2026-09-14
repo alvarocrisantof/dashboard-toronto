@@ -640,7 +640,26 @@ _DRE_CORR = {
 
 _DRE_CORR_2025 = {
     'mm':   {},
-    'bk':   {},
+    'bk':   {
+        '1': {
+            # RECEITAS — API traz Data Competência errada pra jan/2025, recompetenciada
+            'merch_bruta_sw': 972100.00, 'rec_doc_sai': 915.00, 'rec_svc': 350.00,
+            'intermediacao_fin': 49500.00,
+            # DEDUÇÕES
+            'desc_sw': 8900.00, 'dev_fin': 49500.00,
+            # CUSTOS
+            'custo_compra_sw': 883900.00, 'custo_prep_entrega': 3176.09,
+            'frete': 3750.00, 'ipva': 463.95, 'taxas_transf_ent': 110.00,
+            'laudo_custo': 54.90,
+            # DESPESAS OPERACIONAIS
+            'agua': 82.22, 'juridico': 3399.00, 'manutencao_loja': 0.00,
+            'emprestimos': 0.00, 'desp_pessoal_var': 92.00, 'desp_adm_dem': 0.00,
+            'contabil': 0.00, 'comissao_venda': 0.00,
+            # RES. FINANCEIRO
+            'desc_pagar': 549.99, 'juros_rec': 0.00, 'desc_receber': 50.00,
+            'juros_pagar': 0.30, 'juros_pagar2': 0.00,
+        },
+    },
     'cons': {
         '1': {
             # RECEITAS — consolidado AutoConf jan/2025
