@@ -709,7 +709,7 @@ _DRE_CORR_2025 = {
             'juros_rec':           2018.44,
             'tarifa_bancaria':      815.24,
             'desc_receber':         380.22,
-            'juros_pagar':            0.00,
+            'juros_pagar':          290.83,
             'juros_pagar2':        2187.45,
         },
         '2': {
