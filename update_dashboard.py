@@ -696,6 +696,14 @@ _DRE_CORR_2025 = {
             'retorno_comiss': 358.90, 'desc_pagar': 3116.10, 'juros_rec': 95.97,
             'juros_pagar': 37.60,
         },
+        '4': {
+            # CUSTOS
+            'custo_prep_entrega': 80.00, 'frete': 3755.00, 'laudo_custo': 514.70,
+            # DESPESAS OPERACIONAIS
+            'agua': 142.90, 'contabil': 6838.17, 'juridico': 150.00,
+            # RES. FINANCEIRO
+            'juros_rec': 1235.57, 'desc_pagar': 325.10, 'juros_pagar': 35.37,
+        },
     },
     'cons': {
         '1': {
