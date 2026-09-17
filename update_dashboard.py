@@ -749,6 +749,19 @@ _DRE_CORR_2025 = {
             # RES. FINANCEIRO
             'desc_pagar': 2680.96, 'desc_receber': 27.30,
         },
+        '11': {
+            # RECEITAS
+            'rec_doc_sai': 130.16, 'rec_svc': 1400.00, 'laudo_venda': 350.00,
+            # DEDUÇÕES
+            'desc_at': 10000.00,
+            # CUSTOS
+            'custo_prep_entrega': 20971.33, 'laudo_custo': 720.00,
+            # DESPESAS OPERACIONAIS
+            'contabil': 1654.96, 'agua': 288.18, 'desp_pessoal_var': 120.00,
+            # RES. FINANCEIRO
+            'retorno_comiss': 1152.82, 'desc_pagar': 1735.34,
+            'desc_receber': 0.04, 'juros_pagar': 1.48,
+        },
     },
     'cons': {
         '1': {
