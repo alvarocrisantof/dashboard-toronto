@@ -658,6 +658,19 @@ _DRE_CORR_2025 = {
             'juros_rec': 2018.44, 'desc_pagar': 15038.55, 'desc_receber': 330.22,
             'juros_pagar': 290.83, 'juros_pagar2': 2187.15,
         },
+        '2': {
+            # RECEITAS
+            'venda_svc': 33281.86,
+            # CUSTOS
+            'laudo_custo': 5960.20, 'custo_prep_entrega': 53494.77, 'ipva': 10151.10,
+            # DESPESAS OPERACIONAIS
+            'comissao_venda': 17806.90, 'despachante_sai': 3947.29,
+            'desp_pessoal_var': 825.38, 'desp_adm_dem': 2235.37, 'contabil': 78847.51,
+            'juridico': 3829.50, 'emprestimos': 24059.54, 'agua': 208.00,
+            # RES. FINANCEIRO
+            'desc_pagar': 11836.76, 'desc_receber': 1935.00, 'juros_rec': 267.79,
+            'juros_pagar2': 0.00, 'juros_pagar': 108.41,
+        },
     },
     'bk':   {
         '1': {
