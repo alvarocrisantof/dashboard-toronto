@@ -938,6 +938,7 @@ _DRE_CORR_2025 = {
         '11': {
             # RECEITAS
             'rec_doc_sai': 130.16, 'rec_svc': 1400.00, 'laudo_venda': 350.00,
+            'venda_svc': 510.00,
             # DEDUÇÕES
             'desc_at': 10000.00,
             # CUSTOS
