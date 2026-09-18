@@ -950,7 +950,7 @@ _DRE_CORR_2025 = {
         },
         '12': {
             # RECEITAS
-            'rec_doc_sai': 1105.79, 'rec_svc': 830.16,
+            'rec_doc_sai': 1105.79, 'rec_svc': 830.16, 'rec_diversas': 5000.00,
             # DEDUÇÕES
             'desc_at': 25050.00,
             # CUSTOS
