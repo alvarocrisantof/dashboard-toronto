@@ -639,7 +639,26 @@ _DRE_CORR = {
 }
 
 _DRE_CORR_2025 = {
-    'mm':   {},
+    'mm':   {
+        '1': {
+            # RECEITAS
+            'rec_svc': 9700.00, 'rec_doc_sai': 5023.95,
+            'intermediacao_fin': 0.00,
+            # DEDUÇÕES
+            'desc_sw': 16300.00, 'dev_fin': 0.00,
+            # CUSTOS
+            'custo_prep_entrega': 69539.60, 'taxas_transf_ent': 17166.32,
+            'ipva': 6616.34, 'laudo_custo': 7808.70,
+            # DESPESAS OPERACIONAIS
+            'comissao_venda': 768.13, 'agua': 315.00,
+            'desp_pessoal_var': 5552.80, 'desp_adm_dem': 2183.95,
+            'contabil': 60574.88, 'juridico': 9265.15, 'pub_adm': 250.00,
+            'manutencao_loja': 0.00, 'emprestimos': 23204.23,
+            # RES. FINANCEIRO
+            'juros_rec': 2018.44, 'desc_pagar': 15038.55, 'desc_receber': 330.22,
+            'juros_pagar': 290.83, 'juros_pagar2': 2187.15,
+        },
+    },
     'bk':   {
         '1': {
             # RECEITAS — API traz Data Competência errada pra jan/2025, recompetenciada
