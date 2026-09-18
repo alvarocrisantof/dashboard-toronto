@@ -742,6 +742,9 @@ _DRE_CORR_2025 = {
             'despachante_sai': 626.90, 'limpeza': 585.90, 'refeitorio': 883.00,
             'desp_adm_dem': 48.00, 'desp_pessoal_var': 65.80, 'contabil': 54752.85,
             'informatica': 9900.00, 'juridico': 8988.90, 'emprestimos': 26391.86,
+            # RES. FINANCEIRO
+            'retorno_comiss': 39412.99, 'desc_pagar': 11736.80, 'juros_rec': 981.21,
+            'tarifa_bancaria': 1222.29, 'desc_receber': 250.37, 'juros_pagar': 2926.62,
         },
     },
     'bk':   {
@@ -779,7 +782,7 @@ _DRE_CORR_2025 = {
             # RECEITAS/CUSTOS
             'venda_svc': 2566.00, 'custo_prep_entrega': 265.00, 'laudo_custo': 404.90,
             # DESPESAS OPERACIONAIS
-            'comissao_c': 1659.20, 'comissao_venda': 0.00,
+            'comissao_venda': 1659.20, 'comissao_c': 0.00, 'despachante_sai': 0.00,
             'desp_adm_dem': 0.00, 'desp_pessoal_var': 0.00,
             'agua': 56.44, 'juridico': 100.00, 'contabil': 0.00, 'emprestimos': 0.00,
             # RES. FINANCEIRO
@@ -1021,8 +1024,8 @@ _DRE_CORR_2025 = {
             'juros_rec':            558.97,
             'tarifa_bancaria':      783.49,
             'desc_receber':        1935.00,
-            'juros_pagar':            0.00,
-            'juros_pagar2':         108.41,
+            'juros_pagar':          108.41,
+            'juros_pagar2':           0.00,
         },
         '3': {
             # RECEITAS — consolidado AutoConf mar/2025
