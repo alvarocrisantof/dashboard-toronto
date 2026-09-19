@@ -510,6 +510,11 @@ function renderBI(){
   html+=section('Resultado Líquido Mensal','Lucro bruto – Desp. operacionais + Financeiro',
     svgLine([{vals:resVals,color:clr(totRes)}],mnAll,{h:300,showVals:true}));
 
+  // ── Lucro Líquido Mensal (Resultado + Distrib. Dividendos)
+  var lucroLiquidoVals=resVals.map(function(v,i){return v+(d.div[i]||0);});
+  html+=section('Lucro Líquido Mensal','Resultado Líquido + Distribuição de Dividendos (resultado sem o peso da distribuição aos sócios)',
+    svgLine([{vals:lucroLiquidoVals,color:clr(totLiq)}],mnAll,{h:300,showVals:true}));
+
   // ── Margin evolution (line chart)
   var pLBm=d.rec.map(function(r,i){return r>0?d.lb[i]/r*100:null;});
   var pResm=d.rec.map(function(r,i){return r>0?d.res[i]/r*100:null;});
