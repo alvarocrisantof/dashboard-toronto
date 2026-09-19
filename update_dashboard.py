@@ -2289,6 +2289,17 @@ _DRE_CORR_2024 = {
             # DESPESAS OPERACIONAIS
             'desp_pessoal_var': 373.99, 'agua': 313.38, 'juridico': 1020.00,
         },
+        '10': {
+            # RECEITAS
+            'venda_svc': 25815.37,
+            # CUSTOS
+            'custo_prep_entrega': 605.45,
+            # DESPESAS OPERACIONAIS
+            'pub_adm': 1293.00, 'contabil': 107.00, 'juridico': 1535.00,
+            'maq_equip': 23364.42,
+            # RES. FINANCEIRO
+            'juros_rec': 50.00,
+        },
     },
     'cons': {},
 }
