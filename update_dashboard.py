@@ -2100,7 +2100,22 @@ _DRE_CORR_2025 = {
 }
 
 _DRE_CORR_2024 = {
-    'mm':   {},
+    'mm':   {
+        '1': {
+            # RECEITAS
+            'garantia_venda': 2299.00,
+            # CUSTOS
+            'custo_prep_entrega': 41551.71, 'frete': 1500.00, 'multa_veiculo': 533.29,
+            'laudo_custo': 4806.14,
+            # DESPESAS OPERACIONAIS
+            'despachante_sai': 489.42, 'desp_pessoal_var': 8750.64,
+            'agua': 464.00, 'manutencao_loja': 510.00, 'contabil': 36079.06,
+            'consultoria': 4049.00, 'maq_equip': 32145.50,
+            # RES. FINANCEIRO
+            'retorno_comiss': 25725.60, 'desc_pagar': 9711.84, 'juros_rec': 3609.40,
+            'desc_receber': 897.44, 'juros_pagar2': 1232.10,
+        },
+    },
     'bk':   {},
     'cons': {},
 }
@@ -2478,7 +2493,7 @@ def compute_bi_month(d):
     merch = v('merch_bruta_sw') + v('merch_bruta_at')
     rec_svc = (v('intermediacao_fin') + v('laudo_venda') + v('transf_venda') + v('fotos') +
                v('prep_veiculo') + v('gasolina') + v('rec_doc_sai') + v('rec_svc') +
-               v('venda_svc') + v('venda_comiss') + v('aluguel'))
+               v('venda_svc') + v('venda_comiss') + v('aluguel') + v('garantia_venda'))
     total_rec = merch + rec_svc + v('rec_diversas')
     desc = v('desc_sw') + v('desc_at')
     imp = (v('esocial') + v('fgts') + v('csll_irpj') + v('pis_cofins') + v('icms') + v('iss') +
