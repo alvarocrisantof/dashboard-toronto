@@ -2283,6 +2283,12 @@ _DRE_CORR_2024 = {
             # DESPESAS OPERACIONAIS
             'juridico': 700.00, 'pub_adm': 178.13, 'maq_equip': 0.00,
         },
+        '9': {
+            # CUSTOS
+            'custo_prep_entrega': 0.00,
+            # DESPESAS OPERACIONAIS
+            'desp_pessoal_var': 373.99, 'agua': 313.38, 'juridico': 1020.00,
+        },
     },
     'cons': {},
 }
