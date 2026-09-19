@@ -857,7 +857,7 @@ window.renderDRE=function(){
   var computed={};
   months.forEach(function(m){computed[m]=c(data[m]);});
   var ytdData={};
-  var allKeys=Object.keys(data[months[0]]||{});
+  var allKeys={};months.forEach(function(m){Object.keys(data[m]||{}).forEach(function(k){allKeys[k]=1;});});allKeys=Object.keys(allKeys);
   allKeys.forEach(function(k){
     ytdData[k]=months.reduce(function(s,m){return s+(data[m][k]||0);},0);
   });
