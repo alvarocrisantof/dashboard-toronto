@@ -2276,7 +2276,14 @@ _DRE_CORR_2024 = {
             'desc_receber': 817.12, 'juros_pagar': 3102.84,
         },
     },
-    'bk':   {},
+    'bk':   {
+        '8': {
+            # CUSTOS
+            'custo_prep_entrega': 8.25,
+            # DESPESAS OPERACIONAIS
+            'juridico': 700.00, 'pub_adm': 178.13, 'maq_equip': 0.00,
+        },
+    },
     'cons': {},
 }
 
