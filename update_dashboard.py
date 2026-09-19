@@ -2203,6 +2203,20 @@ _DRE_CORR_2024 = {
             'retorno_comiss': 33379.71, 'desc_pagar': 17210.51, 'juros_rec': 622.79,
             'juros_pagar2': 61.93, 'desc_receber': 496.74, 'iof': 2000.09,
         },
+        '8': {
+            # DEDUÇÕES
+            'desc_at': 22800.00,
+            # CUSTOS
+            'custo_prep_entrega': 42311.86, 'multa_veiculo': 400.88, 'garantia_custo': 3320.00,
+            # DESPESAS OPERACIONAIS
+            'despachante_sai': 443.80, 'desp_adm_dem': 4828.56, 'desp_pessoal_var': 2790.50,
+            'agua': 272.00, 'pub_adm': 494.90, 'contabil': 28832.55, 'associacoes': 399.00,
+            'juridico': 4345.00, 'informatica': 11518.13,
+            'maq_equip': 28777.76, 'emprestimos': 19917.78,
+            # RES. FINANCEIRO
+            'retorno_fin': 1785.00, 'desc_pagar': 18677.96, 'juros_pagar2': 371.46,
+            'desc_receber': 1076.99, 'iof': 3009.41,
+        },
     },
     'bk':   {},
     'cons': {},
