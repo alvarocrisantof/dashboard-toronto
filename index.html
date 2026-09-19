@@ -653,10 +653,12 @@ function renderBI(){
     var dy=DRE[biStore][y],ny=dy.n;
     var rT=S(dy.rec,ny),lT=S(dy.lb,ny),rsT=S(dy.res,ny);
     var qT=S(dy.qtd,ny),psT=S(dy.pess,ny),adT=S(dy.adm,ny),prT=S(dy.prop,ny),vdT=S(dy.vend,ny);
+    var dvT=S(dy.div,ny),plT=S(dy.pl,ny),imT=S(dy.imp,ny);
     if(biStore==='cons'&&qT===0){var _ym=DRE.mm[y],_yb=DRE.bk[y],_yn=Math.min(ny,_ym.n,_yb.n);for(var _qi=0;_qi<_yn;_qi++)qT+=(_ym.qtd[_qi]||0)+(_yb.qtd[_qi]||0);}
-    var ebitdaT=lT-psT-adT-prT-vdT;
-    ydata[y]={rec:rT,lb:lT,res:rsT,qtd:qT,ebitda:ebitdaT,
-      pLB:rT?lT/rT*100:0,pRes:rT?rsT/rT*100:0,pEbitda:rT?ebitdaT/rT*100:0,
+    var ebitdaT=lT-psT-adT-prT-vdT+dvT+plT+imT;
+    var liqT=rsT+dvT;
+    ydata[y]={rec:rT,lb:lT,res:rsT,liq:liqT,qtd:qT,ebitda:ebitdaT,
+      pLB:rT?lT/rT*100:0,pRes:rT?rsT/rT*100:0,pLiq:rT?liqT/rT*100:0,pEbitda:rT?ebitdaT/rT*100:0,
       tk:qT?rT/qT:0,lv:qT?lT/qT:0,
       pPess:rT?psT/rT*100:0,pAdm:rT?adT/rT*100:0,pProp:rT?prT/rT*100:0,n:ny};
   });
@@ -665,6 +667,8 @@ function renderBI(){
     {l:'Faturamento',k:'rec',f:fmtK,s:false},
     {l:'Lucro Bruto',k:'lb',f:fmtK,s:false},
     {l:'Margem Bruta',k:'pLB',f:function(v){return v.toFixed(1)+'%';},s:true},
+    {l:'Lucro Líquido',k:'liq',f:fmtK,s:false},
+    {l:'Margem Lucro Líquido',k:'pLiq',f:function(v){return v.toFixed(1)+'%';},s:true},
     {l:'Resultado Líquido',k:'res',f:fmtK,s:false},
     {l:'Margem Líquida',k:'pRes',f:function(v){return v.toFixed(1)+'%';},s:true},
     {l:'Qtd. Vendida',k:'qtd',f:function(v){return Math.round(v)+'';},s:false},
