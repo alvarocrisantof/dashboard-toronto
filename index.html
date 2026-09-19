@@ -439,6 +439,7 @@ function renderBI(){
   var _yFbi=FINAL[biYear]||FINAL['2026']||FINAL;var totRet=(typeof FINAL!=='undefined'&&_yFbi.comp&&_yFbi.comp[biStore]&&_yFbi.comp[biStore].kpi)?_yFbi.comp[biStore].kpi.ret:S(d.ret,n);
   var totVend=S(d.vend,n),totCshow=S(d.cshow,n),totCatac=S(d.catac,n);
   var totCprep=S(d.cprep,n),totCdocs=S(d.cdocs,n),totCsa=S(d.csa,n);
+  var totDiv=S(d.div,n),totPL=S(d.pl,n),totImp=S(d.imp,n);
   var ebitda=totLB-totPess-totAdm-totProp-totVend+totDiv+totPL+totImp;
   var pEbitda=totRec?ebitda/totRec*100:0;
   var pLB=totRec?totLB/totRec*100:0;
@@ -447,11 +448,8 @@ function renderBI(){
   var pAdm=totRec?totAdm/totRec*100:0;
   var pProp=totRec?totProp/totRec*100:0;
   var ticket=totQtd?totRec/totQtd:0;
-  var totDiv=S(d.div,n);
   var totLiq=totRes+totDiv;
   var pLiq=totRec?totLiq/totRec*100:0;
-  var totPL=S(d.pl,n);
-  var totImp=S(d.imp,n);
   var lucVei=totQtd?totRes/totQtd:0;
   var lbVei=totQtd?totLB/totQtd:0;
   var af=n>0&&n<12?12/n:1;
