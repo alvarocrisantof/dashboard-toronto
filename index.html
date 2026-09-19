@@ -476,9 +476,10 @@ function renderBI(){
   if(isP) html+='<div style="margin-bottom:12px;font-size:11px;background:rgba(216,170,44,.12);color:#c98500;border:1px solid rgba(216,170,44,.25);padding:4px 14px;border-radius:20px;font-weight:600;display:inline-block">'+n+' meses registrados · Anualizado ×'+af.toFixed(2)+'</div>';
 
   // ── KPI GRID (2 rows × 4)
-  html+='<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px">';
+  html+='<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:16px">';
   html+=kpi('Faturamento'+(isP?' ('+n+'m)':''),fmtK(totRec),(isP?'Anualizado: '+fmtK(totRec*af):'Total acumulado'),sc,delta('rec'));
   html+=kpi('Lucro Bruto',fmtK(totLB),'Margem: '+pLB.toFixed(1)+'%',pLB>=9?'#199e70':pLB>=6?'#c98500':'#e66767');
+  html+=kpi('Lucro Líquido',fmtK(totLiq),'Margem: '+pLiq.toFixed(1)+'% · sem Distrib. Dividendos',clr(totLiq));
   html+=kpi('Resultado Líquido',fmtK(totRes),'Margem: '+pRes.toFixed(1)+'%',clr(totRes),delta('res'));
   html+=kpi('Veículos Vendidos',totQtd.toFixed(0),(isP?'Ritmo: '+(totQtd*af).toFixed(0)+'/ano':'Acumulado anual'),'#e8eef6',delta('qtd'));
   html+='</div>';
@@ -488,10 +489,9 @@ function renderBI(){
   html+=kpi('Pessoal / Receita',pPess.toFixed(1)+'%','Benchmark: 3–5%',pPess>=3&&pPess<=5?'#199e70':pPess>5?'#e66767':'#c98500');
   html+=kpi('Retorno Financ.',fmtK(totRet),pct(totRet,totRec)+' da receita','#a78bfa');
   html+='</div>';
-  html+='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:20px">';
+  html+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">';
   html+=kpi('EBITDA'+(isP?' ('+n+'m)':''),fmtK(ebitda),'Margem: '+pEbitda.toFixed(1)+'%',clr(ebitda));
   html+=kpi('Margem EBITDA',pEbitda.toFixed(1)+'%','LB − Pessoal − Admin − Mktg − Vendas + Impostos + Distrib. Sócios',pEbitda>=5?'#199e70':pEbitda>=0?'#c98500':'#e66767');
-  html+=kpi('Lucro Líquido',fmtK(totLiq),'Margem: '+pLiq.toFixed(1)+'% · Resultado sem Distrib. Dividendos',clr(totLiq));
   html+='</div>';
 
   // ── Revenue Chart
