@@ -2277,6 +2277,10 @@ _DRE_CORR_2024 = {
         },
     },
     'bk':   {
+        '3': {
+            # loja ainda não existia — zera contaminação vinda da MM (API)
+            'intermediacao_fin': 0.00, 'dev_fin': 0.00,
+        },
         '8': {
             # CUSTOS
             'custo_prep_entrega': 8.25,
