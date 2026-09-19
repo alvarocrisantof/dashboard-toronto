@@ -2516,14 +2516,14 @@ def compute_bi_month(d):
         'rec': total_rec, 'lb': margem, 'res': resultado, 'qtd': v('q'),
         'pess': desp_pess, 'vend': desp_vend, 'prop': desp_mkt,
         'adm': desp_adm + desp_est + desp_soc + desp_outros,
-        'fin': res_fin, 'ret': v('retorno_comiss'),
+        'fin': res_fin, 'ret': v('retorno_comiss'), 'div': v('dividendos'),
         'cshow': v('custo_compra_sw'), 'catac': v('custo_compra_at'),
         'cprep': custo_prep, 'cdocs': custo_docs, 'csa': custo_svc,
         'rshow': v('merch_bruta_sw'), 'ratac': v('merch_bruta_at'),
         'dshow': v('desc_sw'), 'datac': v('desc_at'),
     }
 
-BI_FIELDS = ['rec','lb','res','qtd','pess','adm','prop','ret','fin','vend',
+BI_FIELDS = ['rec','lb','res','qtd','pess','adm','prop','ret','fin','vend','div',
              'cshow','catac','cprep','cdocs','csa','rshow','ratac','dshow','datac']
 
 def build_bi_year(dre_store_raw):
@@ -2548,7 +2548,10 @@ def build_bi_module(html, new_final):
     old_bi = json.loads(m.group(1))
     new_bi = {'mm': {}, 'bk': {}, 'cons': {}}
     for store in ('mm', 'bk', 'cons'):
-        new_bi[store]['2024'] = old_bi.get(store, {}).get('2024', {'n': 0, **{f: [0]*12 for f in BI_FIELDS}})
+        old_2024 = old_bi.get(store, {}).get('2024', {})
+        new_bi[store]['2024'] = {'n': old_2024.get('n', 0)}
+        for f in BI_FIELDS:
+            new_bi[store]['2024'][f] = old_2024.get(f, [0]*12)
         for year in ('2025', '2026'):
             year_data = new_final.get(year, {})
             dre = year_data.get('dre', {}) if year_data else {}
