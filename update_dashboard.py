@@ -2517,13 +2517,14 @@ def compute_bi_month(d):
         'pess': desp_pess, 'vend': desp_vend, 'prop': desp_mkt,
         'adm': desp_adm + desp_est + desp_soc + desp_outros,
         'fin': res_fin, 'ret': v('retorno_comiss'), 'div': v('dividendos'),
+        'pl': v('pro_labore'), 'imp': imp,
         'cshow': v('custo_compra_sw'), 'catac': v('custo_compra_at'),
         'cprep': custo_prep, 'cdocs': custo_docs, 'csa': custo_svc,
         'rshow': v('merch_bruta_sw'), 'ratac': v('merch_bruta_at'),
         'dshow': v('desc_sw'), 'datac': v('desc_at'),
     }
 
-BI_FIELDS = ['rec','lb','res','qtd','pess','adm','prop','ret','fin','vend','div',
+BI_FIELDS = ['rec','lb','res','qtd','pess','adm','prop','ret','fin','vend','div','pl','imp',
              'cshow','catac','cprep','cdocs','csa','rshow','ratac','dshow','datac']
 
 def build_bi_year(dre_store_raw):
