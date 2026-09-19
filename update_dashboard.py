@@ -2761,18 +2761,13 @@ def build_bi_year(dre_store_raw):
 
 def build_bi_module(html, new_final):
     """Regenera var DRE={...} (bi-module usado na Visão Geral) a partir do FINAL
-    recém-calculado, preservando 2024 (fora do escopo de recálculo automático)."""
+    recém-calculado (2024, 2025, 2026 — todos recalculados a cada run)."""
     m = re.search(r'var DRE=(\{.*?\});', html, re.DOTALL)
     if not m:
         return html
-    old_bi = json.loads(m.group(1))
     new_bi = {'mm': {}, 'bk': {}, 'cons': {}}
     for store in ('mm', 'bk', 'cons'):
-        old_2024 = old_bi.get(store, {}).get('2024', {})
-        new_bi[store]['2024'] = {'n': old_2024.get('n', 0)}
-        for f in BI_FIELDS:
-            new_bi[store]['2024'][f] = old_2024.get(f, [0]*12)
-        for year in ('2025', '2026'):
+        for year in ('2024', '2025', '2026'):
             year_data = new_final.get(year, {})
             dre = year_data.get('dre', {}) if year_data else {}
             store_raw = dre.get(store, {})
