@@ -2308,6 +2308,14 @@ _DRE_CORR_2024 = {
             # RES. FINANCEIRO
             'juros_pagar': 85.22,
         },
+        '12': {
+            # CUSTOS
+            'custo_prep_entrega': 20.00, 'frete': 0.00,
+            # DESPESAS OPERACIONAIS
+            'agua': 288.75, 'contabil': 261.25, 'manutencao_loja': 100.00,
+            # RES. FINANCEIRO
+            'juros_pagar': 0.75,
+        },
     },
     'cons': {},
 }
