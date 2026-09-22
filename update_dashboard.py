@@ -1288,10 +1288,10 @@ _DRE_CORR_2025 = {
         },
         '6': {
             # RECEITAS
-            'merch_bruta_sw': 1008550.00, 'merch_bruta_at': 113918.00, 'laudo_venda': 7110.00,
-            'transf_venda': 254.00, 'rec_doc_sai': 8333.04, 'rec_svc': 6350.00,
-            'venda_svc': 13868.34, 'venda_comiss': 3121.25, 'aluguel': 7250.00,
-            'rec_diversas': 9600.00,
+            'merch_bruta_sw': 962900.01, 'merch_bruta_at': 184782.00, 'laudo_venda': 8405.00,
+            'transf_venda': 650.00, 'rec_doc_sai': 8281.11, 'rec_svc': 2530.00,
+            'venda_svc': 16567.86, 'venda_comiss': 0.00, 'aluguel': 7250.00,
+            'rec_diversas': 2653.78, 'intermediacao_fin': 20200.00,
             # DEDUÇÕES
             'desc_sw': 22768.70, 'desc_at': 7772.00,
             # CUSTOS
@@ -1315,7 +1315,7 @@ _DRE_CORR_2025 = {
             # QTD/OUTROS
             'q': 20, 'q_sw': 16.00, 'q_at': 4.00, 'q_consig': 10.00, 'q_proprio': 10.00,
             # OUTROS
-            'garantia_venda': 316.75,
+            'garantia_venda': 0.00,
         },
         '7': {
             # RECEITAS
