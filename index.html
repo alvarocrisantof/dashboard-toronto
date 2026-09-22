@@ -1210,7 +1210,7 @@ window.renderBench=function(){
     var lucro_op=margem-desp_vend-desp_pess-desp_adm-desp_est-desp_mkt-desp_labore-divid-v(d,'emprestimos')-v(d,'aj_saida')-v(d,'maq_equip');
     var res_fin=v(d,'retorno_fin')+v(d,'retorno_acordos')+v(d,'rendimento')+v(d,'seguro_rec')+v(d,'remuner_bank')+v(d,'retorno_comiss')+v(d,'juros_rec')+v(d,'pecld_rec')+v(d,'desc_pagar')-v(d,'tarifa_bancaria')-v(d,'juros_pagar')-v(d,'juros_pagar2')-v(d,'iof')-v(d,'desc_receber');
     var resultado=lucro_op+res_fin;
-    var ebitda=margem-desp_vend-desp_pess-desp_adm-desp_est-desp_mkt-desp_labore;
+    var ebitda=margem-desp_vend-desp_pess-desp_adm-desp_est-desp_mkt-desp_labore+divid+desp_labore+imp;
     var q=v(d,'q'),q_sw=v(d,'q_sw'),q_at=v(d,'q_at');
     var mb_pct=fat_liq>0?margem/fat_liq*100:0;
     var ebitda_pct=fat_liq>0?ebitda/fat_liq*100:0;
