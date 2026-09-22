@@ -1411,7 +1411,7 @@ _DRE_CORR_2025 = {
             # QTD/OUTROS
             'q': 36, 'q_sw': 28.00, 'q_at': 8.00, 'q_consig': 16.00, 'q_proprio': 20.00,
             # OUTROS
-            'garantia_venda': 51.00,
+            'garantia_venda': 0.00,
         },
         '10': {
             # RECEITAS
@@ -1443,7 +1443,7 @@ _DRE_CORR_2025 = {
             # QTD/OUTROS
             'q': 52, 'q_sw': 42.00, 'q_at': 10.00, 'q_consig': 18.00, 'q_proprio': 34.00,
             # OUTROS
-            'compras_func': 3149.00, 'garantia_venda': 103.50,
+            'compras_func': 3149.00, 'garantia_venda': 0.00,
         },
         '11': {
             # RECEITAS
@@ -1474,7 +1474,7 @@ _DRE_CORR_2025 = {
             # QTD/OUTROS
             'q': 53, 'q_sw': 35.00, 'q_at': 18.00, 'q_consig': 25.00, 'q_proprio': 28.00,
             # OUTROS
-            'compras_func': 2943.26, 'garantia_venda': 119.25,
+            'compras_func': 2943.26, 'garantia_venda': 0.00,
         },
         '12': {
             # RECEITAS
