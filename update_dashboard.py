@@ -1223,7 +1223,7 @@ _DRE_CORR_2025 = {
             # QTD/OUTROS
             'q': 28, 'q_sw': 21.00, 'q_at': 7.00, 'q_consig': 10.00, 'q_proprio': 18.00,
             # OUTROS
-            'garantia_venda': 1516.75,
+            'garantia_venda': 0.00,
         },
         '4': {
             # RECEITAS
