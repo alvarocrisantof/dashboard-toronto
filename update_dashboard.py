@@ -2163,8 +2163,9 @@ _DRE_CORR_2024 = {
             'rec_doc_sai': 0.00, 'rec_svc': 0.00, 'venda_svc': 7657.58,
             # CUSTOS
             'custo_prep_entrega': 44907.34, 'multa_veiculo': 569.54, 'garantia_custo': 13400.00,
+            'ipva': 47523.54,
             # DESPESAS OPERACIONAIS
-            'despachante_sai': 2673.84, 'desp_pessoal_var': 14787.55,
+            'despachante_sai': 2673.84, 'desp_pessoal_var': 14787.55, 'refeitorio': 967.50,
             'agua': 297.50, 'pub_adm': 44.21, 'contabil': 11722.89, 'juridico': 13102.45,
             'maq_equip': 489.10, 'emprestimos': 12927.98,
             # RES. FINANCEIRO
