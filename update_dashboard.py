@@ -1235,8 +1235,8 @@ _DRE_CORR_2025 = {
             # CUSTOS
             'custo_compra_sw': 1829103.74, 'custo_compra_at': 240378.10,
             'custo_prep_entrega': 91339.95, 'frete': 950.00, 'despachante_ent': 5670.00,
-            'ipva': 30157.90, 'taxas_transf_ent': 12065.55, 'garantia_custo': 7550.00,
-            'laudo_custo': 3007.20,
+            'ipva': 31233.54, 'taxas_transf_ent': 12065.55, 'garantia_custo': 7550.00,
+            'laudo_custo': 3062.10,
             # DESPESAS OPERACIONAIS
             'comissao_venda': 250.00, 'comissao_c': 5600.00, 'pos_vendas': 1500.00,
             'salarios': 63037.14, 'desp_adm_dem': 9097.38, 'plano_saude': 65.80,
