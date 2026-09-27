@@ -973,7 +973,7 @@ _DRE_CORR = {
             'devolucao': 418.00, 'dev_fin': 0.00,
             # CUSTOS
             'custo_compra_sw': 1128990.00, 'custo_compra_at': 106000.00,
-            'custo_prep_entrega': 14641.71, 'frete': 0.00, 'despachante_ent': 100.00,
+            'custo_prep_entrega': 16481.71, 'frete': 0.00, 'despachante_ent': 100.00,
             'ipva': 23582.30, 'taxas_transf_ent': 246.00, 'comunicado_venda': 0.00,
             'multas_nao_abat': 0.00, 'garantia_custo': 0.00, 'laudo_custo': 419.40,
             # DESPESAS OPERACIONAIS
