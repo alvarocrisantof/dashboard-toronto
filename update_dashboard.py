@@ -1291,13 +1291,13 @@ _DRE_CORR_2025 = {
             'merch_bruta_sw': 1008550.00, 'merch_bruta_at': 113918.00, 'laudo_venda': 7110.00,
             'transf_venda': 254.00, 'rec_doc_sai': 8333.04, 'rec_svc': 6350.00,
             'venda_svc': 13868.34, 'venda_comiss': 3121.25, 'aluguel': 7250.00,
-            'rec_diversas': 9600.00,
+            'rec_diversas': 11100.00,
             # DEDUÇÕES
             'desc_sw': 22768.70, 'desc_at': 7772.00,
             # CUSTOS
             'custo_compra_sw': 851410.53, 'custo_compra_at': 98445.96,
             'custo_prep_entrega': 16003.86, 'frete': 0.00, 'multa_veiculo': 0.00,
-            'despachante_ent': 5990.00, 'ipva': 26331.16, 'taxas_transf_ent': 15385.83,
+            'despachante_ent': 5990.00, 'ipva': 26624.39, 'taxas_transf_ent': 15385.83,
             'garantia_custo': 4800.00, 'laudo_custo': 6130.70,
             # DESPESAS OPERACIONAIS
             'comissao_c': 1000.00, 'pos_vendas': 1252.64, 'despachante_sai': 292.00,
