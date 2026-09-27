@@ -1229,7 +1229,7 @@ _DRE_CORR_2025 = {
             # RECEITAS
             'merch_bruta_sw': 2215609.30, 'merch_bruta_at': 270560.00, 'laudo_venda': 3410.00,
             'transf_venda': 1300.00, 'rec_doc_sai': 7943.32, 'rec_svc': 5630.00,
-            'venda_svc': 10780.00, 'aluguel': 3750.00, 'rec_diversas': 7020.00,
+            'venda_svc': 10780.00, 'aluguel': 3750.00, 'rec_diversas': 7932.32,
             # DEDUÇÕES
             'desc_sw': 63868.23, 'desc_at': 4400.00, 'devolucao': 413.92,
             # CUSTOS
