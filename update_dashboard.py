@@ -1162,7 +1162,7 @@ _DRE_CORR_2025 = {
             'merch_bruta_sw': 1817550.00, 'merch_bruta_at': 0.00, 'intermediacao_fin': 0.00,
             'laudo_venda': 3260.00, 'transf_venda': 300.00, 'rec_doc_sai': 1936.17,
             'rec_svc': 7546.00, 'venda_svc': 33281.86, 'venda_comiss': 0.00,
-            'rec_diversas': 3000.00,
+            'rec_diversas': 3293.47,
             # DEDUÇÕES
             'desc_sw': 15700.00, 'desc_at': 0.00, 'custas': 134.35, 'dev_fin': 0.00,
             # CUSTOS
