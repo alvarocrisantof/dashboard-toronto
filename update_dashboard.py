@@ -1321,14 +1321,14 @@ _DRE_CORR_2025 = {
             # RECEITAS
             'merch_bruta_sw': 2673700.01, 'merch_bruta_at': 775748.00, 'laudo_venda': 7270.00,
             'transf_venda': 1336.00, 'rec_doc_sai': 30764.70, 'rec_svc': 9710.00,
-            'venda_svc': 14998.73, 'venda_comiss': 6028.63, 'rec_diversas': 250.00,
+            'venda_svc': 14998.73, 'venda_comiss': 6028.63, 'rec_diversas': 543.47,
             # DEDUÇÕES
             'desc_sw': 52580.11, 'desc_at': 33774.00,
             # CUSTOS
             'custo_compra_sw': 2287638.30, 'custo_compra_at': 691236.00,
-            'custo_prep_entrega': 65128.26, 'frete': 950.00, 'multa_veiculo': 0.00,
-            'despachante_ent': 3100.00, 'ipva': 38799.62, 'taxas_transf_ent': 16865.10,
-            'garantia_custo': 800.00, 'laudo_custo': 7929.80,
+            'custo_prep_entrega': 70893.75, 'frete': 0.00, 'multa_veiculo': 0.00,
+            'despachante_ent': 3100.00, 'ipva': 38968.18, 'taxas_transf_ent': 15887.10,
+            'garantia_custo': 3489.25, 'laudo_custo': 8533.70,
             # DESPESAS OPERACIONAIS
             'comissao_venda': 7736.90, 'comissao_c': 7085.13, 'pos_vendas': 760.00,
             'despachante_sai': 626.90, 'salarios': 67675.02, 'desp_adm_dem': 48.00,
