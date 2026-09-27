@@ -1852,7 +1852,7 @@ _DRE_CORR_2025 = {
             'merch_bruta_sw': 758600.00, 'merch_bruta_at': 165170.00,
             'intermediacao_fin': 0.00, 'laudo_venda': 350.00, 'prep_veiculo': 2458.00,
             'gasolina': 50.00, 'rec_doc_sai': 1105.79, 'rec_svc': 830.16, 'venda_svc': 789.07,
-            'venda_comiss': 5568.94, 'aluguel': 3750.00, 'rec_diversas': 5000.00,
+            'venda_comiss': 5568.94, 'aluguel': 3750.00, 'rec_diversas': 5325.39,
             # DEDUÇÕES
             'desc_sw': 10760.00, 'desc_at': 25050.00, 'csll_irpj': 1715.90, 'devolucao': 0.00,
             'dev_fin': 0.00,
