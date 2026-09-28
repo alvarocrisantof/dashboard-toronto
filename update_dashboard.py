@@ -1098,7 +1098,7 @@ _DRE_CORR = {
             'pro_labore': 8000.00, 'dividendos': 4000.00, 'emprestimos': 600.00,
             'aj_saida': 0.00,
             # RES. FINANCEIRO
-            'retorno_fin': 2622.27, 'retorno_acordos': 0.00, 'rendimento': 3.66,
+            'retorno_fin': 2853.90, 'retorno_acordos': 0.00, 'rendimento': 3.66,
             'seguro_rec': 0.00, 'juros_rec': 0.01, 'desc_pagar': 290.26,
             'tarifa_bancaria': 0.00, 'juros_pagar2': 132.40, 'desc_receber': 12.00,
             # QTD/OUTROS
