@@ -355,6 +355,7 @@ _DRE_EXT = {
     'taxas_transf_sai': ('TAXAS DE TRANSFERÊNCIA (SAÍDA)',   'A pagar'),
     'baixa_gravame':    ('Baixa de gravame',                 'A pagar'),
     'comunicado_venda': ('Comunicado de venda',              'A pagar'),
+    'despesas_postais': ('Despesas Postais',                 'A pagar'),
     'multas_nao_abat':  ('Multas não abatidas na compra',    'A pagar'),
     'garantia_custo':   ('Garantia',                         'A pagar'),
     'laudo_custo':      ('Laudo cautelar/custo',             'A pagar'),
@@ -536,6 +537,7 @@ _DRE_CORR = {
             'custo_compra_sw': 2421189.84, 'custo_compra_at': 336000.00,
             'custo_prep_entrega': 63832.14, 'frete': 600.00, 'despachante_ent': 1460.00,
             'ipva': 18414.83, 'taxas_transf_ent': 11856.84, 'baixa_gravame': 0.00,
+            'despesas_postais': 40.00,
             'comunicado_venda': 120.90, 'multas_nao_abat': 159.46, 'garantia_custo': 7970.00,
             'laudo_custo': 3325.00,
             # DESPESAS OPERACIONAIS
@@ -2709,7 +2711,7 @@ def compute_bi_month(d):
     custo_compra = v('custo_compra_sw') + v('custo_compra_at')
     custo_prep = v('custo_prep_entrega') + v('frete') + v('multa_veiculo') + v('custos_prep_lv')
     custo_docs = (v('despachante_ent') + v('ipva') + v('taxas_transf_ent') + v('baixa_gravame') +
-                  v('comunicado_venda') + v('multas_nao_abat'))
+                  v('comunicado_venda') + v('despesas_postais') + v('multas_nao_abat'))
     custo_svc = v('garantia_custo') + v('laudo_custo')
     total_cust = custo_compra + custo_prep + custo_docs + custo_svc
     margem = fat_liq - total_cust
