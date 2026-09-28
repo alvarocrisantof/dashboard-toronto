@@ -965,7 +965,7 @@ _DRE_CORR = {
             'merch_bruta_sw': 1312300.00, 'merch_bruta_at': 116500.00,
             'intermediacao_fin': 0.00, 'laudo_venda': 2989.90, 'transf_venda': 1140.00,
             'fotos': 1000.00, 'prep_veiculo': 0.00, 'gasolina': 0.00, 'rec_doc_sai': 4849.26,
-            'rec_svc': 500.00, 'aluguel': 0.00, 'rec_diversas': 0.00,
+            'rec_svc': 500.00, 'aluguel': 0.00, 'rec_diversas': 1290.00,
             # DEDUÇÕES
             'desc_sw': 34320.00, 'desc_at': 18482.00, 'esocial': 1117.68, 'fgts': 261.14,
             'csll_irpj': 3943.60, 'pis_cofins': 4557.85, 'icms': 1500.40, 'iss': 4748.64,
