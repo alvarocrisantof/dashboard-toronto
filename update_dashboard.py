@@ -519,7 +519,7 @@ _DRE_CORR = {
             # QTD/OUTROS
             'q': 49, 'q_sw': 34.00, 'q_at': 15.00, 'q_consig': 18.00, 'q_proprio': 31.00,
             # OUTROS
-            'garantia_venda': 100.50,
+            'garantia_venda': 0.00,
         },
         '2': {
             # RECEITAS
