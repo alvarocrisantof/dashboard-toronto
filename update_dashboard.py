@@ -1482,14 +1482,14 @@ _DRE_CORR_2025 = {
             'intermediacao_fin': 83990.00, 'laudo_venda': 6290.00, 'prep_veiculo': 0.00,
             'gasolina': 0.00, 'rec_doc_sai': 6681.73, 'rec_svc': 6806.00,
             'venda_svc': 16365.00, 'venda_comiss': 10642.76, 'aluguel': 8253.00,
-            'rec_diversas': 5791.92,
+            'rec_diversas': 5922.08,
             # DEDUÇÕES
             'desc_sw': 10150.00, 'desc_at': 60673.84, 'csll_irpj': 18313.59,
             'devolucao': 586.94, 'dev_fin': 81290.00,
             # CUSTOS
             'custo_compra_sw': 1197980.00, 'custo_compra_at': 497750.00,
             'custo_prep_entrega': 35301.28, 'frete': 0.00, 'despachante_ent': 6290.00,
-            'ipva': 3276.07, 'taxas_transf_ent': 16862.58, 'garantia_custo': 8800.00,
+            'ipva': 3578.77, 'taxas_transf_ent': 16862.58, 'garantia_custo': 8800.00,
             'laudo_custo': 4549.80,
             # DESPESAS OPERACIONAIS
             'comissao_c': 6568.94, 'pos_vendas': 4210.75, 'taxas_transf_sai': 450.00,
