@@ -887,7 +887,7 @@ _DRE_CORR = {
             'intermediacao_fin': 0.00, 'laudo_venda': 1550.00, 'transf_venda': 958.00,
             'fotos': 4300.00, 'prep_veiculo': 1429.00, 'gasolina': 0.00,
             'rec_doc_sai': 2404.20, 'rec_svc': 1650.00, 'venda_comiss': 1681.16,
-            'aluguel': 2125.00, 'rec_diversas': 54.90,
+            'aluguel': 2125.00, 'rec_diversas': 554.90,
             # DEDUÇÕES
             'desc_sw': 30360.00, 'desc_at': 4000.00, 'esocial': 520.86, 'fgts': 129.68,
             'pis_cofins': 4440.59, 'icms': 3459.00, 'iss': 4361.41, 'alvara': 0.00,
@@ -895,7 +895,7 @@ _DRE_CORR = {
             # CUSTOS
             'custo_compra_sw': 1241350.00, 'custo_compra_at': 130000.00,
             'custo_prep_entrega': 5882.64, 'frete': 0.00, 'despachante_ent': 200.00,
-            'ipva': 10482.08, 'taxas_transf_ent': 593.07, 'baixa_gravame': 0.00,
+            'ipva': 10570.46, 'taxas_transf_ent': 593.07, 'baixa_gravame': 0.00,
             'comunicado_venda': 28.00, 'multas_nao_abat': 0.00, 'garantia_custo': 3900.00,
             'laudo_custo': 299.70,
             # DESPESAS OPERACIONAIS
