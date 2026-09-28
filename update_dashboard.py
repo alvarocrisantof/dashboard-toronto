@@ -1326,9 +1326,9 @@ _DRE_CORR_2025 = {
             'desc_sw': 52580.11, 'desc_at': 33774.00,
             # CUSTOS
             'custo_compra_sw': 2287638.30, 'custo_compra_at': 691236.00,
-            'custo_prep_entrega': 70893.75, 'frete': 0.00, 'multa_veiculo': 0.00,
-            'despachante_ent': 3100.00, 'ipva': 38968.18, 'taxas_transf_ent': 15887.10,
-            'garantia_custo': 3489.25, 'laudo_custo': 8533.70,
+            'custo_prep_entrega': 65128.26, 'frete': 950.00, 'multa_veiculo': 0.00,
+            'despachante_ent': 3100.00, 'ipva': 38968.18, 'taxas_transf_ent': 16865.10,
+            'garantia_custo': 800.00, 'laudo_custo': 7929.80,
             # DESPESAS OPERACIONAIS
             'comissao_venda': 7736.90, 'comissao_c': 7085.13, 'pos_vendas': 760.00,
             'despachante_sai': 626.90, 'salarios': 67675.02, 'desp_adm_dem': 48.00,
@@ -1357,8 +1357,8 @@ _DRE_CORR_2025 = {
             'desc_sw': 26900.01, 'desc_at': 1636.00, 'devolucao': 0.00, 'dev_fin': 17700.00,
             # CUSTOS
             'custo_compra_sw': 838811.91, 'custo_compra_at': 165400.00,
-            'custo_prep_entrega': 48633.28, 'despachante_ent': 3955.00, 'ipva': 18556.37,
-            'taxas_transf_ent': 17154.48, 'garantia_custo': 15800.00, 'laudo_custo': 5131.30,
+            'custo_prep_entrega': 32241.11, 'despachante_ent': 3955.00, 'ipva': 18556.37,
+            'taxas_transf_ent': 17000.48, 'garantia_custo': 15800.00, 'laudo_custo': 4361.80,
             # DESPESAS OPERACIONAIS
             'comissao_venda': 2779.90, 'comissao_c': 6808.15, 'pos_vendas': 1013.80,
             'despachante_sai': 462.84, 'salarios': 99948.52, 'desp_adm_dem': 474.38,
@@ -1384,14 +1384,14 @@ _DRE_CORR_2025 = {
             'merch_bruta_sw': 2356200.01, 'merch_bruta_at': 407614.00,
             'intermediacao_fin': 174600.00, 'laudo_venda': 4445.00, 'transf_venda': 635.00,
             'rec_doc_sai': 9517.91, 'rec_svc': 8639.00, 'venda_svc': 21633.94,
-            'venda_comiss': 8930.35, 'aluguel': 7250.00, 'rec_diversas': 3610.28,
+            'venda_comiss': 8930.35, 'aluguel': 7250.00, 'rec_diversas': 3937.62,
             # DEDUÇÕES
             'desc_sw': 42915.70, 'desc_at': 17980.00, 'devolucao': 600.00,
             'dev_fin': 171900.00,
             # CUSTOS
             'custo_compra_sw': 2062393.67, 'custo_compra_at': 356170.00,
             'custo_prep_entrega': 65871.44, 'frete': 130.00, 'despachante_ent': 5570.00,
-            'ipva': 26494.56, 'taxas_transf_ent': 13832.58, 'garantia_custo': 5100.00,
+            'ipva': 32121.35, 'taxas_transf_ent': 13832.58, 'garantia_custo': 5100.00,
             'laudo_custo': 2913.50,
             # DESPESAS OPERACIONAIS
             'comissao_c': 2300.00, 'pos_vendas': 1425.00, 'despachante_sai': 305.91,
