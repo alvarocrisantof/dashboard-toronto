@@ -1238,7 +1238,7 @@ _DRE_CORR_2025 = {
             'custo_compra_sw': 1829103.74, 'custo_compra_at': 240378.10,
             'custo_prep_entrega': 91339.95, 'frete': 950.00, 'despachante_ent': 5670.00,
             'ipva': 31233.54, 'taxas_transf_ent': 12065.55, 'garantia_custo': 7550.00,
-            'laudo_custo': 3062.10,
+            'laudo_custo': 3062.10, 'despesas_postais': 0.00,
             # DESPESAS OPERACIONAIS
             'comissao_venda': 250.00, 'comissao_c': 5600.00, 'pos_vendas': 1500.00,
             'salarios': 63037.14, 'desp_adm_dem': 9097.38, 'plano_saude': 65.80,
@@ -1361,6 +1361,7 @@ _DRE_CORR_2025 = {
             'custo_compra_sw': 838811.91, 'custo_compra_at': 165400.00,
             'custo_prep_entrega': 32241.11, 'despachante_ent': 3955.00, 'ipva': 18325.45,
             'taxas_transf_ent': 17000.48, 'garantia_custo': 15800.00, 'laudo_custo': 4361.80,
+            'despesas_postais': 0.00,
             # DESPESAS OPERACIONAIS
             'comissao_venda': 2779.90, 'comissao_c': 6808.15, 'pos_vendas': 1013.80,
             'despachante_sai': 462.84, 'salarios': 99948.52, 'desp_adm_dem': 474.38,
