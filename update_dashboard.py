@@ -527,7 +527,7 @@ _DRE_CORR = {
             'merch_bruta_sw': 2233169.84, 'merch_bruta_at': 292000.00,
             'intermediacao_fin': 169072.40, 'laudo_venda': 4048.70, 'transf_venda': 450.00,
             'fotos': 650.00, 'prep_veiculo': 414.00, 'gasolina': 630.08,
-            'rec_doc_sai': 15979.48, 'rec_svc': 4644.50, 'venda_comiss': 7200.11,
+            'rec_doc_sai': 14241.12, 'rec_svc': 4670.00, 'venda_comiss': 7200.11,
             'aluguel': 16000.00, 'rec_diversas': 53820.24,
             # DEDUÇÕES
             'desc_sw': 48327.50, 'desc_at': 11780.00, 'esocial': 3058.91, 'fgts': 4577.32,
@@ -535,11 +535,11 @@ _DRE_CORR = {
             'das': 4155.39, 'devolucao': 50.00, 'dev_fin': 169072.40,
             # CUSTOS
             'custo_compra_sw': 1888289.84, 'custo_compra_at': 258000.00,
-            'custo_prep_entrega': 41949.75, 'frete': 0.00, 'despachante_ent': 1160.00,
-            'ipva': 12598.42, 'taxas_transf_ent': 4606.24, 'baixa_gravame': 0.00,
-            'despesas_postais': 40.00,
+            'custo_prep_entrega': 59404.98, 'frete': 100.00, 'despachante_ent': 1160.00,
+            'ipva': 12568.52, 'taxas_transf_ent': 4452.24, 'baixa_gravame': 0.00,
+            'despesas_postais': 0.00,
             'comunicado_venda': 106.90, 'multas_nao_abat': 159.46, 'garantia_custo': 4570.00,
-            'laudo_custo': 2989.10,
+            'laudo_custo': 2545.00,
             # DESPESAS OPERACIONAIS
             'comissao_c': 24364.89, 'pos_vendas': 5655.23, 'taxas_transf_sai': 11717.38,
             'despachante_sai': 0.00, 'salarios': 108334.61, 'rescisao': 910.02,
@@ -550,12 +550,12 @@ _DRE_CORR = {
             'juridico': 1550.00, 'estacionamento': 18.00, 'aluguel_cond': 25550.00,
             'energia': 65.39, 'telefonia': 614.86, 'limpeza': 148.27,
             'manutencao_loja': 644.99, 'publicidade': 19993.44, 'feirao': 16448.21,
-            'brindes': 800.00, 'pro_labore': 11273.96, 'dividendos': 54000.00,
+            'brindes': 800.00, 'pro_labore': 0.00, 'dividendos': 54000.00,
             'emprestimos': 27039.35, 'aj_saida': 44750.22, 'maq_equip': 265.99,
             # RES. FINANCEIRO
             'retorno_fin': 22028.78, 'retorno_acordos': 23835.79, 'rendimento': 241.21,
             'seguro_rec': 16862.87, 'juros_rec': 379.35, 'pecld_rec': 2000.00,
-            'desc_pagar': 15757.74, 'tarifa_bancaria': 542.42, 'juros_pagar2': 43.49,
+            'desc_pagar': 15489.14, 'tarifa_bancaria': 542.42, 'juros_pagar2': 43.49,
             'desc_receber': 291.40,
             # QTD/OUTROS
             'q': 37, 'q_sw': 30.00, 'q_at': 7.00, 'q_consig': 14.00, 'q_proprio': 23.00,
