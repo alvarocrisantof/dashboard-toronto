@@ -764,33 +764,33 @@ _DRE_CORR = {
         '8': {
             # RECEITAS
             'merch_bruta_sw': 2187758.85, 'merch_bruta_at': 258390.00,
-            'intermediacao_fin': 0.00, 'laudo_venda': 4650.00, 'transf_venda': 1311.00,
+            'intermediacao_fin': 0.00, 'laudo_venda': 3950.00, 'transf_venda': 1311.00,
             'fotos': 750.00, 'prep_veiculo': 5271.00, 'gasolina': 50.00,
             'rec_doc_sai': 15123.44, 'rec_svc': 8460.00, 'venda_comiss': 18195.71,
-            'aluguel': 9000.00, 'rec_diversas': 15850.00,
+            'aluguel': 9000.00, 'rec_diversas': 19702.16,
             # DEDUÇÕES
             'desc_sw': 33851.50, 'desc_at': 12516.00, 'esocial': 3250.30, 'fgts': 4294.48,
             'pis_cofins': 14105.06, 'icms': 23640.62, 'iss': 5854.29, 'iptu': 2143.92,
             'das': 4183.05, 'dev_fin': 0.00,
             # CUSTOS
             'custo_compra_sw': 1871585.65, 'custo_compra_at': 221350.00,
-            'custo_prep_entrega': 58603.33, 'frete': 0.00, 'despachante_ent': 3660.00,
-            'ipva': 20027.60, 'taxas_transf_ent': 3242.00, 'comunicado_venda': 89.90,
+            'custo_prep_entrega': 58603.33, 'frete': 105.00, 'despachante_ent': 4600.00,
+            'ipva': 22699.80, 'taxas_transf_ent': 3242.00, 'comunicado_venda': 89.90,
             'multas_nao_abat': 703.51, 'garantia_custo': 2300.00, 'laudo_custo': 1132.80,
             # DESPESAS OPERACIONAIS
             'comissao_venda': 1200.00, 'comissao_c': 5482.51, 'pos_vendas': 7228.49,
             'taxas_transf_sai': 14121.96, 'despachante_sai': 0.00, 'salarios': 83986.73,
             'ferias': 2813.33, 'plano_saude': 93.67, 'refeitorio': 484.75,
-            'transporte': 270.40, 'medicina': 40.00, 'copa': 158.25, 'cartorio': 646.00,
-            'mat_aux': 428.71, 'mat_escrit': 290.68, 'seguros': 4515.58, 'contabil': 2000.00,
+            'transporte': 270.40, 'medicina': 40.00, 'copa': 158.25, 'cartorio': 608.00,
+            'mat_aux': 428.71, 'mat_escrit': 290.68, 'seguros': 4062.75, 'contabil': 2000.00,
             'informatica': 3119.31, 'associacoes': 250.00, 'consultoria': 750.00,
             'aluguel_cond': 25550.00, 'agua': 0.00, 'energia': 314.97, 'telefonia': 674.44,
             'limpeza': 629.15, 'manutencao_loja': 800.00, 'publicidade': 9999.00,
             'portais': 8076.28, 'brindes': 2492.00, 'pro_labore': 0.00, 'dividendos': 89758.94,
             'emprestimos': 21945.48, 'aj_saida': 1384.59,
             # RES. FINANCEIRO
-            'retorno_fin': 30517.41, 'retorno_acordos': 29369.39, 'rendimento': 6.45,
-            'seguro_rec': 1464.86, 'juros_rec': 200.10, 'desc_pagar': 5878.40,
+            'retorno_fin': 30517.41, 'retorno_acordos': 29369.39, 'rendimento': 6.02,
+            'seguro_rec': 1340.22, 'juros_rec': 200.10, 'desc_pagar': 5878.40,
             'tarifa_bancaria': 62.28, 'juros_pagar2': 4301.64, 'desc_receber': 0.00,
             # QTD/OUTROS
             'q': 33, 'q_sw': 25.00, 'q_at': 8.00, 'q_consig': 11.00, 'q_proprio': 22.00,
