@@ -680,7 +680,7 @@ _DRE_CORR = {
             # QTD/OUTROS
             'q': 36, 'q_sw': 28.00, 'q_at': 8.00, 'q_consig': 9.00, 'q_proprio': 27.00,
             # OUTROS
-            'compras_func': 0.00, 'garantia_venda': 71.70,
+            'compras_func': 0.00, 'garantia_venda': 0.00,
         },
         '6': {
             # RECEITAS
@@ -719,7 +719,7 @@ _DRE_CORR = {
             # QTD/OUTROS
             'q': 34, 'q_sw': 28.00, 'q_at': 6.00, 'q_consig': 8.00, 'q_proprio': 26.00,
             # OUTROS
-            'compras_func': 0.00, 'garantia_venda': 35.25,
+            'compras_func': 0.00, 'garantia_venda': 0.00,
         },
         '7': {
             # RECEITAS
@@ -759,7 +759,7 @@ _DRE_CORR = {
             # QTD/OUTROS
             'q': 42, 'q_sw': 32.00, 'q_at': 10.00, 'q_consig': 10.00, 'q_proprio': 32.00,
             # OUTROS
-            'compras_func': 4199.83, 'garantia_venda': 153.60,
+            'compras_func': 4199.83, 'garantia_venda': 0.00,
         },
         '8': {
             # RECEITAS
@@ -795,7 +795,7 @@ _DRE_CORR = {
             # QTD/OUTROS
             'q': 33, 'q_sw': 25.00, 'q_at': 8.00, 'q_consig': 11.00, 'q_proprio': 22.00,
             # OUTROS
-            'compras_func': 110.00, 'garantia_venda': 190.65,
+            'compras_func': 110.00, 'garantia_venda': 0.00,
         },
         '9': {'rec_doc_sai': 6497.01, 'rec_svc': 3740.00,
               'custo_prep_entrega': 9319.76, 'despachante_ent': 260.00,
@@ -803,7 +803,7 @@ _DRE_CORR = {
               'despachante_sai': 0.00, 'publicidade': 9999.00,
               'maq_equip': 31.89,
               'desc_pagar': 9487.67, 'juros_rec': 1.98,
-              'desc_receber': 250.01, 'juros_pagar2': 22.68},
+              'desc_receber': 250.01, 'juros_pagar2': 22.68, 'garantia_venda': 0.00},
     
     },
     'bk': {
