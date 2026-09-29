@@ -641,7 +641,7 @@ _DRE_CORR = {
             # QTD/OUTROS
             'q': 33, 'q_sw': 24.00, 'q_at': 9.00, 'q_consig': 17.00, 'q_proprio': 16.00,
             # OUTROS
-            'compras_func': 0.00, 'garantia_venda': 93.90,
+            'compras_func': 0.00, 'garantia_venda': 0.00,
         },
         '5': {
             # RECEITAS
