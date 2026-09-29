@@ -1044,7 +1044,7 @@ _DRE_CORR = {
             'rec_svc': 2650.00, 'venda_comiss': 2078.38, 'aluguel': 0.00, 'rec_diversas': 260.32,
             # DEDUÇÕES
             'desc_sw': 8700.00, 'desc_at': 2236.00, 'esocial': 1139.14, 'fgts': 265.68,
-            'csll_irpj': 0.01, 'pis_cofins': 2589.05, 'icms': 10437.23, 'iss': 0.00,
+            'csll_irpj': 3259.27, 'pis_cofins': 2589.05, 'icms': 10437.23, 'iss': 0.00,
             'alvara': 0.00, 'iptu': 0.00, 'custas': 0.00, 'das': 0.00, 'dev_fin': 0.00,
             # CUSTOS
             'custo_compra_sw': 854721.30, 'custo_compra_at': 90000.00,
