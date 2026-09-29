@@ -696,12 +696,12 @@ _DRE_CORR = {
             # CUSTOS
             'custo_compra_sw': 2132930.46, 'custo_compra_at': 131000.00,
             'custo_prep_entrega': 42582.32, 'frete': 0.00, 'despachante_ent': 1100.00,
-            'ipva': 19466.06, 'taxas_transf_ent': 2052.00, 'baixa_gravame': 900.00,
+            'ipva': 17698.59, 'taxas_transf_ent': 2052.00, 'baixa_gravame': 900.00,
             'comunicado_venda': 89.90, 'multas_nao_abat': 303.16, 'garantia_custo': 4650.00,
             'laudo_custo': 1552.00,
             # DESPESAS OPERACIONAIS
-            'comissao_venda': 0.00, 'comissao_c': 1431.60, 'pos_vendas': 16054.64,
-            'taxas_transf_sai': 12513.22, 'despachante_sai': 0.00, 'salarios': 80133.40,
+            'comissao_venda': 0.00, 'comissao_c': 1431.60, 'pos_vendas': 15204.64,
+            'taxas_transf_sai': 12293.22, 'despachante_sai': 0.00, 'salarios': 80133.40,
             'ferias': 2266.67, 'rescisao': 5207.95, 'plano_saude': 91.80, 'datas_com': 550.25,
             'refeitorio': 344.73, 'transporte': 416.08, 'uniforme': 228.76, 'copa': 917.97,
             'cartorio': 284.17, 'mat_aux': 230.16, 'mat_escrit': 570.08, 'seguros': 0.00,
