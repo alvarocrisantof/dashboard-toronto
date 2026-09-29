@@ -608,7 +608,7 @@ _DRE_CORR = {
             'intermediacao_fin': 67900.00, 'laudo_venda': 7553.20, 'transf_venda': 60.00,
             'fotos': 2200.00, 'prep_veiculo': 2520.00, 'gasolina': 390.00,
             'rec_doc_sai': 16210.90, 'rec_svc': 6950.00, 'venda_comiss': 10816.10,
-            'aluguel': 19083.35, 'rec_diversas': 15544.99,
+            'aluguel': 19083.35, 'rec_diversas': 20185.15,
             # DEDUÇÕES
             'desc_sw': 43190.17, 'desc_at': 3500.00, 'esocial': 3479.42, 'fgts': 5529.50,
             'csll_irpj': 93601.19, 'pis_cofins': 8477.19, 'icms': 10111.00, 'iss': 6358.10,
