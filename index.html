@@ -494,14 +494,17 @@ function renderBI(){
   html+=kpi('Margem EBITDA',pEbitda.toFixed(1)+'%','LB − Pessoal − Admin − Mktg − Vendas + Impostos + Distrib. Sócios',pEbitda>=5?'#199e70':pEbitda>=0?'#c98500':'#e66767');
   html+='</div>';
 
-  // ── Revenue Chart
-  html+=section('Receita Mensal','Faturamento mês a mês — R$',
-    svgBar(recVals,mnAll,{color:sc,h:200}));
+  // ── Revenue Chart (Black × Multimarcas × Consolidado)
+  var dBk3=DRE.bk[biYear],dMm3=DRE.mm[biYear],dCons3=DRE.cons[biYear];
+  var stCores3=[STORES.bk.c,STORES.mm.c,STORES.cons.c],stLabs3=[STORES.bk.label,STORES.mm.label,STORES.cons.label];
+  function ebitdaArr3(dd){return dd.lb.map(function(lb,i){return(lb||0)-(dd.pess[i]||0)-(dd.adm[i]||0)-(dd.prop[i]||0)-(dd.vend[i]||0)+(dd.div[i]||0)+(dd.pl[i]||0)+(dd.imp[i]||0);}).slice(0,12);}
+  html+=section('Receita Mensal','Faturamento mês a mês — R$ · Black × Multimarcas × Consolidado',
+    svgGroupBar([dBk3.rec.slice(0,12),dMm3.rec.slice(0,12),dCons3.rec.slice(0,12)],stLabs3,stCores3,mnAll,{h:220,showVals:false}));
 
-  // ── EBITDA Chart
+  // ── EBITDA Chart (Black × Multimarcas × Consolidado)
   var ebitdaVals=d.lb.map(function(lb,i){return(lb||0)-(d.pess[i]||0)-(d.adm[i]||0)-(d.prop[i]||0)-(d.vend[i]||0)+(d.div[i]||0)+(d.pl[i]||0)+(d.imp[i]||0);});
-  html+=section('EBITDA Mensal','Lucro Bruto − Pessoal − Admin − Marketing − Vendas + Impostos + Distrib. Sócios (resultado operacional puro)',
-    svgBar(ebitdaVals.slice(0,12),mnAll,{color:'#199e70',negColor:'#e66767',h:180}));
+  html+=section('EBITDA Mensal','Lucro Bruto − Pessoal − Admin − Marketing − Vendas + Impostos + Distrib. Sócios (resultado operacional puro) · Black × Multimarcas × Consolidado',
+    svgGroupBar([ebitdaArr3(dBk3),ebitdaArr3(dMm3),ebitdaArr3(dCons3)],stLabs3,stCores3,mnAll,{h:200,showVals:false}));
   document.getElementById('pg-visaogeral').innerHTML=html;html='';
 
   // ── Profit side by side
