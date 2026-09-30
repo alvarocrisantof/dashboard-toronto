@@ -2810,15 +2810,13 @@ def main():
         data_2026['gvop']   = preserved('2026', 'gvop')
         data_2026['acordo'] = preserved('2026', 'acordo')
 
-    data_2025 = process_year(2025, _DRE_CORR_2025, today)
-    if data_2025:
-        data_2025['gvop']   = preserved('2025', 'gvop')
-        data_2025['acordo'] = preserved('2025', 'acordo')
-
-    data_2024 = process_year(2024, _DRE_CORR_2024, today)
-    if data_2024:
-        data_2024['gvop']   = preserved('2024', 'gvop')
-        data_2024['acordo'] = preserved('2024', 'acordo')
+    # 2025 e 2024 CONGELADOS: DRE ja reconciliada manualmente contra os
+    # relatorios reais da Autoconf (mes a mes, loja a loja). Nao rebuscar via
+    # API — reaproveita o bloco ja salvo em index.html para evitar que o cron
+    # reintroduza divergencias. Para reabrir um ano, trocar de volta para
+    # process_year(ano, _DRE_CORR_ANO, today).
+    data_2025 = old_final.get('2025')
+    data_2024 = old_final.get('2024')
 
     new_final = {}
     if data_2026: new_final['2026'] = data_2026
