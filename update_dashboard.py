@@ -2123,6 +2123,7 @@ _DRE_CORR_2024 = {
             'venda_svc': 6844.00,
             # CUSTOS
             'custo_prep_entrega': 32092.04, 'frete': 1000.00, 'multa_veiculo': 299.33,
+            'despesas_postais': 0.00,
             # DESPESAS OPERACIONAIS
             'despachante_sai': 1088.75, 'desp_adm_dem': 7636.45, 'desp_pessoal_var': 3506.21,
             'agua': 300.00, 'informatica': 207.40, 'contabil': 10936.52,
@@ -2152,6 +2153,7 @@ _DRE_CORR_2024 = {
             'desc_sw': 77600.00, 'desc_at': 3686.00,
             # CUSTOS
             'custo_prep_entrega': 30178.07, 'frete': 500.00, 'multa_veiculo': 104.13,
+            'despesas_postais': 0.00,
             # DESPESAS OPERACIONAIS
             'despachante_sai': 74.92, 'desp_adm_dem': 200.00, 'desp_pessoal_var': 2709.37,
             'agua': 374.00, 'informatica': 102.90, 'contabil': 31361.91,
@@ -2225,7 +2227,7 @@ _DRE_CORR_2024 = {
             # RECEITAS
             'rec_doc_sai': 0.00, 'venda_svc': 11749.36, 'garantia_venda': 0.00,
             # CUSTOS
-            'custo_prep_entrega': 36248.44, 'multa_veiculo': 0.00,
+            'custo_prep_entrega': 36248.44, 'multa_veiculo': 0.00, 'despesas_postais': 0.00,
             # DESPESAS OPERACIONAIS
             'despachante_sai': 311.39, 'desp_adm_dem': 105.00, 'desp_pessoal_var': 404.80,
             'agua': 326.00, 'pub_adm': 10244.90, 'informatica': 311.40, 'contabil': 29098.74,
@@ -2240,6 +2242,7 @@ _DRE_CORR_2024 = {
             'rec_doc_sai': 115.00,
             # CUSTOS
             'custo_prep_entrega': 44464.66, 'multa_veiculo': 599.22, 'garantia_custo': 5300.00,
+            'despesas_postais': 0.00,
             # DESPESAS OPERACIONAIS
             'despachante_sai': 2019.89, 'desp_adm_dem': 4390.89, 'desp_pessoal_var': 960.68,
             'agua': 166.00, 'pub_adm': 10310.79, 'informatica': 11.30, 'contabil': 60318.70,
@@ -2255,6 +2258,7 @@ _DRE_CORR_2024 = {
             # CUSTOS
             'custo_prep_entrega': 42241.37, 'multa_veiculo': 104.13, 'despachante_ent': 3400.00,
             'taxas_transf_ent': 16371.88, 'garantia_custo': 5250.00, 'laudo_custo': 6717.00,
+            'despesas_postais': 0.00,
             # DESPESAS OPERACIONAIS
             'despachante_sai': 327.54, 'desp_adm_dem': 6452.40, 'desp_pessoal_var': 99.30,
             'agua': 352.00, 'pub_adm': 10424.90, 'informatica': 26.00, 'contabil': 39994.07,
