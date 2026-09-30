@@ -2138,7 +2138,7 @@ _DRE_CORR_2024 = {
             # DEDUÇÕES
             'desc_sw': 35694.77, 'dev_fin': 37456.29,
             # CUSTOS
-            'custo_prep_entrega': 78428.64, 'frete': 978.96, 'multa_veiculo': 478.96,
+            'custo_prep_entrega': 78398.64, 'frete': 500.00, 'multa_veiculo': 478.96,
             'garantia_custo': 6898.00, 'despesas_postais': 0.00,
             # DESPESAS OPERACIONAIS
             'despachante_sai': 384.41, 'desp_adm_dem': 540.87, 'desp_pessoal_var': 2120.80,
