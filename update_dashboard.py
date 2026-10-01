@@ -704,11 +704,11 @@ _DRE_CORR = {
             'taxas_transf_sai': 12293.22, 'despachante_sai': 0.00, 'salarios': 80133.40,
             'ferias': 2266.67, 'rescisao': 5207.95, 'plano_saude': 91.80, 'datas_com': 550.25,
             'refeitorio': 344.73, 'transporte': 416.08, 'uniforme': 228.76, 'copa': 917.97,
-            'cartorio': 284.17, 'mat_aux': 230.16, 'mat_escrit': 570.08, 'seguros': 0.00,
+            'cartorio': 299.97, 'mat_aux': 230.16, 'mat_escrit': 570.08, 'seguros': 0.00,
             'contabil': 2000.00, 'informatica': 3477.38, 'associacoes': 250.00,
             'aluguel_cond': 25550.00, 'agua': 0.00, 'energia': 271.86, 'telefonia': 652.84,
             'limpeza': 1063.86, 'manutencao_loja': 1018.70, 'publicidade': 14300.82,
-            'portais': 8004.98, 'feirao': 5161.11, 'brindes': 3450.00, 'pro_labore': 0.00,
+            'portais': 8004.98, 'feirao': 5251.11, 'brindes': 3450.00, 'pro_labore': 0.00,
             'dividendos': 53000.00, 'emprestimos': 24624.37, 'aj_saida': 3590.73,
             'maq_equip': 3176.53,
             # RES. FINANCEIRO
