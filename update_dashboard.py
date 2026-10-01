@@ -749,7 +749,7 @@ _DRE_CORR = {
             'associacoes': 250.00, 'consultoria': 750.00, 'estacionamento': 0.00,
             'aluguel_cond': 25550.00, 'agua': 0.00, 'energia': 295.11, 'telefonia': 615.78,
             'limpeza': 429.87, 'manutencao_loja': 0.00, 'publicidade': 9999.00,
-            'portais': 7444.28, 'feirao': 8395.54, 'brindes': 350.41, 'pro_labore': 0.00,
+            'portais': 7444.28, 'feirao': 8883.59, 'brindes': 350.41, 'pro_labore': 0.00,
             'dividendos': 50000.00, 'emprestimos': 91606.25, 'aj_saida': 16623.89,
             'maq_equip': 3953.98,
             # RES. FINANCEIRO
