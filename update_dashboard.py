@@ -669,7 +669,7 @@ _DRE_CORR = {
             'contabil': 2000.00, 'informatica': 4710.18, 'associacoes': 250.00,
             'consultoria': 2580.00, 'viagens': 4810.74, 'aluguel_cond': 23550.00, 'agua': 0.00,
             'energia': 432.25, 'telefonia': 795.59, 'limpeza': 742.16, 'manutencao_loja': 0.00,
-            'publicidade': 11019.96, 'portais': 8004.98, 'feirao': 12374.47,
+            'publicidade': 11019.96, 'portais': 8004.98, 'feirao': 13004.47,
             'brindes': 2790.00, 'pro_labore': 0.00, 'dividendos': 55500.00,
             'emprestimos': 24359.40, 'maq_equip': 1800.00,
             # RES. FINANCEIRO
