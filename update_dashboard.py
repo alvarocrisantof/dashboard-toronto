@@ -779,7 +779,7 @@ _DRE_CORR = {
             'multas_nao_abat': 703.51, 'garantia_custo': 2300.00, 'laudo_custo': 1467.10,
             # DESPESAS OPERACIONAIS
             'comissao_venda': 1200.00, 'comissao_c': 5482.51, 'pos_vendas': 7228.49,
-            'taxas_transf_sai': 14011.96, 'despachante_sai': 0.00, 'salarios': 83986.73,
+            'taxas_transf_sai': 14011.96, 'despachante_sai': 0.00, 'salarios': 89387.73,
             'ferias': 2813.33, 'plano_saude': 93.67, 'refeitorio': 484.75,
             'transporte': 270.40, 'medicina': 40.00, 'copa': 158.25, 'cartorio': 608.00,
             'mat_aux': 428.71, 'mat_escrit': 290.68, 'seguros': 4515.58, 'contabil': 2000.00,
