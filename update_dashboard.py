@@ -775,7 +775,7 @@ _DRE_CORR = {
             # CUSTOS
             'custo_compra_sw': 1871585.65, 'custo_compra_at': 221350.00,
             'custo_prep_entrega': 58153.33, 'frete': 0.00, 'despachante_ent': 3860.00,
-            'ipva': 21183.50, 'taxas_transf_ent': 4178.00, 'comunicado_venda': 89.90,
+            'ipva': 15782.50, 'taxas_transf_ent': 4288.00, 'comunicado_venda': 89.90,
             'multas_nao_abat': 703.51, 'garantia_custo': 2300.00, 'laudo_custo': 1467.10,
             # DESPESAS OPERACIONAIS
             'comissao_venda': 1200.00, 'comissao_c': 5482.51, 'pos_vendas': 7228.49,
