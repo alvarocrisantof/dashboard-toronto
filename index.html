@@ -284,7 +284,7 @@ function svgLine(series,labels,opts){
     // dots
     pts.forEach(function(p,pi){
       parts.push('<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="4" fill="'+ser.color+'" stroke="#0a1525" stroke-width="2"/>');
-      if(opts.showVals){var lv=ser.vals[validIdx[pi]];if(lv!==0&&lv!==null&&lv!==undefined){var ty2=p[1]-11;parts.push('<text x="'+p[0].toFixed(1)+'" y="'+ty2.toFixed(1)+'" fill="'+ser.color+'" font-size="9" text-anchor="middle" font-weight="600" font-family="Inter,Arial,sans-serif">'+fmtAx(lv)+'</text>');}}
+      if(opts.showVals){var lv=ser.vals[validIdx[pi]];if(lv!==0&&lv!==null&&lv!==undefined){var ty2=p[1]-11;var lbltxt=opts.pct?(lv.toFixed(1)+'%'):fmtAx(lv);parts.push('<text x="'+p[0].toFixed(1)+'" y="'+ty2.toFixed(1)+'" fill="'+ser.color+'" font-size="9" text-anchor="middle" font-weight="600" font-family="Inter,Arial,sans-serif">'+lbltxt+'</text>');}}
     });
   });
   // x labels
@@ -333,7 +333,7 @@ function svgGroupBar(series,sLabels,colors,xLabels,opts){
       var by=isNeg?zY:zY-bh;
       var bc=isNeg?negC:'url(#'+gidG+')';
       parts.push('<rect x="'+bx.toFixed(1)+'" y="'+by.toFixed(1)+'" width="'+bW.toFixed(1)+'" height="'+bh.toFixed(1)+'" fill="'+bc+'" rx="2"/>');
-      if(opts.showVals&&bh>16){
+      if(opts.showVals){
         var ty=isNeg?(by+bh+10):(by-5);
         parts.push('<text x="'+( bx+bW/2).toFixed(1)+'" y="'+ty.toFixed(1)+'" fill="#a0b4c8" font-size="8" text-anchor="middle" font-family="Inter,Arial,sans-serif">'+fmtAx(v)+'</text>');
       }
@@ -538,7 +538,7 @@ function renderBI(){
       {vals:pctArr3(dBk3,'lb'),color:STORES.bk.c,label:STORES.bk.label},
       {vals:pctArr3(dMm3,'lb'),color:STORES.mm.c,label:STORES.mm.label},
       {vals:pctArr3(dCons3,'lb'),color:STORES.cons.c,label:STORES.cons.label}
-    ],mnAll,{h:220}));
+    ],mnAll,{h:220,showVals:true,pct:true}));
 
   // ── Margem Líquida % Mensal (Black × Multimarcas × Consolidado)
   html+=section('Margem Líquida Mensal (%)','Resultado Líquido / Receita · Black × Multimarcas × Consolidado',
@@ -546,7 +546,7 @@ function renderBI(){
       {vals:pctArr3(dBk3,'res'),color:STORES.bk.c,label:STORES.bk.label},
       {vals:pctArr3(dMm3,'res'),color:STORES.mm.c,label:STORES.mm.label},
       {vals:pctArr3(dCons3,'res'),color:STORES.cons.c,label:STORES.cons.label}
-    ],mnAll,{h:220}));
+    ],mnAll,{h:220,showVals:true,pct:true}));
 
   // ── Custo de Aquisição Mensal (Black × Multimarcas × Consolidado)
   function custoAq3(dd){return dd.rec.map(function(r,i){var ca=(dd.cshow[i]||0)+(dd.catac[i]||0);return ca>0?ca:Math.max(0,r-(dd.lb[i]||0));}).slice(0,12);}
@@ -593,7 +593,7 @@ function renderBI(){
       {vals:pctPrepPosv3(dBk3),color:STORES.bk.c,label:STORES.bk.label},
       {vals:pctPrepPosv3(dMm3),color:STORES.mm.c,label:STORES.mm.label},
       {vals:pctPrepPosv3(dCons3),color:STORES.cons.c,label:STORES.cons.label}
-    ],mnAll,{h:220}));
+    ],mnAll,{h:220,showVals:true,pct:true}));
 
   document.getElementById('pg-resultado').innerHTML=html;html='';
 
@@ -624,7 +624,7 @@ function renderBI(){
   
   // % mix line chart
   var mixPct=shn.map(function(v,i){var t=v+(atn[i]||0);return t>0?(atn[i]||0)/t*100:0;});
-  var mixLine=svgLine([{vals:mixPct.slice(0,12),color:'#c98500',label:'Atacado%'}],mnAll,{h:140});
+  var mixLine=svgLine([{vals:mixPct.slice(0,12),color:'#c98500',label:'Atacado%'}],mnAll,{h:140,showVals:true,pct:true});
   
   html+=section('Mix de Canal — Showroom vs Atacado (Repasse)','Faturamento líquido por canal · Showroom = Venda Normal · Atacado = Venda Repasse',
     canalKpi+canalChart
