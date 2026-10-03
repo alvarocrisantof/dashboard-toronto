@@ -162,13 +162,13 @@ function pct(v,t){return t?(v/t*100).toFixed(1)+'%':'–';}
 function fmtK(v){
   if(v===undefined||v===null||isNaN(v))return'–';
   var neg=v<0;v=Math.abs(v);
-  var s=v>=1e6?'R$'+(v/1e6).toFixed(1)+'M':v>=1e3?'R$'+(v/1e3).toFixed(0)+'k':'R$'+v.toFixed(0);
+  var s=v>=1e6?'R$'+(v/1e6).toFixed(1).replace('.',',')+'M':v>=1e3?'R$'+(v/1e3).toFixed(1).replace('.',',')+'k':'R$'+v.toFixed(0);
   return neg?'('+s+')':s;
 }
 function fmtAx(v){
   if(!v)return'0';
   var neg=v<0;v=Math.abs(v);
-  var s=v>=1e6?(v/1e6).toFixed(1)+'M':v>=1e3?(v/1e3).toFixed(0)+'k':v.toFixed(0);
+  var s=v>=1e6?(v/1e6).toFixed(1).replace('.',',')+'M':v>=1e3?(v/1e3).toFixed(1).replace('.',',')+'k':v.toFixed(0);
   return (neg?'-':'')+s;
 }
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
