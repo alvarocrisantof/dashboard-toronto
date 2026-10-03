@@ -564,10 +564,12 @@ function renderBI(){
   html+=kpi('Preparação / Veículo',fmtK(cprepUn),'Custo médio por carro preparado','#c98500');
   html+=kpi('Custo de Pós-Venda',fmtK(totPosv),'Retrabalho e atendimento — total do período','#9085e9');
   html+=kpi('Pós-Venda / Veículo',fmtK(posvUn),'Custo médio por carro vendido','#9085e9');
-  html+='</div><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px">';
+  var laudoUn=totQtd?totLaudo/totQtd:0;
+  html+='</div><div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:16px">';
   html+=kpi('Custo de Garantia',fmtK(totGar),'Total do período','#e87a3a');
   html+=kpi('Garantia / Veículo',fmtK(garUn),'Custo médio por carro','#e87a3a');
   html+=kpi('Laudo Cautelar',fmtK(totLaudo),'Vistoria/inspeção — total do período','#5a6e84');
+  html+=kpi('Laudo / Veículo',fmtK(laudoUn),'Custo médio por carro','#5a6e84');
   html+=kpi('% s/ Faturamento',pPrepPosv.toFixed(1)+'%','Preparação + Pós-venda sobre receita','#3987e5');
   html+='</div>';
 
