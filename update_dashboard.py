@@ -2749,10 +2749,13 @@ def compute_bi_month(d):
         'cprep': custo_prep, 'cdocs': custo_docs, 'csa': custo_svc,
         'rshow': v('merch_bruta_sw'), 'ratac': v('merch_bruta_at'),
         'dshow': v('desc_sw'), 'datac': v('desc_at'),
+        'posv': v('pos_vendas'), 'gar': v('garantia_custo'), 'laudo': v('laudo_custo'),
+        'frete': v('frete'), 'cprepsolo': v('custo_prep_entrega'),
     }
 
 BI_FIELDS = ['rec','lb','res','qtd','pess','adm','prop','ret','fin','vend','div','pl','imp',
-             'cshow','catac','cprep','cdocs','csa','rshow','ratac','dshow','datac']
+             'cshow','catac','cprep','cdocs','csa','rshow','ratac','dshow','datac',
+             'posv','gar','laudo','frete','cprepsolo']
 
 def build_bi_year(dre_store_raw):
     """dre_store_raw: {'1':{...},...,'12':{...}} (meses presentes = meses já processados)."""
