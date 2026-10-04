@@ -963,11 +963,13 @@ window.renderDRE=function(){
     if(ytdVal<0)ycls=' class="dre-neg"';
     else if(type==='dre-result'&&ytdVal>0)ycls=' class="dre-pos"';
     tr+='<td'+ycls+' class="dre-ytd-cell">'+formatter(ytdVal)+'</td>';
+    var avgVal=months.length?ytdVal/months.length:0;
+    tr+='<td'+ycls+' class="dre-ytd-cell">'+formatter(avgVal)+'</td>';
     tr+='</tr>';
     return tr;
   }
   function section(label,gid){
-    return '<tr class="dre-sec" data-gid="'+gid+'" onclick="dreToggle(\''+gid+'\')"><td colspan="14">'+label+'</td></tr>';
+    return '<tr class="dre-sec" data-gid="'+gid+'" onclick="dreToggle(\''+gid+'\')"><td colspan="15">'+label+'</td></tr>';
   }
   var html='<div class="dre-filter">';
   html+='<div class="tabs"><button class="tab'+(store==='cons'?' on':'')+'" onclick="window.sbStore(\'cons\')">Consolidado</button>';
@@ -978,7 +980,7 @@ window.renderDRE=function(){
   html+='<div class="dre-wrap"><table class="dre-tbl"><thead><tr><th>Item</th>';
   months.forEach(function(m){html+='<th>'+MONTHS[+m-1]+'</th>';});
   for(var i=months.length;i<12;i++)html+='<th style="color:#1a2a38">'+MONTHS[i]+'</th>';
-  html+='<th class="dre-ytd-cell">YTD</th></tr></thead><tbody>';
+  html+='<th class="dre-ytd-cell">YTD</th><th class="dre-ytd-cell">Média Mensal</th></tr></thead><tbody>';
   // VOLUME
   html+=row('Veículos Vendidos','dre-total',function(d){return d.q;});
   html+=row('   ∙ Showroom','dre-sub2',function(d){return d.q_sw;});
