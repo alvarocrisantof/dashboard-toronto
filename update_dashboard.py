@@ -184,8 +184,10 @@ def parse_fluxo_month(target_mes, target_ano, store_filter=None):
                 (conta == 'Vendas de Mercadorias' and 'Financiamento' in ident and 'Retorno' not in ident) or
                 (conta == 'Intermediação de financiamento')
             )
-            # Retorno de Financiamento
-            is_ret = (conta == 'Retorno de Financiamento')
+            # Retorno de Financiamento (inclui retorno lançado em outra conta,
+            # ex.: Vendas de Mercadorias — Onix SJH6F81 set/2026)
+            is_ret = (conta == 'Retorno de Financiamento' or
+                      'retorno de financiamento' in ident.lower())
 
             if is_fin:
                 key_dedup = f"{banco}|{part_id}|{valor}"
