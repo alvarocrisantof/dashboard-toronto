@@ -799,13 +799,35 @@ _DRE_CORR = {
             # OUTROS
             'compras_func': 110.00, 'garantia_venda': 0.00,
         },
-        '9': {'rec_doc_sai': 6497.01, 'rec_svc': 3740.00,
-              'custo_prep_entrega': 9319.76, 'despachante_ent': 260.00,
-              'ipva': 4581.02, 'taxas_transf_ent': 1086.16, 'laudo_custo': 54.90,
-              'despachante_sai': 0.00, 'publicidade': 9999.00,
-              'maq_equip': 31.89,
-              'desc_pagar': 9487.67, 'juros_rec': 1.98,
-              'desc_receber': 250.01, 'juros_pagar2': 22.68, 'garantia_venda': 0.00},
+        '9': {  # conferido com print AutoConf MM set/2026 (06/10)
+            # RECEITAS
+            'merch_bruta_sw': 2036800.00, 'merch_bruta_at': 289360.00, 'intermediacao_fin': 0.00, 'laudo_venda': 5650.00,
+            'transf_venda': 620.91, 'fotos': 1750.00, 'prep_veiculo': 200.00, 'gasolina': 100.00,
+            'rec_doc_sai': 12602.26, 'rec_svc': 6590.00, 'aluguel': 9000.00, 'garantia_venda': 0.00,
+            'rec_diversas': 22293.66,
+            # DEDUÇÕES
+            'desc_sw': 43300.00, 'desc_at': 8786.00, 'esocial': 2631.79, 'fgts': 4595.35,
+            'pis_cofins': 11007.17, 'icms': 11250.85, 'iss': 9956.99, 'iptu': 2143.92,
+            'das': 5326.98, 'dev_fin': 0.00,
+            # CUSTOS
+            'custo_compra_sw': 1741617.37, 'custo_compra_at': 257226.00, 'custo_prep_entrega': 41534.37, 'multa_veiculo': 0.00,
+            'despachante_ent': 700.00, 'ipva': 9685.31, 'taxas_transf_ent': 3339.34, 'baixa_gravame': 414.86,
+            'comunicado_venda': 61.90, 'garantia_custo': 1500.00, 'laudo_custo': 109.80,
+            # DESPESAS OPERACIONAIS
+            'comissao_c': 1300.00, 'pos_vendas': 24620.01, 'taxas_transf_sai': 9904.82, 'despachante_sai': 0.00,
+            'salarios': 97153.97, 'refeitorio': 325.60, 'plano_saude': 91.80, 'almoco_meta': 324.93,
+            'copa': 1968.00, 'cartorio': 374.26, 'mat_escrit': 351.44, 'consultoria': 750.00,
+            'associacoes': 250.00, 'contabil': 2000.00, 'informatica': 3506.40, 'aj_saida': 325.23,
+            'aluguel_cond': 25550.00, 'energia': 298.70, 'limpeza': 603.41, 'telefonia': 669.93,
+            'emprestimos': 18017.83, 'maq_equip': 415.00, 'brindes': 50.00, 'publicidade': 10124.58,
+            'feirao': 13879.24, 'portais': 7593.36, 'dividendos': 62000.00,
+            # RES. FINANCEIRO
+            'retorno_fin': 16938.51, 'retorno_acordos': 25256.18, 'seguro_rec': 6469.93, 'rendimento': 1.37,
+            'desc_pagar': 9793.04, 'juros_rec': 1.98, 'tarifa_bancaria': 75.74, 'desc_receber': 1210.33,
+            'juros_pagar2': 77.97,
+            # OUTROS (não aparecem no relatório real)
+            'compras_func': 0.00, 'manutencao_loja': 0.00, 'mat_aux': 0.00, 'pro_labore': 0.00, 'seguros': 0.00, 'transporte': 0.00, 'viagens': 0.00,
+        },
     
     },
     'bk': {
