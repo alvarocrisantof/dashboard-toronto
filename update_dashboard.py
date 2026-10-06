@@ -1132,9 +1132,11 @@ _DRE_CORR = {
             # OUTROS
             'compras_func': 0.00, 'garantia_venda': 0.00,
         },
-        '9': {'desc_pagar': 429.01, 'juros_pagar2': 60.30, 'despachante_sai': 0.00,
-              'rec_doc_sai': 187.02, 'custo_prep_entrega': 679.92, 'ipva': 2425.86,
-              'despachante_ent': 0.00, 'taxas_transf_ent': 0.00, 'laudo_custo': 0.00},
+        '9': {  # conferido com print AutoConf BK set/2026 (06/10)
+              'desc_pagar': 489.18, 'juros_pagar2': 60.30, 'despachante_sai': 0.00,
+              'rec_doc_sai': 187.02, 'custo_prep_entrega': 699.92, 'ipva': 2425.86,
+              'despachante_ent': 100.00, 'taxas_transf_ent': 154.00, 'laudo_custo': 0.00,
+              'juros_rec': 0.02},
     
     },
     'cons': {
