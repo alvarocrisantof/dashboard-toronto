@@ -2570,6 +2570,75 @@ def _parse_txns(rev_filter, target_mes, target_ano):
     return {f: sorted(v, key=lambda x: x['comp']) for f, v in d.items()}
 
 # ── PROCESS ONE CALENDAR YEAR ──────────────────────────────────────────────
+# ── PÓS-VENDA POR CARRO (extrato-titulos, conta PÓS-VENDAS) ─────────────────
+# Lançamentos de pós-venda confirmados no AutoConf que não vêm no extrato-titulos.
+_POSV_MANUAL = {
+    2026: [
+        {'m': 5, 'loja': 'bk', 'placa': 'QFG8I31', 'valor': 13000.00,
+         'forn': 'Pós-venda confirmado no AutoConf'},  # Volvo XC, fora do extrato (07/10/2026)
+    ],
+}
+_PLACA_RE = re.compile(r'\b([A-Z]{3})-?(\d[A-Z0-9]\d{2})\b')
+
+def build_posv(year, active_months, lv_cache):
+    """Pós-venda por carro: lançamentos da conta PÓS-VENDAS (competência no mês),
+    agrupados por placa e loja, com modelo/data/lucro bruto da venda (lucro-venda)."""
+    def pus(s): s = (s or '').strip(); return float(s) if s else 0.0
+    rev_loja = {REV_MM: 'mm', REV_BK: 'bk'}
+    info = {}
+    for m in sorted(lv_cache):
+        for row in csv.DictReader(io.StringIO(lv_cache[m] or '')):
+            if (row.get('Saida', '') or '').strip().lower() == 'total': continue
+            p = (row.get('Placa', '') or '').replace('-', '').upper().strip()
+            if not p: continue
+            info[p] = {'mod': f"{row.get('Marca','')} {row.get('Modelo','')}".strip(),
+                       'dv': (row.get('Saida', '') or '')[:10],
+                       'lb': round(pus(row.get('Lucro Bruto')), 2)}
+    cars = {}
+    seen = set()
+    def add(m, loja, placa, valor, forn, mod_hint=''):
+        c = cars.setdefault((placa, loja), {'p': placa, 'lj': loja, 't': 0.0, 'n': 0,
+                                            'ms': defaultdict(float), 'fz': defaultdict(float), 'mh': ''})
+        c['t'] += valor; c['n'] += 1; c['ms'][str(m)] += valor; c['fz'][forn] += valor
+        if mod_hint and not c['mh']: c['mh'] = mod_hint
+    for m in active_months:
+        target = f"{m:02d}/{year}"
+        for (_, _), csv_text in _extrato_cache.items():
+            if not csv_text: continue
+            for row in csv.DictReader(io.StringIO(csv_text)):
+                if (row.get('Conta Contábil', '') or '').strip().upper() != 'PÓS-VENDAS': continue
+                if (row.get('Operação', '') or '').strip() != 'A pagar': continue
+                if (row.get('Data Competência', '') or '').strip()[3:10] != target: continue
+                loja = rev_loja.get((row.get('Revenda Origem Id', '') or '').strip())
+                if not loja: continue
+                valor = parse_num(row.get('Valor', ''))
+                if valor == 0: continue
+                pid = (row.get('Parcela Id', '') or '').strip()
+                if pid and pid in seen: continue
+                if pid: seen.add(pid)
+                ident = (row.get('Identificação', '') or '')
+                mt = _PLACA_RE.search(ident.upper())
+                placa = (mt.group(1) + mt.group(2)) if mt else 'SEM PLACA'
+                mh = ''
+                if 'veículo:' in ident:
+                    mh = ident.split('veículo:', 1)[1].split(',')[0].strip()
+                    for w in ('Acessórios ', 'Instalação de Acessórios ', 'Peças ', 'Serviços '):
+                        if mh.startswith(w): mh = mh[len(w):]
+                add(m, loja, placa, valor, (row.get('Cliente Fornecedor', '') or '').strip(), mh)
+    for e in _POSV_MANUAL.get(year, []):
+        if e['m'] in active_months:
+            add(e['m'], e['loja'], e['placa'], e['valor'], e['forn'])
+    out = []
+    for c in cars.values():
+        i = info.get(c['p'], {})
+        out.append({'p': c['p'], 'lj': c['lj'], 'mod': i.get('mod') or c['mh'][:30],
+                    'dv': i.get('dv', ''), 'lb': i.get('lb'), 't': round(c['t'], 2), 'n': c['n'],
+                    'ms': {k: round(v, 2) for k, v in c['ms'].items()},
+                    'fz': [[k, round(v, 2)] for k, v in sorted(c['fz'].items(), key=lambda t: -t[1])]})
+    out.sort(key=lambda c: -c['t'])
+    return {'cars': out}
+
+
 def process_year(year, dre_corr, today):
     """Fetch and process all DRE/COMP/FLUXO data for a single year."""
     active_months = [m for m in range(1, 13) if date(year, m, 1) <= today]
@@ -2754,6 +2823,8 @@ def process_year(year, dre_corr, today):
             mm_val = dre_mm_raw[m_str].get(k, 0) or 0
             dre_cons_raw[m_str][k] = round(mm_val + bk_val, 2)
 
+    posv = build_posv(year, active_months, _lv_cache)
+
     return {
         'generated': today.strftime('%d/%m/%Y'),
         'comp':   {'mm': comp_mm,   'bk': comp_bk,   'cons': comp_cons},
@@ -2761,6 +2832,7 @@ def process_year(year, dre_corr, today):
         'seguro': seguro_final,
         'dre':    {'mm': dre_mm_raw, 'bk': dre_bk_raw, 'cons': dre_cons_raw,
                    'txns': {'mm': dre_txns_mm, 'bk': dre_txns_bk, 'cons': dre_txns_cons}},
+        'posv':   posv,
     }
 
 
@@ -2880,6 +2952,13 @@ def main():
     if data_2026:
         data_2026['gvop']   = preserved('2026', 'gvop')
         data_2026['acordo'] = preserved('2026', 'acordo')
+        # pós-venda: carros vendidos antes de 2026 não estão no lucro-venda do ano;
+        # reaproveita modelo/data/LB já gravados para essas placas
+        old_cars = {c['p']: c for c in (preserved('2026', 'posv') or {}).get('cars', [])}
+        for c in data_2026.get('posv', {}).get('cars', []):
+            o = old_cars.get(c['p'])
+            if c.get('lb') is None and o and o.get('lb') is not None:
+                c['mod'], c['dv'], c['lb'] = o['mod'], o['dv'], o['lb']
 
     # 2025 e 2024 CONGELADOS: DRE ja reconciliada manualmente contra os
     # relatorios reais da Autoconf (mes a mes, loja a loja). Nao rebuscar via
