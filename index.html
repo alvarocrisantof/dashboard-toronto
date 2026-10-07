@@ -18,6 +18,9 @@
 .dre-sub2>td{color:#5f7390;font-size:10.5px}
 .dre-sub2>td:first-child{padding-left:36px}
 .dre-sub.hidden,.dre-sub2.hidden{display:none}
+.dre-eye{background:#0a2540;color:#7fa6cc;border:1px solid #1a3a5c;border-radius:6px;padding:4px 8px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-size:11px;margin-left:auto}
+.dre-eye:hover{background:#0f3050;color:#c0d8ef}
+body.dre-masked #pg-dre .dre-tbl tbody td:not(:first-child),body.dre-masked #dre-modal-body{filter:blur(7px);user-select:none}
 .dre-neg{color:#e06060!important}
 .dre-pos{color:#40c060!important}
 .dre-filter{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:8px}
@@ -998,6 +1001,8 @@ window.renderDRE=function(){
   html+='<button class="tab'+(store==='mm'?' on':'')+'" onclick="window.sbStore(\'mm\')">Multimarcas</button>';
   html+='<button class="tab'+(store==='bk'?' on':'')+'" onclick="window.sbStore(\'bk\')">Black</button></div>';
   html+='<span style="color:#5f7390;font-size:11px">Competência — valores em R$</span>';
+  var _m=document.body.classList.contains('dre-masked');
+  html+='<button class="dre-eye" onclick="dreEye()" title="'+(_m?'Mostrar valores':'Ocultar valores')+'">'+(_m?'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19M14.12 14.12a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>':'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>')+(_m?'Mostrar':'Ocultar')+'</button>';
   html+='</div>';
   html+='<div class="dre-wrap"><table class="dre-tbl"><thead><tr><th>Item</th>';
   months.forEach(function(m){html+='<th>'+MONTHS[+m-1]+'</th>';});
@@ -1168,6 +1173,12 @@ window.renderDRE=function(){
   var pg=document.getElementById('pg-dre');
   if(pg)pg.innerHTML=html;
 };
+window.dreEye=function(){
+  var on=document.body.classList.toggle('dre-masked');
+  try{localStorage.setItem('dreMasked',on?'1':'0');}catch(e){}
+  window.renderDRE();
+};
+try{if(localStorage.getItem('dreMasked')==='1')document.body.classList.add('dre-masked');}catch(e){}
 window.dreToggle=function(gid){
   var rows=document.querySelectorAll('#pg-dre tr.dre-sub, #pg-dre tr.dre-sub2');
   var sec=document.querySelector('#pg-dre tr.dre-sec[data-gid="'+gid+'"]');
