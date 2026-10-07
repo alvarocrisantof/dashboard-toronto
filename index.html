@@ -21,6 +21,7 @@
 .dre-eye{background:#0a2540;color:#7fa6cc;border:1px solid #1a3a5c;border-radius:6px;padding:4px 8px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-size:11px;margin-left:auto}
 .dre-eye:hover{background:#0f3050;color:#c0d8ef}
 body.dre-masked #pg-dre .dre-tbl tbody td:not(:first-child),body.dre-masked #dre-modal-body{filter:blur(7px);user-select:none}
+body.vg-masked #pg-visaogeral .bi-v{filter:blur(8px);user-select:none}
 .dre-neg{color:#e06060!important}
 .dre-pos{color:#40c060!important}
 .dre-filter{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:8px}
@@ -405,9 +406,9 @@ function kpi(label,val,sub,accent,delta){
   return '<div style="background:linear-gradient(145deg,#16243a 0%,#0f1d33 100%);border:1px solid #1e3452;border-radius:14px;padding:18px 20px;position:relative;overflow:hidden">'
     +'<div style="position:absolute;top:-10px;right:-10px;width:60px;height:60px;background:radial-gradient(circle,'+accent+'22 0%,transparent 70%);border-radius:50%"></div>'
     +'<div style="font-size:10px;color:#5a6e84;text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;font-weight:600">'+esc(label)+'</div>'
-    +'<div style="font-size:24px;font-weight:800;color:'+accent+';line-height:1.1">'+esc(val)+'</div>'
-    +(sub?'<div style="font-size:11px;color:#6b7f96;margin-top:5px">'+esc(sub)+'</div>':'')
-    +(delta!==undefined?'<div style="font-size:11px;color:'+dc+';margin-top:4px;font-weight:600">'+da+' '+(delta>=0?'+':'')+delta.toFixed(1)+'% vs 2025</div>':'')
+    +'<div class="bi-v" style="font-size:24px;font-weight:800;color:'+accent+';line-height:1.1">'+esc(val)+'</div>'
+    +(sub?'<div class="bi-v" style="font-size:11px;color:#6b7f96;margin-top:5px">'+esc(sub)+'</div>':'')
+    +(delta!==undefined?'<div class="bi-v" style="font-size:11px;color:'+dc+';margin-top:4px;font-weight:600">'+da+' '+(delta>=0?'+':'')+delta.toFixed(1)+'% vs 2025</div>':'')
     +'</div>';
 }
 
@@ -438,7 +439,7 @@ function section(title,sub,body,opts){
     +'<div style="font-size:14px;font-weight:700;color:#cdd9e8">'+esc(title)+'</div>'
     +(sub?'<div style="font-size:11px;color:#4a5e74;margin-top:2px">'+esc(sub)+'</div>':'')
     +'</div>'
-    +'<div style="padding:18px 22px 20px">'+body+'</div>'
+    +'<div class="bi-v" style="padding:18px 22px 20px">'+body+'</div>'
     +'</div>';
 }
 
@@ -488,6 +489,8 @@ function renderBI(){
   var mnAll=MN.slice(0,12);
 
   var html='';
+  var _vm=document.body.classList.contains('vg-masked');
+  html+='<div style="display:flex;justify-content:flex-end;margin-bottom:10px"><button class="dre-eye" onclick="vgEye()" title="'+(_vm?'Mostrar valores':'Ocultar valores')+'">'+(_vm?'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19M14.12 14.12a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>':'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>')+(_vm?'Mostrar':'Ocultar')+'</button></div>';
   if(isP) html+='<div style="margin-bottom:12px;font-size:11px;background:rgba(216,170,44,.12);color:#c98500;border:1px solid rgba(216,170,44,.25);padding:4px 14px;border-radius:20px;font-weight:600;display:inline-block">'+n+' meses registrados · Anualizado ×'+af.toFixed(2)+'</div>';
 
   // ── KPI GRID (2 rows × 4)
@@ -1173,6 +1176,12 @@ window.renderDRE=function(){
   var pg=document.getElementById('pg-dre');
   if(pg)pg.innerHTML=html;
 };
+window.vgEye=function(){
+  var on=document.body.classList.toggle('vg-masked');
+  try{localStorage.setItem('vgMasked',on?'1':'0');}catch(e){}
+  renderBI();
+};
+try{if(localStorage.getItem('vgMasked')==='1')document.body.classList.add('vg-masked');}catch(e){}
 window.dreEye=function(){
   var on=document.body.classList.toggle('dre-masked');
   try{localStorage.setItem('dreMasked',on?'1':'0');}catch(e){}
