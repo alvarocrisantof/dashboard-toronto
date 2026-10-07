@@ -2575,7 +2575,7 @@ def _parse_txns(rev_filter, target_mes, target_ano):
 _POSV_MANUAL = {
     2026: [
         {'m': 5, 'loja': 'bk', 'placa': 'QFG8I31', 'valor': 13000.00,
-         'forn': 'Pós-venda confirmado no AutoConf'},  # Volvo XC, fora do extrato (07/10/2026)
+         'forn': 'FELIPE PG PRIME'},  # Volvo XC, confirmado no AutoConf, fora do extrato (07/10/2026)
     ],
 }
 _PLACA_RE = re.compile(r'\b([A-Z]{3})-?(\d[A-Z0-9]\d{2})\b')
@@ -2598,8 +2598,10 @@ def build_posv(year, active_months, lv_cache):
     seen = set()
     def add(m, loja, placa, valor, forn, mod_hint=''):
         c = cars.setdefault((placa, loja), {'p': placa, 'lj': loja, 't': 0.0, 'n': 0,
-                                            'ms': defaultdict(float), 'fz': defaultdict(float), 'mh': ''})
+                                            'ms': defaultdict(float), 'fz': defaultdict(float),
+                                            'mf': defaultdict(lambda: defaultdict(float)), 'mh': ''})
         c['t'] += valor; c['n'] += 1; c['ms'][str(m)] += valor; c['fz'][forn] += valor
+        c['mf'][str(m)][forn] += valor
         if mod_hint and not c['mh']: c['mh'] = mod_hint
     for m in active_months:
         target = f"{m:02d}/{year}"
@@ -2634,7 +2636,9 @@ def build_posv(year, active_months, lv_cache):
         out.append({'p': c['p'], 'lj': c['lj'], 'mod': i.get('mod') or c['mh'][:30],
                     'dv': i.get('dv', ''), 'lb': i.get('lb'), 't': round(c['t'], 2), 'n': c['n'],
                     'ms': {k: round(v, 2) for k, v in c['ms'].items()},
-                    'fz': [[k, round(v, 2)] for k, v in sorted(c['fz'].items(), key=lambda t: -t[1])]})
+                    'fz': [[k, round(v, 2)] for k, v in sorted(c['fz'].items(), key=lambda t: -t[1])],
+                    'mf': {m: [[k, round(v, 2)] for k, v in sorted(fz.items(), key=lambda t: -t[1])]
+                           for m, fz in c['mf'].items()}})
     out.sort(key=lambda c: -c['t'])
     return {'cars': out}
 
