@@ -2162,6 +2162,14 @@ _IMP_2025 = {
     },
 }
 
+# Portais de anúncio 2025: no AutoConf ficavam em "Propaganda e Publicidade" (a conta
+# "Portais de anúncio" só existe a partir de 2026). Reclassificado no FINAL em 07/10/2026:
+# publicidade -> portais (fornecedores OLX, Webmotors, iCarros, Meu Carro Novo, Usados BR).
+_PORTAIS_2025 = {
+    'mm': {'1': 4489.06, '2': 4469.46, '3': 4421.56, '4': 4548.49, '5': 6177.01, '6': 6921.04, '7': 6970.64, '8': 9068.89, '9': 6261.57, '10': 8272.25, '11': 7652.5, '12': 6953.5},
+    'bk': {'11': 1191.05, '12': 1170.16},
+}
+
 _DRE_CORR_2024 = {
     'mm':   {
         '1': {
