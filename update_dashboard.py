@@ -2128,6 +2128,40 @@ _DRE_CORR_2025 = {
     },
 }
 
+# Em 2025 o AutoConf tinha uma conta única "Impostos e Taxas", que no _DRE_CORR_2025
+# acima foi gravada em 'contabil' (Serviços Contábeis). Em 07/10/2026 o FINAL de 2025 foi
+# reclassificado: contabil -> campos de Impostos, com o detalhamento abaixo (extrato-titulos
+# 2025, conta "Impostos e Taxas", por Identificação). Totais da DRE não mudam.
+# nov/2025 mm custas inclui 377.143,62 de "MULTA AUTO DE INFRAÇÃO" (DARF Receita Federal).
+_IMP_2025 = {
+    'mm': {
+        '1': {'csll_irpj': 5820.06, 'custas': 600.0, 'esocial': 4144.26, 'fgts': 3078.06, 'icms': 10162.09, 'iptu': 17832.06, 'iss': 9908.67, 'pis_cofins': 9029.68},
+        '2': {'csll_irpj': 46857.59, 'custas': 573.74, 'fgts': 6029.84, 'icms': 7373.55, 'iss': 8717.07, 'pis_cofins': 9295.72},
+        '3': {'csll_irpj': 23315.65, 'esocial': 3173.4, 'fgts': 1995.2, 'icms': 6334.69, 'iss': 7772.06},
+        '4': {'csll_irpj': 25041.69, 'fgts': 1663.85, 'icms': 4563.73, 'iss': 11464.04, 'pis_cofins': 10128.05},
+        '5': {'csll_irpj': 25292.08, 'esocial': 7759.78, 'fgts': 2219.83, 'icms': 5267.29, 'iss': 6895.3, 'pis_cofins': 7290.62},
+        '6': {'csll_irpj': 25577.55, 'das': 20.74, 'esocial': 3418.84, 'fgts': 2068.32, 'icms': 5623.79, 'iss': 11578.52, 'pis_cofins': 11040.79},
+        '7': {'csll_irpj': 25327.65, 'esocial': 2832.18, 'fgts': 2118.63, 'icms': 6258.0, 'iss': 9044.34, 'pis_cofins': 9172.05},
+        '8': {'alvara': 1312.94, 'csll_irpj': 25581.09, 'esocial': 3543.1, 'fgts': 2876.08, 'icms': 6805.29, 'iss': 7683.28, 'pis_cofins': 8544.93},
+        '9': {'csll_irpj': 25874.69, 'custas': 90.41, 'das': 3799.04, 'esocial': 4183.6, 'fgts': 3075.47, 'icms': 5215.55, 'iss': 6260.37, 'pis_cofins': 6249.08},
+        '10': {'csll_irpj': 14262.99, 'das': 3575.44, 'esocial': 3866.5, 'fgts': 3325.11, 'icms': 9299.85, 'iss': 6812.82, 'pis_cofins': 7794.82},
+        '11': {'custas': 377143.62, 'das': 3000.0, 'esocial': 3628.69, 'fgts': 3447.97, 'icms': 13923.96, 'iss': 8196.41, 'pis_cofins': 10443.67},
+        '12': {'das': 3900.0, 'esocial': 6420.51, 'fgts': 4631.8, 'icms': 6820.9, 'iss': 8434.19, 'pis_cofins': 8491.13},
+    },
+    'bk': {
+        '2': {'iss': 110.36, 'pis_cofins': 80.55},
+        '4': {'csll_irpj': 3164.16, 'iptu': 300.51, 'iss': 1950.0, 'pis_cofins': 1423.5},
+        '5': {'iptu': 300.51, 'iss': 1323.36, 'pis_cofins': 966.06},
+        '6': {'custas': 18.5, 'esocial': 551.02, 'fgts': 121.44, 'icms': 650.0, 'iptu': 300.51, 'iss': 1242.64, 'pis_cofins': 1231.97},
+        '7': {'csll_irpj': 9282.8, 'esocial': 551.02, 'fgts': 121.44, 'iptu': 300.51, 'iss': 3057.82, 'pis_cofins': 2213.73},
+        '8': {'alvara': 839.68, 'esocial': 503.79, 'fgts': 125.2, 'iptu': 300.51, 'iss': 1844.69, 'pis_cofins': 1711.63},
+        '9': {'esocial': 554.43, 'fgts': 135.92, 'icms': 2480.0, 'iptu': 300.51, 'iss': 1295.0, 'pis_cofins': 945.35},
+        '10': {'csll_irpj': 2891.59, 'esocial': 514.75, 'fgts': 127.52, 'icms': 2702.5, 'iptu': 300.51, 'iss': 2189.05, 'pis_cofins': 1972.13},
+        '11': {'custas': 8.02, 'esocial': 514.75, 'fgts': 127.52, 'iptu': 304.02, 'iss': 405.0, 'pis_cofins': 295.65},
+        '12': {'esocial': 900.47, 'fgts': 164.71, 'iss': 751.25, 'pis_cofins': 547.5},
+    },
+}
+
 _DRE_CORR_2024 = {
     'mm':   {
         '1': {
