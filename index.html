@@ -1021,8 +1021,13 @@ window.renderDRE=function(){
     var res_fin=res_fin_pos-res_fin_neg;
     var resultado=lucro_op+res_fin;
     var mb_pct=fat_liq>0?margem/fat_liq*100:0;
+    var cmv_sw=v(d,'merch_bruta_sw')-v(d,'desc_sw')-v(d,'custo_compra_sw');
+    var cmv_at=v(d,'merch_bruta_at')-v(d,'desc_at')-v(d,'custo_compra_at');
+    var cmv=cmv_sw+cmv_at;
+    var cmv_pct=(merch-desc)>0?cmv/(merch-desc)*100:0;
+    var cmv_car=v(d,'q')>0?cmv/v(d,'q'):0;
     var ml_pct=fat_liq>0?resultado/fat_liq*100:0;
-    return {merch,rec_svc,total_rec,desc,imp,dev,total_ded,fat_liq,custo_compra,custo_prep,custo_docs,custo_svc,total_cust,margem,desp_vend,desp_pess,desp_adm,desp_est,desp_mkt,desp_soc,total_desp,lucro_op,res_fin,resultado,mb_pct,ml_pct,q:v(d,'q'),q_prop:v(d,'q_proprio'),q_cons:v(d,'q_consig'),q_sw:v(d,'q_sw'),q_at:v(d,'q_at'),
+    return {cmv,cmv_sw,cmv_at,cmv_pct,cmv_car,merch,rec_svc,total_rec,desc,imp,dev,total_ded,fat_liq,custo_compra,custo_prep,custo_docs,custo_svc,total_cust,margem,desp_vend,desp_pess,desp_adm,desp_est,desp_mkt,desp_soc,total_desp,lucro_op,res_fin,resultado,mb_pct,ml_pct,q:v(d,'q'),q_prop:v(d,'q_proprio'),q_cons:v(d,'q_consig'),q_sw:v(d,'q_sw'),q_at:v(d,'q_at'),
       merch_sw:v(d,'merch_bruta_sw'),merch_at:v(d,'merch_bruta_at'),
       desc_sw:v(d,'desc_sw'),desc_at:v(d,'desc_at'),
       custo_compra_sw:v(d,'custo_compra_sw'),custo_compra_at:v(d,'custo_compra_at'),
@@ -1092,7 +1097,7 @@ window.renderDRE=function(){
     return n.toLocaleString('pt-BR',{minimumFractionDigits:0,maximumFractionDigits:0});
   }
   function fpct(n){return n.toFixed(1).replace('.',',')+'%';}
-  function row(label,type,getter,cls,fields,fmt){
+  function row(label,type,getter,cls,fields,fmt,ratio){
     cls=cls||'';
     var formatter=fmt||fv;
     var clickable=fields?' dre-clickable':'';
@@ -1119,7 +1124,7 @@ window.renderDRE=function(){
     if(avgValRaw<0)ycfcls=' class="dre-neg"';
     else if(type==='dre-result'&&avgValRaw>0)ycfcls=' class="dre-pos"';
     tr+='<td'+ycfcls+' class="dre-ytd-cell">'+formatter(avgValRaw)+'</td>';
-    var avgVal=avgCount?avgValRaw/avgCount:0;
+    var avgVal=(ratio||formatter===fpct)?avgValRaw:(avgCount?avgValRaw/avgCount:0);
     var aycls='';
     if(avgVal<0)aycls=' class="dre-neg"';
     else if(type==='dre-result'&&avgVal>0)aycls=' class="dre-pos"';
@@ -1212,6 +1217,11 @@ window.renderDRE=function(){
   html+=row('TOTAL CUSTOS','dre-total',function(d){return d.total_cust;});
   html+=row('= MARGEM BRUTA','dre-result',function(d){return d.margem;});
   html+=row('  % s/ Fat. Líquido','dre-sub2',function(d){return d.mb_pct;},'',null,fpct);
+  html+=row('= CMV (Venda − Compra)','dre-result',function(d){return d.cmv;});
+  html+=row('   ∙ Showroom','dre-sub2',function(d){return d.cmv_sw;});
+  html+=row('   ∙ Atacado','dre-sub2',function(d){return d.cmv_at;});
+  html+=row('  % s/ Venda Líquida','dre-sub2',function(d){return d.cmv_pct;},'',null,fpct);
+  html+=row('  Por carro vendido','dre-sub2',function(d){return d.cmv_car;},'',null,null,true);
   // DESPESAS OPERACIONAIS
   html+=section('▾ (-) DESPESAS OPERACIONAIS','desp');
   html+=row('Despesas com Vendas','dre-sub',function(d){return d.desp_vend;},'','comissao_venda,comissao_c,pos_vendas,taxas_transf_sai,despachante_sai');
