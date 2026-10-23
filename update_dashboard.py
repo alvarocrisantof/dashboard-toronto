@@ -194,6 +194,13 @@ def parse_fluxo_month(target_mes, target_ano, store_filter=None):
                 if key_dedup in seen_idents_fin: continue
                 seen_idents_fin.add(key_dedup)
                 by_fin[banco] += valor
+                # Intermediação: AutoConf separa "Taxa de financiamento" em outra
+                # parcela (#6898 Pan, #6855 Bradesco out/2026) — mesmo contrato, conta 1x
+                m_int = re.search(r'#(\d+)', ident) if conta == 'Intermediação de financiamento' else None
+                if m_int:
+                    key_int = f"{banco}|INT|{m_int.group(1)}"
+                    if key_int in seen_idents_fin: continue
+                    seen_idents_fin.add(key_int)
                 by_q[banco]   += 1
             elif is_ret:
                 by_ret[banco] += valor
@@ -700,7 +707,7 @@ _DRE_CORR = {
             'custo_prep_entrega': 42582.32, 'frete': 0.00, 'despachante_ent': 1100.00,
             'ipva': 17698.59, 'taxas_transf_ent': 2260.00, 'baixa_gravame': 900.00,
             'comunicado_venda': 89.90, 'multas_nao_abat': 303.16, 'garantia_custo': 4650.00,
-            'laudo_custo': 1606.90,
+            'laudo_custo': 1661.80,  # +54,90 p/ cons bater 2.501,10 (print cons 20/10)
             # DESPESAS OPERACIONAIS
             'comissao_venda': 0.00, 'comissao_c': 1431.60, 'pos_vendas': 15204.64,
             'taxas_transf_sai': 12293.22, 'despachante_sai': 0.00, 'salarios': 80133.40,
@@ -1145,7 +1152,7 @@ _DRE_CORR = {
         '3': {'rec_doc_sai': 25043.25, 'rec_svc': 10030.0, 'rec_diversas': 15554.90, 'desc_sw': 118306.96, 'desc_at': 42900.0, 'custo_prep_entrega': 80624.66, 'frete': 0.0, 'despachante_ent': 2300.0, 'ipva': 30297.31, 'taxas_transf_ent': 5793.22, 'comunicado_venda': 149.90, 'laudo_custo': 2620.20, 'despachante_sai': 0.0, 'cartorio': 366.64, 'pub_adm': 1200.0, 'publicidade': 9349.94, 'seguro_rec': 246.34, 'remuner_bank': 1741.50, 'juros_rec': 60.34, 'desc_pagar': 12100.00, 'desc_receber': 84.51, 'juros_pagar': 2201.80, 'juros_pagar2': 82.64, 'retorno_fin': 28417.19},
         '4': {'rec_svc': 7300.0, 'laudo_venda': 9775.90, 'custo_prep_entrega': 40676.10, 'frete': 0.0, 'despachante_ent': 2150.0, 'ipva': 27580.05, 'taxas_transf_ent': 6938.16, 'multas_nao_abat': 104.13, 'laudo_custo': 5156.70, 'taxas_transf_sai': 14389.08, 'despachante_sai': 0.0, 'compras_func': 0.0, 'pub_adm': 1200.0, 'emprestimos': 28130.95, 'publicidade': 10699.00, 'feirao': 18594.66, 'seguro_rec': 8606.03, 'retorno_comiss': 2873.03, 'remuner_bank': 4833.99, 'juros_rec': 201.14, 'desc_pagar': 10125.00, 'desc_receber': 116.44, 'juros_pagar2': 244.47, 'tarifa_bancaria': 241.09},
         '5': {'rec_svc': 6314.0, 'desc_sw': 125020.01, 'desc_at': 20782.0, 'custo_prep_entrega': 57438.43, 'frete': 80.0, 'despachante_ent': 700.0, 'ipva': 40485.04, 'taxas_transf_ent': 3711.0, 'laudo_custo': 2470.50, 'despachante_sai': 0.0, 'compras_func': 0.0, 'viagens': 4810.74, 'seguro_rec': 4091.67, 'retorno_comiss': 652.16, 'juros_rec': 9679.03, 'desc_pagar': 10896.69, 'desc_receber': 2651.00, 'iof': 4.56, 'juros_pagar2': 238.98},
-        '6': {'rec_doc_sai': 5310.40, 'rec_svc': 7000.0, 'fotos': 4250.0, 'rec_diversas': 18147.16, 'custo_prep_entrega': 50890.65, 'frete': 0.0, 'despachante_ent': 1200.0, 'ipva': 16883.52, 'taxas_transf_ent': 2306.0, 'laudo_custo': 1977.10, 'despachante_sai': 0.0, 'compras_func': 0.0, 'maq_equip': 3471.76, 'seguro_rec': 9546.18, 'juros_rec': 42.35, 'desc_pagar': 17123.50, 'desc_receber': 263.17, 'juros_pagar': 9531.10, 'juros_pagar2': 139.38, 'retorno_fin': 24060.29,
+        '6': {'rec_doc_sai': 5310.40, 'rec_svc': 7000.0, 'fotos': 4250.0, 'rec_diversas': 18147.16, 'custo_prep_entrega': 50890.65, 'frete': 0.0, 'despachante_ent': 1200.0, 'ipva': 16883.52, 'taxas_transf_ent': 2306.0, 'laudo_custo': 2501.10, 'despachante_sai': 0.0, 'compras_func': 0.0, 'maq_equip': 3471.76, 'seguro_rec': 9546.18, 'juros_rec': 42.35, 'desc_pagar': 17123.50, 'desc_receber': 263.17, 'juros_pagar': 9531.10, 'juros_pagar2': 139.38, 'retorno_fin': 24060.29,
               'associacoes': 250.00, 'portais': 10425.29},
         '7': {},  # limpo — cons = MM+BK natural, redistribuição vira identidade
     },
