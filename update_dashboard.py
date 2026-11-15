@@ -1520,7 +1520,7 @@ _DRE_CORR_2025 = {
             'venda_svc': 16365.00, 'venda_comiss': 10642.76, 'aluguel': 8253.00,
             'rec_diversas': 5922.08,
             # DEDUÇÕES
-            'desc_sw': 10150.00, 'desc_at': 60673.84, 'csll_irpj': 18313.59,
+            'desc_sw': 10150.00, 'desc_at': 16372.00, 'csll_irpj': 18313.59,
             'devolucao': 586.94, 'dev_fin': 81290.00,
             # CUSTOS
             'custo_compra_sw': 1197980.00, 'custo_compra_at': 497750.00,
@@ -1890,7 +1890,7 @@ _DRE_CORR_2025 = {
             'gasolina': 50.00, 'rec_doc_sai': 1105.79, 'rec_svc': 830.16, 'venda_svc': 789.07,
             'venda_comiss': 5568.94, 'aluguel': 3750.00, 'rec_diversas': 5325.39,
             # DEDUÇÕES
-            'desc_sw': 10760.00, 'desc_at': 25050.00, 'csll_irpj': 1715.90, 'devolucao': 0.00,
+            'desc_sw': 10760.00, 'desc_at': 0.00, 'csll_irpj': 1715.90, 'devolucao': 0.00,
             'dev_fin': 0.00,
             # CUSTOS
             'custo_compra_sw': 697000.00, 'custo_compra_at': 151000.00,
