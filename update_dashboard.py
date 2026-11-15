@@ -1488,7 +1488,7 @@ _DRE_CORR_2025 = {
             'rec_svc': 3820.00, 'venda_svc': 12739.47, 'venda_comiss': 16241.91,
             'aluguel': 3500.00, 'rec_diversas': 7056.27,
             # DEDUÇÕES
-            'desc_sw': 82421.30, 'desc_at': 23740.01, 'csll_irpj': 18313.59,
+            'desc_sw': 82421.30, 'desc_at': 4080.01, 'csll_irpj': 18313.59,
             'dev_fin': 294110.13,
             # CUSTOS
             'custo_compra_sw': 2435093.00, 'custo_compra_at': 746118.22,
@@ -1860,7 +1860,7 @@ _DRE_CORR_2025 = {
             'rec_svc': 1400.00, 'venda_svc': 510.00, 'venda_comiss': 7531.31,
             'aluguel': 3750.00, 'rec_diversas': 130.16,
             # DEDUÇÕES
-            'desc_sw': 33763.00, 'desc_at': 10000.00, 'csll_irpj': 1715.90, 'dev_fin': 0.00,
+            'desc_sw': 33763.00, 'desc_at': 0.00, 'csll_irpj': 1715.90, 'dev_fin': 0.00,
             # CUSTOS
             'custo_compra_sw': 887500.00, 'custo_compra_at': 68000.00,
             'custo_prep_entrega': 20971.33, 'despachante_ent': 300.00, 'ipva': 1844.43,
