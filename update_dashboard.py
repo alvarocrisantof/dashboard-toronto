@@ -2225,7 +2225,7 @@ _DRE_CORR_2024 = {
         },
         '4': {
             # DEDUÇÕES
-            'desc_sw': 77600.00, 'desc_at': 3686.00,
+            'desc_sw': 70700.00, 'desc_at': 3686.00,
             # CUSTOS
             'custo_prep_entrega': 30178.07, 'frete': 500.00, 'multa_veiculo': 104.13,
             'despesas_postais': 0.00,
