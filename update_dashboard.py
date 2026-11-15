@@ -1422,7 +1422,7 @@ _DRE_CORR_2025 = {
             'rec_doc_sai': 9517.91, 'rec_svc': 8639.00, 'venda_svc': 21633.94,
             'venda_comiss': 8930.35, 'aluguel': 7250.00, 'rec_diversas': 3937.62,
             # DEDUÇÕES
-            'desc_sw': 42915.70, 'desc_at': 17980.00, 'devolucao': 600.00,
+            'desc_sw': 42915.70, 'desc_at': 16350.00, 'devolucao': 600.00,
             'dev_fin': 171900.00,
             # CUSTOS
             'custo_compra_sw': 2062393.67, 'custo_compra_at': 356170.00,
