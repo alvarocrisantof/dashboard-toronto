@@ -2286,7 +2286,7 @@ _DRE_CORR_2024 = {
         },
         '8': {
             # DEDUÇÕES
-            'desc_at': 22800.00,
+            'desc_at': 13900.00,
             # CUSTOS
             'custo_prep_entrega': 42311.86, 'multa_veiculo': 400.88, 'garantia_custo': 3320.00,
             # DESPESAS OPERACIONAIS
