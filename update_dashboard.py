@@ -2414,7 +2414,29 @@ def apply_dre_corrections(raw, store, corr=None):
         if mes_str in raw:
             raw[mes_str].update(fixes)
 
-def parse_lv_dre(csv_text, rev):
+def commissioned_negs():
+    """IDs de negociação com lançamento em 'Venda Comissionada' no extrato em cache.
+
+    Carro consignado vendido com comissão é intermediação: a DRE do AutoConf conta só a
+    comissão (venda_comiss) e deixa o carro fora de vendas, descontos, compras e quantidade.
+    O lucro-venda da API lista esses carros como venda normal (ex.: BMW M2 #303257 BK jan/2025,
+    Mustang #463907 BK set/2025, Amarok #529083 MM nov/2025, Peugeot 208 #766747 MM ago/2026).
+    """
+    negs = set()
+    for csv_text in _extrato_cache.values():
+        if not csv_text: continue
+        for row in csv.DictReader(io.StringIO(csv_text)):
+            if (row.get('Conta Contábil','') or '').strip() != 'Venda Comissionada': continue
+            m = re.search(r'#(\d+)', row.get('Identificação','') or '')
+            if m: negs.add(m.group(1))
+    return negs
+
+def _is_intermediacao(row, skip_negs):
+    return (bool(skip_negs)
+            and (row.get('Estoque','') or '').strip() == 'Consignado'
+            and (row.get('Negociação Saida ID','') or '').strip() in skip_negs)
+
+def parse_lv_dre(csv_text, rev, skip_negs=None):
     d = defaultdict(float)
     d['q'] = 0
     if not csv_text: return d
@@ -2437,6 +2459,11 @@ def parse_lv_dre(csv_text, rev):
         rec_ss= pus(row.get('Receita com Serviços Agregados Saída'))
         rec_sa= pus(row.get('Receita com Serviços Agregados'))
         if vb <= 0 and compra <= 0: continue
+        if _is_intermediacao(row, skip_negs):
+            # intermediação: carro fora da DRE, receitas de documentos/serviços continuam
+            d['rec_doc_sai'] += rec_ds + rec_de
+            d['rec_svc']     += rec_se + rec_ss + rec_sa
+            continue
         estoque = (row.get('Estoque','') or '').strip()
         d['q'] += 1
         if estoque == 'Consignado':
@@ -2507,7 +2534,7 @@ def parse_ext_dre_group(target_mes, target_ano):
             d[field] += valor
     return d
 
-def parse_lv_txns(csv_text, rev):
+def parse_lv_txns(csv_text, rev, skip_negs=None):
     """Per-vehicle txns from lucro-venda: merch_bruta, custo_compra, desc, rec_doc_sai, rec_svc."""
     d = defaultdict(list)
     if not csv_text: return d
@@ -2530,7 +2557,11 @@ def parse_lv_txns(csv_text, rev):
         rec_ss = pus(row.get('Receita com Serviços Agregados Saída'))
         if vb <= 0 and compra <= 0: continue
         ident = f"{marca} {modelo} {placa}".strip()
-        if sw:
+        if _is_intermediacao(row, skip_negs):
+            sw = None  # intermediação: só receitas de documentos/serviços
+        if sw is None:
+            pass
+        elif sw:
             if vb > 0:     d['merch_bruta_sw'].append({'comp':saida,'liq':saida,'id':ident,'val':vb})
             if desc > 0:   d['desc_sw'].append({'comp':saida,'liq':saida,'id':ident,'val':desc})
             if compra > 0: d['custo_compra_sw'].append({'comp':saida,'liq':saida,'id':ident,'val':compra})
@@ -2753,10 +2784,11 @@ def process_year(year, dre_corr, today):
     print(f"[2b] DRE {year}...")
     dre_mm_raw = {}; dre_bk_raw = {}
     dre_txns_mm = {}; dre_txns_bk = {}; dre_txns_cons = {}
+    skip_negs = commissioned_negs()
     for m in active_months:
         txt = _lv_cache.get(m, '')
-        lv_mm = parse_lv_dre(txt, REV_MM)
-        lv_bk = parse_lv_dre(txt, REV_BK)
+        lv_mm = parse_lv_dre(txt, REV_MM, skip_negs)
+        lv_bk = parse_lv_dre(txt, REV_BK, skip_negs)
         ex_mm = parse_ext_dre(REV_MM, m, year)
         ex_bk = parse_ext_dre(REV_BK, m, year)
         def merge_dre(a, b):
@@ -2770,8 +2802,8 @@ def process_year(year, dre_corr, today):
         txns_bk  = _parse_txns(REV_BK, m, year)
         txns_grp = _parse_txns(None,   m, year)
         lv_txt = _lv_cache.get(m, '')
-        lv_mm = parse_lv_txns(lv_txt, REV_MM)
-        lv_bk = parse_lv_txns(lv_txt, REV_BK)
+        lv_mm = parse_lv_txns(lv_txt, REV_MM, skip_negs)
+        lv_bk = parse_lv_txns(lv_txt, REV_BK, skip_negs)
         for f, lst in lv_mm.items(): txns_mm[f] = sorted(lst + txns_mm.get(f,[]), key=lambda x: x['comp'])
         for f, lst in lv_bk.items(): txns_bk[f] = sorted(lst + txns_bk.get(f,[]), key=lambda x: x['comp'])
         dre_txns_mm[str(m)] = txns_mm
