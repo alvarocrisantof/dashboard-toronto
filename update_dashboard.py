@@ -2211,7 +2211,7 @@ _DRE_CORR_2024 = {
             # RECEITAS
             'rec_doc_sai': 0.00, 'intermediacao_fin': 37456.30,
             # DEDUÇÕES
-            'desc_sw': 35694.77, 'dev_fin': 37456.29,
+            'desc_sw': 26990.00, 'dev_fin': 37456.29,
             # CUSTOS
             'custo_prep_entrega': 78398.64, 'frete': 500.00, 'multa_veiculo': 478.96,
             'garantia_custo': 6898.00, 'despesas_postais': 0.00,
