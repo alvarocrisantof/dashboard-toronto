@@ -2271,7 +2271,7 @@ _DRE_CORR_2024 = {
             # RECEITAS
             'rec_doc_sai': 0.00, 'venda_svc': 25478.00,
             # DEDUÇÕES
-            'desc_sw': 69650.00, 'desc_at': 13938.00,
+            'desc_sw': 57850.00, 'desc_at': 13438.00,
             # CUSTOS
             'custo_prep_entrega': 83403.93, 'multa_veiculo': 639.37, 'garantia_custo': 19349.00,
             # DESPESAS OPERACIONAIS
