@@ -1358,7 +1358,7 @@ _DRE_CORR_2025 = {
             'transf_venda': 1336.00, 'rec_doc_sai': 30764.70, 'rec_svc': 9710.00,
             'venda_svc': 14998.73, 'venda_comiss': 6028.63, 'rec_diversas': 543.47,
             # DEDUÇÕES
-            'desc_sw': 52580.11, 'desc_at': 33774.00,
+            'desc_sw': 52580.11, 'desc_at': 23874.00,
             # CUSTOS
             'custo_compra_sw': 2287638.30, 'custo_compra_at': 691236.00,
             'custo_prep_entrega': 65128.26, 'frete': 950.00, 'multa_veiculo': 0.00,
