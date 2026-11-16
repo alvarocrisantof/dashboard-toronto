@@ -841,6 +841,7 @@ _DRE_CORR = {
             'compras_func': 0.00, 'manutencao_loja': 0.00, 'mat_aux': 0.00, 'pro_labore': 0.00, 'seguros': 0.00, 'transporte': 0.00, 'viagens': 0.00,
         },
         '10': {'merch_bruta_sw': 2051273.70, 'merch_bruta_at': 393766.00, 'rec_doc_sai': 28730.57, 'rec_svc': 9150.00, 'laudo_venda': 4841.25, 'transf_venda': 1038.90, 'venda_comiss': 3000.00, 'fotos': 1000.00, 'prep_veiculo': 679.00, 'gasolina': 200.00, 'aluguel': 38750.01, 'rec_diversas': 15731.63, 'desc_sw': 50703.86, 'desc_at': 14900.00, 'esocial': 1807.58, 'fgts': 7517.04, 'csll_irpj': 21050.93, 'pis_cofins': 9202.70, 'icms': 16328.34, 'iss': 4014.12, 'fisc_func': 189.00, 'iptu': 2143.92, 'das': 7474.31, 'custo_compra_sw': 1696835.00, 'custo_compra_at': 375075.00, 'custo_prep_entrega': 40638.20, 'site_compra': 999.00, 'despachante_ent': 4416.76, 'ipva': 5690.86, 'taxas_transf_ent': 2526.00, 'comunicado_venda': 61.90, 'multas_nao_abat': 1470.06, 'garantia_custo': 17040.00, 'laudo_custo': 1891.80, 'pos_vendas': 25601.42, 'comissao_c': 1700.00, 'taxas_transf_sai': 13690.17, 'refeitorio': 168.00, 'salarios': 92918.99, 'cursos': 115.00, 'ferias': 840.00, 'rescisao': 1875.50, 'fgts_rescis': 3802.63, 'plano_saude': 91.80, 'datas_com': 135.00, 'copa': 25.47, 'cartorio': 467.00, 'estacionamento': 7.00, 'mat_aux': 306.67, 'mat_escrit': 931.20, 'seguros': 488.14, 'associacoes': 250.00, 'contabil': 2000.00, 'informatica': 2491.37, 'aj_saida': 8325.00, 'aluguel_cond': 25550.00, 'energia': 321.52, 'limpeza': 641.14, 'telefonia': 898.48, 'emprestimos': 33663.37, 'brindes': 946.73, 'publicidade': 12417.00, 'feirao': 8604.00, 'portais': 6076.28, 'dividendos': 61999.85, 'retorno_fin': 25592.16, 'retorno_acordos': 8639.23, 'seguro_rec': 5557.49, 'rendimento': 2.92, 'desc_pagar': 6254.35, 'juros_rec': 180.30, 'tarifa_bancaria': 43.00, 'iof': 39.45, 'desc_receber': 150.00, 'juros_pagar2': 6.22},  # DRE AutoConf MM out/2026 completa (16/11/2026); BK = cons - MM
+        '11': {'merch_bruta_at': 81784.00, 'rec_doc_sai': 5069.98, 'rec_svc': 5200.00, 'laudo_venda': 2014.20, 'transf_venda': 30.00, 'fotos': 250.00, 'prep_veiculo': 1720.00, 'gasolina': 39.00, 'aluguel': 19625.00, 'rec_diversas': 17009.09, 'desc_sw': 25900.00, 'desc_at': 80.00, 'icms': 21503.34, 'iss': 5029.21, 'das': 3000.00, 'custo_compra_sw': 824093.70, 'custo_compra_at': 73000.00, 'custo_prep_entrega': 9492.86, 'despachante_ent': 1636.31, 'ipva': 13928.36, 'taxas_transf_ent': 1925.00, 'despesas_postais': 32.40, 'baixa_gravame': 400.00, 'comunicado_venda': 141.90, 'multas_nao_abat': 704.33, 'garantia_custo': 1920.00, 'laudo_custo': 1457.30, 'pos_vendas': 13408.80, 'taxas_transf_sai': 6143.80, 'refeitorio': 300.00, 'salarios': 76550.34, 'transporte': 266.50, 'decimo_terceiro': 15690.56, 'medicina': 20.00, 'rescisao': 1818.28, 'plano_saude': 96.00, 'cartorio': 247.00, 'mat_aux': 321.04, 'mat_escrit': 240.51, 'associacoes': 250.00, 'contabil': 2000.00, 'informatica': 1766.11, 'aj_saida': 1000.00, 'aluguel_cond': 25550.00, 'limpeza': 275.69, 'telefonia': 319.41, 'emprestimos': 29735.13, 'publicidade': 1799.00, 'feirao': 4500.00, 'portais': 7444.28, 'dividendos': 63600.00, 'retorno_fin': 14144.76, 'retorno_acordos': 674.22, 'seguro_rec': 7045.41, 'desc_pagar': 14107.74, 'juros_rec': 356.14, 'tarifa_bancaria': 11.00, 'iof': 9.04, 'desc_receber': 0.49, 'juros_pagar2': 25.15, 'garantia_venda': 0.00},  # DRE AutoConf MM nov/2026 (16/11/2026, mês aberto); merch_bruta_sw fora: DRE 1.043.142 tem 75.200 a mais que a API, aguardando venda
     
     },
     'bk': {
@@ -2942,9 +2943,15 @@ def process_year(year, dre_corr, today):
 
     for m_str, fixes in dre_corr.get('mm', {}).items():
         if m_str not in dre_cons_raw: continue
+        # Mês sem correção de consolidado nem de BK (só a DRE da MM foi conferida):
+        # a BK segue a API e o consolidado vira MM + BK.
+        so_mm = m_str not in dre_corr.get('cons', {}) and m_str not in dre_corr.get('bk', {})
         for k, mm_val in fixes.items():
             dre_mm_raw[m_str][k] = mm_val
-            dre_bk_raw[m_str][k] = round(dre_cons_raw[m_str].get(k, 0) - mm_val, 2)
+            if so_mm:
+                dre_cons_raw[m_str][k] = round(mm_val + (dre_bk_raw[m_str].get(k, 0) or 0), 2)
+            else:
+                dre_bk_raw[m_str][k] = round(dre_cons_raw[m_str].get(k, 0) - mm_val, 2)
 
     for m_str, fixes in dre_corr.get('bk', {}).items():
         if m_str not in dre_cons_raw: continue
