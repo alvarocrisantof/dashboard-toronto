@@ -740,16 +740,17 @@ _DRE_CORR = {
             'rec_doc_sai': 8438.73, 'rec_svc': 10050.00, 'venda_comiss': 0.00,
             'aluguel': 15500.00, 'rec_diversas': 39433.04,
             # DEDUÇÕES
-            'desc_sw': 30388.10, 'desc_at': 36080.00, 'esocial': 3433.27, 'fgts': 4213.06,
+            'desc_sw': 30388.10, 'desc_at': 26630.00,  # sem Tracker #745057 9.450 (cliente pagou cheio)
+            'esocial': 3433.27, 'fgts': 4213.06,
             'csll_irpj': 15099.48, 'pis_cofins': 12990.59, 'icms': 21659.17, 'iss': 7463.83,
             'alvara': 199.38, 'iptu': 2143.92, 'custas': 1211.18, 'das': 4590.75,
             'dev_fin': 0.00,
             # CUSTOS
             'custo_compra_sw': 2229822.52, 'custo_compra_at': 284023.40,
-            'custo_prep_entrega': 66300.00, 'frete': 0.00, 'despachante_ent': 990.00,
-            'ipva': 8653.52, 'taxas_transf_ent': 7754.93, 'baixa_gravame': 530.16,
+            'custo_prep_entrega': 66300.00, 'frete': 0.00, 'despachante_ent': 1090.00,
+            'ipva': 24809.29, 'taxas_transf_ent': 8448.93, 'baixa_gravame': 530.16,
             'comunicado_venda': 138.17, 'multas_nao_abat': 595.77, 'garantia_custo': 20950.00,
-            'laudo_custo': 3799.60,
+            'laudo_custo': 3964.30,
             # DESPESAS OPERACIONAIS
             'comissao_venda': 1000.00, 'comissao_c': 4678.38, 'pos_vendas': 2404.29,
             'taxas_transf_sai': 17269.45, 'despachante_sai': 0.00, 'salarios': 84538.84,
