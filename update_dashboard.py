@@ -2443,6 +2443,16 @@ def _is_intermediacao(row, skip_negs):
             and (row.get('Estoque','') or '').strip() == 'Consignado'
             and (row.get('Negociação Saida ID','') or '').strip() in skip_negs)
 
+# Vendas de carro consignado cuja compra (pagamento ao dono) ainda não foi feita no
+# AutoConf: a DRE não conta a compra até ela ser feita, mas o lucro-venda da API já
+# traz o valor. Tirar a negociação daqui quando o usuário avisar que a compra foi feita.
+_COMPRA_PENDENTE = {
+    '825180',  # Volvo S60 QYL1I00, BK nov/2026, compra 115.000 (confirmado pelo usuário 16/11/2026)
+}
+
+def _compra_pendente(row):
+    return (row.get('Negociação Saida ID','') or '').strip() in _COMPRA_PENDENTE
+
 def parse_lv_dre(csv_text, rev, skip_negs=None):
     d = defaultdict(float)
     d['q'] = 0
@@ -2458,6 +2468,7 @@ def parse_lv_dre(csv_text, rev, skip_negs=None):
         vb    = pus(row.get('Venda Bruta'))
         desc  = pus(row.get('Valor Desconto'))
         compra= pus(row.get('Compra'))
+        if _compra_pendente(row): compra = 0.0
         ret   = pus(row.get('Retorno'))
         custos= pus(row.get('Custos'))
         rec_ds= pus(row.get('Receita com Documentos Saída'))
@@ -2620,6 +2631,7 @@ def parse_lv_txns(csv_text, rev, skip_negs=None):
         vb     = pus(row.get('Venda Bruta'))
         desc   = pus(row.get('Valor Desconto'))
         compra = pus(row.get('Compra'))
+        if _compra_pendente(row): compra = 0.0
         rec_ds = pus(row.get('Receita com Documentos Saída'))
         rec_de = pus(row.get('Receita com Documentos Entrada'))
         rec_se = pus(row.get('Receita com Serviços Agregados Entrada'))
