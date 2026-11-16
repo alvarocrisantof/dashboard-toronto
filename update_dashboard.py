@@ -820,13 +820,13 @@ _DRE_CORR = {
             'pis_cofins': 11007.17, 'icms': 11250.85, 'iss': 9956.99, 'iptu': 2143.92,
             'das': 5326.98, 'dev_fin': 0.00,
             # CUSTOS
-            'custo_compra_sw': 1741617.37, 'custo_compra_at': 257226.00, 'custo_prep_entrega': 41639.37, 'multa_veiculo': 0.00,
-            'despachante_ent': 800.00, 'ipva': 12490.69, 'taxas_transf_ent': 3559.34, 'baixa_gravame': 414.86,
+            'custo_compra_sw': 1741617.37, 'custo_compra_at': 257226.00, 'custo_prep_entrega': 41309.37, 'multa_veiculo': 0.00,
+            'despachante_ent': 900.00, 'ipva': 14854.33, 'taxas_transf_ent': 4031.34, 'baixa_gravame': 414.86,
             'comunicado_venda': 61.90, 'garantia_custo': 2000.00, 'laudo_custo': 54.90,
             # DESPESAS OPERACIONAIS
             'comissao_c': 2949.32, 'pos_vendas': 24620.01, 'taxas_transf_sai': 9879.82, 'despachante_sai': 0.00,
             'salarios': 97153.97, 'refeitorio': 325.60, 'plano_saude': 91.80, 'almoco_meta': 324.93,
-            'copa': 1968.00, 'cartorio': 374.26, 'mat_escrit': 351.44, 'consultoria': 750.00,
+            'copa': 1968.00, 'cartorio': 374.26, 'mat_escrit': 301.44, 'consultoria': 750.00,
             'associacoes': 250.00, 'contabil': 2000.00, 'informatica': 3776.76, 'aj_saida': 325.23,
             'aluguel_cond': 25550.00, 'energia': 298.70, 'limpeza': 603.41, 'telefonia': 669.93,
             'emprestimos': 21617.83, 'maq_equip': 415.00, 'brindes': 50.00, 'publicidade': 10124.58,
