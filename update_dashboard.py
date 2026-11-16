@@ -358,7 +358,7 @@ _DRE_EXT = {
     'frete':            ('Frete',                            'A pagar'),
     'multa_veiculo':    ('Multa veícular',                   'A pagar'),
     'despachante_ent':  ('Despachante (ENTRADA)',             'A pagar'),
-    'despachante_sai':  ('DESPACHANTE (SAIDA)',               'A pagar'),
+    # 'despachante_sai': DESPACHANTE (SAIDA) fica fora: a DRE do AutoConf mostra 0 em todos os meses de 2026 conferidos
     'ipva':             ('IPVA',                             'A pagar'),
     'taxas_transf_ent': ('TAXAS DE TRANSFERÊNCIA (ENTRADA)', 'A pagar'),
     'taxas_transf_sai': ('TAXAS DE TRANSFERÊNCIA (SAÍDA)',   'A pagar'),
@@ -373,6 +373,7 @@ _DRE_EXT = {
     'salarios':         ('Salários',                         'A pagar'),
     'refeitorio':       ('Refeitório e Lanches',             'A pagar'),
     'ferias':           ('Férias',                           'A pagar'),
+    'decimo_terceiro':  ('Décimo Terceiro',                  'A pagar'),
     'rescisao':         ('Rescisão',                         'A pagar'),
     'plano_saude':      ('Plano de Saúde',                   'A pagar'),
     'datas_com':        ('Datas Comemorativas',              'A pagar'),
@@ -2976,7 +2977,7 @@ def compute_bi_month(d):
     total_cust = custo_compra + custo_prep + custo_docs + custo_svc
     margem = fat_liq - total_cust
     desp_vend = v('comissao_venda') + v('comissao_c') + v('pos_vendas') + v('taxas_transf_sai') + v('despachante_sai')
-    desp_pess = (v('salarios') + v('desp_adm_dem') + v('desp_pessoal_var') + v('ferias') +
+    desp_pess = (v('salarios') + v('desp_adm_dem') + v('desp_pessoal_var') + v('ferias') + v('decimo_terceiro') +
                  v('rescisao') + v('fgts_rescis') + v('plano_saude') + v('datas_com') +
                  v('refeitorio') + v('transporte') + v('uniforme') + v('medicina') +
                  v('cursos') + v('churrasco') + v('almoco_meta'))
