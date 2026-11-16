@@ -2499,6 +2499,53 @@ def _is_veic_uso(row, conta):
     ident = (row.get('Identificação','') or '').upper().replace('-', '')
     return any(p in ident for p in _VEIC_USO_PLACAS)
 
+# ── CARROS EM ESTOQUE ──────────────────────────────────────────────────────
+# A DRE do AutoConf não reconhece o custo de carro em estoque: o custo fica no
+# estoque e só entra na DRE (no mês de competência) quando o carro sai.
+# Confirmado pelo usuário em 16/11/2026; testado contra as DREs jul-out/2026.
+# Lista de placas com status "Estoque" vem de relatorio/estoque/veiculos, que é
+# filtrado pela data de cadastro do veículo: buscamos os últimos 12 meses.
+_ESTOQUE_MESES = 12
+_ESTOQUE_CONTAS = {'custo_prep_entrega', 'frete', 'despachante_ent', 'ipva',
+                   'taxas_transf_ent', 'baixa_gravame', 'multas_nao_abat',
+                   'laudo_custo', 'garantia_custo'}
+_estoque_placas = set()
+
+def _placa_norm(p):
+    """Placa sem hífen e no padrão Mercosul (ABC1D23), para casar placa antiga e nova."""
+    p = (p or '').replace('-', '').strip().upper()
+    if len(p) == 7 and p[4].isdigit():
+        p = p[:4] + 'ABCDEFGHIJ'[int(p[4])] + p[5:]
+    return p
+
+def fetch_estoque_placas(today):
+    """Preenche _estoque_placas. Se alguma chamada falhar, deixa vazio (regra desligada)."""
+    global _estoque_placas
+    status = {}
+    y, m = today.year, today.month
+    for _ in range(_ESTOQUE_MESES):
+        t = api_get('relatorio/estoque/veiculos', m, y)
+        if t is None:
+            print(f"  estoque {m:02d}/{y} falhou: regra de estoque desligada nesta execução")
+            _estoque_placas = set()
+            return
+        for row in csv.DictReader(io.StringIO(t)):
+            pl = _placa_norm(row.get('Placa'))
+            d = (row.get('Data', '') or '').strip()
+            if not pl or len(d) < 10: continue
+            k = (d[6:10], d[3:5], d[0:2])
+            if pl not in status or k >= status[pl][0]:
+                status[pl] = (k, (row.get('Status', '') or '').strip())
+        m -= 1
+        if m == 0: y, m = y - 1, 12
+    _estoque_placas = {pl for pl, (_, st) in status.items() if st == 'Estoque'}
+    print(f"  estoque: {len(_estoque_placas)} placas em estoque")
+
+def _is_estoque(row, field):
+    if not _estoque_placas or field not in _ESTOQUE_CONTAS: return False
+    ident = (row.get('Identificação', '') or '').upper()
+    return any(_placa_norm(a + b) in _estoque_placas for a, b in _PLACA_RE.findall(ident))
+
 def parse_ext_dre(rev, target_mes, target_ano):
     d = defaultdict(float)
     seen = set()
@@ -2518,6 +2565,7 @@ def parse_ext_dre(rev, target_mes, target_ano):
                 field = 'venda_comiss'
             if not field: continue
             if _is_veic_uso(row, conta): continue
+            if _is_estoque(row, field): continue
             pid = (row.get('Parcela Id','') or '').strip()
             key = (pid, conta, op, valor) if pid else None
             if key and key in seen: continue
@@ -2546,6 +2594,7 @@ def parse_ext_dre_group(target_mes, target_ano):
                 field = 'venda_comiss'
             if not field: continue
             if _is_veic_uso(row, conta): continue
+            if _is_estoque(row, field): continue
             pid = (row.get('Parcela Id','') or '').strip()
             key = (pid, conta, op, valor) if pid else None
             if key and key in seen: continue
@@ -2618,6 +2667,7 @@ def _parse_txns(rev_filter, target_mes, target_ano):
                 field = 'venda_comiss'
             if not field: continue
             if _is_veic_uso(row, conta): continue
+            if _is_estoque(row, field): continue
             pid = (row.get('Parcela Id','') or '').strip()
             key = (pid, conta, op, valor) if pid else None
             if key and key in seen: continue
@@ -2802,6 +2852,8 @@ def process_year(year, dre_corr, today):
 
     # ── 2b. DRE ──────────────────────────────────────────────────────────
     print(f"[2b] DRE {year}...")
+    if year == today.year:
+        fetch_estoque_placas(today)
     dre_mm_raw = {}; dre_bk_raw = {}
     dre_txns_mm = {}; dre_txns_bk = {}; dre_txns_cons = {}
     skip_negs = commissioned_negs()
