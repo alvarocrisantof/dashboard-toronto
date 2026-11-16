@@ -664,13 +664,13 @@ _DRE_CORR = {
             # DEDUÇÕES
             'desc_sw': 90700.01, 'desc_at': 2300.00, 'esocial': 3475.07, 'fgts': 5350.78,
             'csll_irpj': 14107.73, 'pis_cofins': 17142.75, 'icms': 14601.57, 'iss': 15294.72,
-            'alvara': 746.45, 'iptu': 2144.28, 'retencoes': 0.00, 'custas': 2835.88,
+            'alvara': 746.45, 'iptu': 2143.92, 'retencoes': 0.00, 'custas': 2835.88,
             'das': 5124.91, 'devolucao': 0.00, 'dev_fin': 264434.00,
             # CUSTOS
             'custo_compra_sw': 2041179.34, 'custo_compra_at': 259550.00,
-            'custo_prep_entrega': 45061.72, 'frete': 80.00, 'despachante_ent': 700.00,
-            'ipva': 19463.13, 'taxas_transf_ent': 3613.00, 'comunicado_venda': 20.00,
-            'multas_nao_abat': 955.81, 'garantia_custo': 4780.00, 'laudo_custo': 2215.80,
+            'custo_prep_entrega': 45061.72, 'frete': 80.00, 'despachante_ent': 800.00,
+            'ipva': 20228.28, 'taxas_transf_ent': 3915.00, 'comunicado_venda': 20.00,
+            'multas_nao_abat': 955.81, 'garantia_custo': 4780.00, 'laudo_custo': 2270.70,
             # DESPESAS OPERACIONAIS
             'comissao_c': 8422.77, 'pos_vendas': 2975.72, 'taxas_transf_sai': 15211.32,
             'despachante_sai': 0.00, 'salarios': 82368.37, 'ferias': 2666.67,
@@ -1002,7 +1002,8 @@ _DRE_CORR = {
             'fotos': 1000.00, 'prep_veiculo': 0.00, 'gasolina': 0.00, 'rec_doc_sai': 4849.26,
             'rec_svc': 500.00, 'aluguel': 0.00, 'rec_diversas': 1290.00,
             # DEDUÇÕES
-            'desc_sw': 34320.00, 'desc_at': 18482.00, 'esocial': 1117.68, 'fgts': 261.14,
+            'desc_sw': 34320.00, 'desc_at': 4582.00,  # sem Tiggo #668869 13.900 (cliente pagou cheio)
+            'esocial': 1117.68, 'fgts': 261.14,
             'csll_irpj': 3943.60, 'pis_cofins': 4557.85, 'icms': 1500.40, 'iss': 4748.64,
             'alvara': 746.45, 'iptu': 0.00, 'retencoes': 53.81, 'custas': 0.00, 'das': 0.00,
             'devolucao': 418.00, 'dev_fin': 0.00,
@@ -1153,7 +1154,7 @@ _DRE_CORR = {
         '2': {'rec_doc_sai': 16323.66, 'rec_svc': 5720.0, 'desc_sw': 72545.50, 'custo_prep_entrega': 63811.0, 'frete': 600.0, 'despachante_ent': 1460.0, 'ipva': 18414.83, 'taxas_transf_ent': 11856.84, 'baixa_gravame': 0.0, 'laudo_custo': 3025.0, 'despachante_sai': 0.0, 'seguro_rec': 16862.87, 'juros_rec': 379.35, 'desc_pagar': 15757.74, 'desc_receber': 291.40, 'juros_pagar2': 43.49},
         '3': {'rec_doc_sai': 25043.25, 'rec_svc': 10030.0, 'rec_diversas': 15554.90, 'desc_sw': 118306.96, 'desc_at': 31000.0, 'custo_prep_entrega': 80624.66, 'frete': 0.0, 'despachante_ent': 2300.0, 'ipva': 30297.31, 'taxas_transf_ent': 5793.22, 'comunicado_venda': 149.90, 'laudo_custo': 2620.20, 'despachante_sai': 0.0, 'cartorio': 366.64, 'pub_adm': 1200.0, 'publicidade': 9349.94, 'seguro_rec': 246.34, 'remuner_bank': 1741.50, 'juros_rec': 60.34, 'desc_pagar': 12100.00, 'desc_receber': 84.51, 'juros_pagar': 2201.80, 'juros_pagar2': 82.64, 'retorno_fin': 28417.19},
         '4': {'rec_svc': 7300.0, 'laudo_venda': 9775.90, 'custo_prep_entrega': 40778.86, 'frete': 0.0, 'despachante_ent': 2250.0, 'ipva': 30259.00, 'taxas_transf_ent': 7464.16, 'multas_nao_abat': 319.13, 'laudo_custo': 5516.00, 'taxas_transf_sai': 14389.08, 'despachante_sai': 0.0, 'compras_func': 0.0, 'pub_adm': 1200.0, 'emprestimos': 28130.95, 'publicidade': 10699.00, 'feirao': 18594.66, 'seguro_rec': 8606.03, 'retorno_comiss': 2873.03, 'remuner_bank': 4833.99, 'juros_rec': 201.14, 'desc_pagar': 10125.00, 'desc_receber': 116.44, 'juros_pagar2': 244.47, 'tarifa_bancaria': 241.09},
-        '5': {'rec_svc': 6314.0, 'desc_sw': 125020.01, 'desc_at': 20782.0, 'custo_prep_entrega': 57438.43, 'frete': 80.0, 'despachante_ent': 700.0, 'ipva': 40485.04, 'taxas_transf_ent': 3711.0, 'laudo_custo': 2470.50, 'despachante_sai': 0.0, 'compras_func': 0.0, 'viagens': 4810.74, 'seguro_rec': 4091.67, 'retorno_comiss': 652.16, 'juros_rec': 9679.03, 'desc_pagar': 10896.69, 'desc_receber': 2651.00, 'iof': 4.56, 'juros_pagar2': 238.98},
+        '5': {'rec_svc': 6314.0, 'desc_sw': 125020.01, 'desc_at': 6882.0, 'custo_prep_entrega': 61543.43, 'frete': 80.0, 'despachante_ent': 900.0, 'ipva': 43810.58, 'taxas_transf_ent': 4161.0, 'laudo_custo': 2690.10, 'despachante_sai': 0.0, 'compras_func': 0.0, 'viagens': 4810.74, 'seguro_rec': 4091.67, 'retorno_comiss': 652.16, 'juros_rec': 9679.03, 'desc_pagar': 10896.69, 'desc_receber': 2651.00, 'iof': 4.56, 'juros_pagar2': 238.98},
         '6': {'rec_doc_sai': 5310.40, 'rec_svc': 7000.0, 'fotos': 4250.0, 'rec_diversas': 18147.16, 'custo_prep_entrega': 50890.65, 'frete': 0.0, 'despachante_ent': 1200.0, 'ipva': 16883.52, 'taxas_transf_ent': 2306.0, 'laudo_custo': 2501.10, 'despachante_sai': 0.0, 'compras_func': 0.0, 'maq_equip': 3471.76, 'seguro_rec': 9546.18, 'juros_rec': 42.35, 'desc_pagar': 17123.50, 'desc_receber': 263.17, 'juros_pagar': 9531.10, 'juros_pagar2': 139.38, 'retorno_fin': 24060.29,
               'associacoes': 250.00, 'portais': 10425.29},
         '7': {},  # limpo — cons = MM+BK natural, redistribuição vira identidade
