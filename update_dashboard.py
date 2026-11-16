@@ -788,9 +788,9 @@ _DRE_CORR = {
             'das': 4183.05, 'dev_fin': 0.00,
             # CUSTOS
             'custo_compra_sw': 1871585.65, 'custo_compra_at': 221350.00,
-            'custo_prep_entrega': 59073.33, 'frete': 0.00, 'despachante_ent': 4600.00,
-            'ipva': 17298.80, 'taxas_transf_ent': 6197.00, 'comunicado_venda': 89.90,
-            'multas_nao_abat': 703.51, 'garantia_custo': 2300.00, 'laudo_custo': 1804.50,
+            'custo_prep_entrega': 59073.33, 'frete': 0.00, 'despachante_ent': 4400.00,
+            'ipva': 17298.80, 'taxas_transf_ent': 5718.00, 'comunicado_venda': 89.90,
+            'multas_nao_abat': 703.51, 'garantia_custo': 2300.00, 'laudo_custo': 1631.80,
             # DESPESAS OPERACIONAIS
             'comissao_venda': 1200.00, 'comissao_c': 5482.51, 'pos_vendas': 7228.49,
             'taxas_transf_sai': 14011.96, 'despachante_sai': 0.00, 'salarios': 89387.73,
@@ -1122,10 +1122,10 @@ _DRE_CORR = {
             'dev_fin': 0.00,
             # CUSTOS
             'custo_compra_sw': 1307380.00, 'custo_compra_at': 0.00,
-            'custo_prep_entrega': 7105.20, 'frete': 4000.00, 'despachante_ent': 380.00,
-            'ipva': 2463.23, 'taxas_transf_ent': 1355.28, 'comunicado_venda': 0.00,
+            'custo_prep_entrega': 7105.20, 'frete': 4000.00, 'despachante_ent': 580.00,
+            'ipva': 2463.23, 'taxas_transf_ent': 1834.28, 'comunicado_venda': 0.00,
             'multas_nao_abat': 1100.00,  # chave reserva Corolla #761811
-            'garantia_custo': 0.00, 'laudo_custo': 349.50,
+            'garantia_custo': 0.00, 'laudo_custo': 522.20,
             # DESPESAS OPERACIONAIS
             'comissao_venda': 1800.00, 'comissao_c': 12195.71, 'pos_vendas': 3039.55,
             'taxas_transf_sai': 3229.90, 'despachante_sai': 0.00, 'salarios': 24836.04,
