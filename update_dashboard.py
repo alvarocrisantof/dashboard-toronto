@@ -1160,6 +1160,7 @@ _DRE_CORR = {
         '6': {'rec_doc_sai': 5310.40, 'rec_svc': 7000.0, 'fotos': 4250.0, 'rec_diversas': 18147.16, 'custo_prep_entrega': 50890.65, 'frete': 0.0, 'despachante_ent': 1300.0, 'ipva': 20590.55, 'taxas_transf_ent': 2786.0, 'laudo_custo': 2501.10, 'despachante_sai': 0.0, 'compras_func': 0.0, 'maq_equip': 3471.76, 'seguro_rec': 9546.18, 'juros_rec': 42.35, 'desc_pagar': 17123.50, 'desc_receber': 263.17, 'juros_pagar': 9531.10, 'juros_pagar2': 139.38, 'retorno_fin': 24060.29,
               'associacoes': 250.00, 'portais': 10425.29},
         '7': {},  # limpo — cons = MM+BK natural, redistribuição vira identidade
+        '10': {'rec_doc_sai': 28951.78, 'rec_svc': 10750.00, 'intermediacao_fin': 0.00, 'garantia_venda': 0.00, 'dev_fin': 0.00, 'custo_prep_entrega': 53500.39, 'frete': 0.00, 'despachante_ent': 4576.76, 'ipva': 6983.50, 'taxas_transf_ent': 3199.35, 'garantia_custo': 17040.00, 'laudo_custo': 2134.40, 'despachante_sai': 0.00, 'datas_com': 135.00, 'desc_pagar': 7146.13, 'juros_rec': 180.31, 'tarifa_bancaria': 43.00, 'desc_receber': 284.61, 'juros_pagar2': 11.00},  # DRE AutoConf consolidado out/2026 (16/11/2026); custo de carro em estoque fica fora até a venda
     },
 }
 
