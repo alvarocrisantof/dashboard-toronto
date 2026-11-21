@@ -18,8 +18,9 @@ Uso:
 Custo de API: 1 chamada de lucro-venda por mês desde --desde até hoje
 + 1 extrato por mês conferido.
 
-Atenção: no Custo de Preparação a DRE não segue exatamente essa regra
-(fica acima da API); trate o valor dessa conta como indicação, não exato.
+Custo de Preparação e Frete aparecem só como informação (fora do total): a DRE
+não move essas contas para o mês de competência. "Quitação de financiamento"
+é ignorada (não entra na DRE mesmo lançada em IPVA).
 """
 import argparse, csv, io, os, sys
 from collections import defaultdict
@@ -31,6 +32,17 @@ import warnings; warnings.filterwarnings('ignore')
 import update_dashboard as U  # noqa: E402
 
 LOJA = {U.REV_MM: 'MM', U.REV_BK: 'BK'}
+# Contas que a DRE NÃO move para o mês de competência quando o carro é vendido
+# (preparação não entrou em jun/jul/set; frete do RVM1B91 foi para o mês da venda).
+# Aparecem no relatório só como informação, fora do total esperado.
+INFO_CAMPOS = {'custo_prep_entrega', 'frete'}
+
+
+def _ignorar(ident):
+    # "Quitação de financiamento" lançada em IPVA (Renegade SYU0F26, #799824) não
+    # entrou na DRE de set/2026 mesmo com o carro vendido.
+    i = ident.upper()
+    return 'QUITAÇÃO DE FINANCIAMENTO' in i or 'QUITACAO DE FINANCIAMENTO' in i
 MESES = ['', 'jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez']
 
 
@@ -104,23 +116,27 @@ def main():
             if campo not in U._ESTOQUE_CONTAS or U._is_veic_uso(r, conta):
                 continue
             ident = (r.get('Identificação', '') or '')
+            if _ignorar(ident):
+                continue
             placas = [U._placa_norm(x + y) for x, y in U._PLACA_RE.findall(ident.upper())]
             hit = next((p for p in placas if p in vendidos), None)
             if not hit:
                 continue
             v = U.parse_num(r.get('Valor', ''))
             loja = LOJA.get((r.get('Revenda Origem Id', '') or '').strip(), '?')
-            por_conta[(conta, loja)] += v
-            linhas.append((conta, loja, v, hit, vendidos[hit]))
+            info = campo in INFO_CAMPOS
+            por_conta[(info, conta, loja)] += v
+            linhas.append((info, conta, loja, v, hit, vendidos[hit]))
         if not linhas:
             print(f'{MESES[m]}/{ano}: nada mudou')
             continue
-        tot = sum(por_conta.values())
+        tot = sum(v for (info, _, _), v in por_conta.items() if not info)
         total_geral += tot
         print(f'{MESES[m]}/{ano}: DRE deve ter subido R$ {brl(tot)}')
-        for (conta, loja), v in sorted(por_conta.items()):
-            print(f'    {conta:<34} {loja}  +{brl(v):>10}')
-        for conta, loja, v, pl, (d, neg, modelo, lj) in sorted(linhas):
+        for (info, conta, loja), v in sorted(por_conta.items()):
+            tag = '  (só informativo: a DRE não costuma mover)' if info else ''
+            print(f'    {conta:<34} {loja}  +{brl(v):>10}{tag}')
+        for info, conta, loja, v, pl, (d, neg, modelo, lj) in sorted(linhas):
             print(f'      · {conta[:22]:<22} {brl(v):>9}  {modelo} {pl} vendido {d} (#{neg}, {lj})')
         print()
     print(f'Total nos meses conferidos: R$ {brl(total_geral)}')
