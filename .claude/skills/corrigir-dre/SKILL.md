@@ -76,6 +76,19 @@ fix(dre): corrige <campos legíveis> <LOJA> <mes>/<ano> (confere screenshot <loj
 - Commit com `update_dashboard.py` e `index.html` juntos.
 - **Pergunte antes de `git push`.** O push publica no GitHub Pages.
 
+## Meses já conferidos que mudam depois (carro em estoque vendido)
+
+A DRE do AutoConf não conta custo de carro em estoque. Quando o carro é vendido, os custos dele entram na DRE do mês de **competência** de cada lançamento, então a DRE de um mês já gravado sobe depois. Para saber quanto:
+
+```bash
+python3 .claude/skills/corrigir-dre/scripts/conferir_vendidos.py --desde DD/MM/AAAA [--meses 7,8,9]
+```
+
+- `--desde` = data da última conferência daquele mês. Lista, por mês/conta/loja, os custos de carros vendidos desde então.
+- Só lê a API (1 lucro-venda por mês desde `--desde` + 1 extrato por mês conferido).
+- Use para propor a atualização ao usuário; confirme com a DRE antes de gravar. No Custo de Preparação a DRE não segue a regra exata.
+- Fique de olho em lançamento classificado errado (ex.: "Quitação de financiamento" na conta IPVA).
+
 ## Checklist final
 
 - [ ] Loja do print confirmada com o usuário
