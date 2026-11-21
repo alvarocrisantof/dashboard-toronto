@@ -823,7 +823,7 @@ _DRE_CORR = {
             'das': 5326.98, 'dev_fin': 0.00,
             # CUSTOS
             'custo_compra_sw': 1741617.37, 'custo_compra_at': 257226.00, 'custo_prep_entrega': 41309.37, 'multa_veiculo': 0.00,
-            'despachante_ent': 900.00, 'ipva': 14854.33, 'taxas_transf_ent': 4031.34, 'baixa_gravame': 414.86,
+            'despachante_ent': 1000.00, 'ipva': 18422.57, 'taxas_transf_ent': 4349.34, 'baixa_gravame': 414.86,
             'comunicado_venda': 61.90, 'garantia_custo': 2000.00, 'laudo_custo': 54.90,
             # DESPESAS OPERACIONAIS
             'comissao_c': 2949.32, 'pos_vendas': 24620.01, 'taxas_transf_sai': 9879.82, 'despachante_sai': 0.00,
