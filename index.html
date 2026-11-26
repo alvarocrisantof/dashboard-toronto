@@ -159,6 +159,28 @@ function triggerUpdate(){
 var MN=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
 var STORES={cons:{label:'Consolidado',c:'#3987e5'},mm:{label:'Multimarcas',c:'#199e70'},bk:{label:'Black',c:'#c98500'}};
 var biStore='cons',biYear=window.biYear=2026;
+var vgPer=window.vgPer='ano';
+var MNL=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+function vgIdx(p,n){if(p==='ano'){var a=[];for(var i=0;i<n;i++)a.push(i);return a;}if(p.charAt(0)==='q'){var q=+p.slice(1);return[3*q-3,3*q-2,3*q-1];}return[+p.slice(1)-1];}
+function vgPerOk(p,nMax){if(p==='ano')return true;if(p.charAt(0)==='q')return 3*(+p.slice(1))-3<nMax;return +p.slice(1)<=nMax;}
+function vgNome(p){if(p==='ano')return 'Ano';if(p.charAt(0)==='q')return p.slice(1)+'º tri';return MN[+p.slice(1)-1];}
+window.vgSetPer=function(p){vgPer=window.vgPer=p;renderBI();};
+function vgPerBar(n){
+  var d=DRE[biStore][biYear],nMax=0;for(var k=0;k<12;k++)if((d.rec[k]||0)>0)nMax=k+1;nMax=Math.max(nMax,n);
+  var b='display:inline-block;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid #1e3452;';
+  function btn(p,t){var on=vgPer===p,ok=vgPerOk(p,nMax);
+    return '<button '+(ok?'onclick="vgSetPer(\''+p+'\')"':'disabled')+' style="'+b+(on?'background:#3987e5;color:#fff;border-color:#3987e5':'background:#101e31;color:'+(ok?'#8093ab':'#2a3d55'))+';'+(ok?'':'cursor:default')+'">'+t+'</button>';}
+  var h='<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px">';
+  h+='<span style="font-size:11px;color:#5a6e84;text-transform:uppercase;letter-spacing:.8px;font-weight:600;margin-right:4px">Período</span>';
+  h+=btn('ano','Ano '+biYear);
+  for(var q=1;q<=4;q++)h+=btn('q'+q,q+'º Tri');
+  var isM=vgPer.charAt(0)==='m';
+  h+='<select onchange="if(this.value)vgSetPer(this.value)" style="'+b+'background:'+(isM?'#3987e5':'#101e31')+';color:'+(isM?'#fff':'#8093ab')+';outline:none"><option value="">Mês…</option>';
+  for(var m=1;m<=12;m++){h+='<option value="m'+m+'"'+(vgPer==='m'+m?' selected':'')+(m>nMax?' disabled':'')+'>'+MNL[m-1]+'</option>';}
+  h+='</select>';
+  if(vgPer.charAt(0)==='q'){var qq=+vgPer.slice(1);if(3*qq>nMax)h+='<span style="font-size:11px;color:#c98500;margin-left:6px">trimestre parcial ('+(nMax-3*qq+3)+' de 3 meses)</span>';}
+  return h+'</div>';
+}
 
 function S(a,n){var t=0;for(var i=0;i<(n||a.length);i++)t+=a[i]||0;return t;}
 function clr(v){return v>=0?'#199e70':'#e66767';}
@@ -400,7 +422,7 @@ function svgPECombo(fatVals,peVals,mcArr,xLabels,opts){
   parts.push('<line x1="'+PL+'" y1="'+PT+'" x2="'+PL+'" y2="'+(PT+cH)+'" stroke="#1d2d49" stroke-width="1"/>');
   return '<svg width="100%" viewBox="0 0 '+W+' '+H+'" style="display:block;overflow:visible">'+parts.join('')+'</svg>';
 }
-function kpi(label,val,sub,accent,delta){
+function kpi(label,val,sub,accent,delta,dlab){
   var dc=delta===undefined?'':delta>=0?'#199e70':'#e66767';
   var da=delta===undefined?'':delta>=0?'▲':('▼');
   return '<div style="background:linear-gradient(145deg,#16243a 0%,#0f1d33 100%);border:1px solid #1e3452;border-radius:14px;padding:18px 20px;position:relative;overflow:hidden">'
@@ -408,7 +430,7 @@ function kpi(label,val,sub,accent,delta){
     +'<div style="font-size:10px;color:#5a6e84;text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;font-weight:600">'+esc(label)+'</div>'
     +'<div class="bi-v" style="font-size:24px;font-weight:800;color:'+accent+';line-height:1.1">'+esc(val)+'</div>'
     +(sub?'<div class="bi-v" style="font-size:11px;color:#6b7f96;margin-top:5px">'+esc(sub)+'</div>':'')
-    +(delta!==undefined?'<div class="bi-v" style="font-size:11px;color:'+dc+';margin-top:4px;font-weight:600">'+da+' '+(delta>=0?'+':'')+delta.toFixed(1)+'% vs 2025</div>':'')
+    +(delta!==undefined?'<div class="bi-v" style="font-size:11px;color:'+dc+';margin-top:4px;font-weight:600">'+da+' '+(delta>=0?'+':'')+delta.toFixed(1)+'% '+esc(dlab||'vs 2025')+'</div>':'')
     +'</div>';
 }
 
@@ -489,17 +511,55 @@ function renderBI(){
   var mnAll=MN.slice(0,12);
 
   var html='';
+  (function(){
+  // ── Período da Visão Geral (ano / trimestre / mês) ──
+  var nMax=0;for(var _k=0;_k<12;_k++)if((d.rec[_k]||0)>0)nMax=_k+1;nMax=Math.max(nMax,n);
+  if(!vgPerOk(vgPer,nMax))vgPer=window.vgPer='ano';
+  var ix=vgIdx(vgPer,n);
+  var isAno=vgPer==='ano';
+  var cix=isAno?[0,1,2,3,4,5,6,7,8,9,10,11]:ix;
+  var cLab=cix.map(function(i){return MN[i];});
+  function pk(a){return cix.map(function(i){return a[i]||0;});}
+  function SI(a){var t=0;ix.forEach(function(i){t+=a[i]||0;});return t;}
+  var totRec=SI(d.rec),totLB=SI(d.lb),totRes=SI(d.res);
+  var totQtd=SI(d.qtd),totPess=SI(d.pess),totAdm=SI(d.adm);
+  if(biStore==='cons'&&totQtd===0){ix.forEach(function(i){totQtd+=(DRE.mm[biYear].qtd[i]||0)+(DRE.bk[biYear].qtd[i]||0);});}
+  var totProp=SI(d.prop),totVend=SI(d.vend),totDiv=SI(d.div),totPL=SI(d.pl),totImp=SI(d.imp);
+  var _yF=FINAL[biYear]||{};var _cp=_yF.comp&&_yF.comp[biStore];
+  var totRet;
+  if(_cp&&isAno&&_cp.kpi)totRet=_cp.kpi.ret;
+  else if(_cp&&_cp.bm){totRet=0;Object.keys(_cp.bm).forEach(function(b){ix.forEach(function(i){var x=_cp.bm[b][String(i+1)];if(x)totRet+=x.ret||0;});});}
+  else totRet=SI(d.ret);
+  var ebitda=totLB-totPess-totAdm-totProp-totVend+totDiv+totPL+totImp;
+  var pEbitda=totRec?ebitda/totRec*100:0,pLB=totRec?totLB/totRec*100:0,pRes=totRec?totRes/totRec*100:0;
+  var pPess=totRec?totPess/totRec*100:0;
+  var ticket=totQtd?totRec/totQtd:0,totLiq=totRes+totDiv,pLiq=totRec?totLiq/totRec*100:0;
+  var lbVei=totQtd?totLB/totQtd:0;
+  var af=isAno&&n>0&&n<12?12/n:1;
+  var isP=isAno&&n<12;
+  // Delta: ano = vs ano anterior completo (anualizado); trimestre/mês = vs mesmo período do ano anterior
+  var py=String(+biYear-1),dPrev=DRE[biStore][py];
+  var dLab='vs '+(isAno?py:vgNome(vgPer)+'/'+py)+(!isAno&&ix.some(function(i){return i>=nMax;})?' (mesmos meses)':'');
+  function delta(key){
+    if(!dPrev)return undefined;
+    var a,b=SI(d[key]);
+    if(isAno){a=S(dPrev[key],dPrev.n);b=b*af;}
+    else{a=0;ix.forEach(function(i){if(i<nMax)a+=dPrev[key][i]||0;});}
+    if(key==='qtd'&&biStore==='cons'){if(b===0)b=totQtd*(isAno?af:1);if(a===0){var pm=DRE.mm[py],pb=DRE.bk[py];(isAno?Array.apply(null,{length:pm.n}).map(function(_,i){return i;}):ix.filter(function(i){return i<nMax;})).forEach(function(i){a+=(pm.qtd[i]||0)+(pb.qtd[i]||0);});}}
+    return a?((b-a)/Math.abs(a)*100):undefined;
+  }
   var _vm=document.body.classList.contains('vg-masked');
   html+='<div style="display:flex;justify-content:flex-end;margin-bottom:10px"><button class="dre-eye" onclick="vgEye()" title="'+(_vm?'Mostrar valores':'Ocultar valores')+'">'+(_vm?'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19M14.12 14.12a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>':'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>')+(_vm?'Mostrar':'Ocultar')+'</button></div>';
+  html+=vgPerBar(n);
   if(isP) html+='<div style="margin-bottom:12px;font-size:11px;background:rgba(216,170,44,.12);color:#c98500;border:1px solid rgba(216,170,44,.25);padding:4px 14px;border-radius:20px;font-weight:600;display:inline-block">'+n+' meses registrados · Anualizado ×'+af.toFixed(2)+'</div>';
 
   // ── KPI GRID (2 rows × 4)
   html+='<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:16px">';
-  html+=kpi('Faturamento'+(isP?' ('+n+'m)':''),fmtK(totRec),(isP?'Anualizado: '+fmtK(totRec*af):'Total acumulado'),sc,delta('rec'));
+  html+=kpi('Faturamento'+(isP?' ('+n+'m)':''),fmtK(totRec),(isP?'Anualizado: '+fmtK(totRec*af):(isAno?'Total acumulado':'Total · '+vgNome(vgPer))),sc,delta('rec'),dLab);
   html+=kpi('Lucro Bruto',fmtK(totLB),'Margem: '+pLB.toFixed(1)+'%',pLB>=9?'#199e70':pLB>=6?'#c98500':'#e66767');
   html+=kpi('Lucro Líquido',fmtK(totLiq),'Margem: '+pLiq.toFixed(1)+'% · sem Distrib. Dividendos',clr(totLiq));
-  html+=kpi('Resultado Líquido',fmtK(totRes),'Margem: '+pRes.toFixed(1)+'%',clr(totRes),delta('res'));
-  html+=kpi('Veículos Vendidos',totQtd.toFixed(0),(isP?'Ritmo: '+(totQtd*af).toFixed(0)+'/ano':'Acumulado anual'),'#e8eef6',delta('qtd'));
+  html+=kpi('Resultado Líquido',fmtK(totRes),'Margem: '+pRes.toFixed(1)+'%',clr(totRes),delta('res'),dLab);
+  html+=kpi('Veículos Vendidos',totQtd.toFixed(0),(isP?'Ritmo: '+(totQtd*af).toFixed(0)+'/ano':(isAno?'Acumulado anual':'Total · '+vgNome(vgPer))),'#e8eef6',delta('qtd'),dLab);
   html+='</div>';
   html+='<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px">';
   html+=kpi('Ticket Médio',fmtK(ticket),'Bench 2026: ~R$85k',ticket>=75000?'#199e70':'#c98500');
@@ -515,36 +575,36 @@ function renderBI(){
   // ── Revenue Chart (Black × Multimarcas × Consolidado)
   var dBk3=DRE.bk[biYear],dMm3=DRE.mm[biYear],dCons3=DRE.cons[biYear];
   var stCores3=[STORES.bk.c,STORES.mm.c,STORES.cons.c],stLabs3=[STORES.bk.label,STORES.mm.label,STORES.cons.label];
-  function ebitdaArr3(dd){return dd.lb.map(function(lb,i){return(lb||0)-(dd.pess[i]||0)-(dd.adm[i]||0)-(dd.prop[i]||0)-(dd.vend[i]||0)+(dd.div[i]||0)+(dd.pl[i]||0)+(dd.imp[i]||0);}).slice(0,12);}
+  function ebitdaArr3(dd){return dd.lb.map(function(lb,i){return(lb||0)-(dd.pess[i]||0)-(dd.adm[i]||0)-(dd.prop[i]||0)-(dd.vend[i]||0)+(dd.div[i]||0)+(dd.pl[i]||0)+(dd.imp[i]||0);}).filter(function(_,i){return cix.indexOf(i)>=0;});}
   html+=section('Receita Mensal','Faturamento mês a mês — R$ · Black × Multimarcas × Consolidado',
-    svgGroupBar([dBk3.rec.slice(0,12),dMm3.rec.slice(0,12),dCons3.rec.slice(0,12)],stLabs3,stCores3,mnAll,{h:220,showVals:true}));
+    svgGroupBar([pk(dBk3.rec),pk(dMm3.rec),pk(dCons3.rec)],stLabs3,stCores3,cLab,{h:220,showVals:true}));
 
   // ── EBITDA Chart (Black × Multimarcas × Consolidado)
   var ebitdaVals=d.lb.map(function(lb,i){return(lb||0)-(d.pess[i]||0)-(d.adm[i]||0)-(d.prop[i]||0)-(d.vend[i]||0)+(d.div[i]||0)+(d.pl[i]||0)+(d.imp[i]||0);});
   html+=section('EBITDA Mensal','Lucro Bruto − Pessoal − Admin − Marketing − Vendas + Impostos + Distrib. Sócios (resultado operacional puro) · Black × Multimarcas × Consolidado',
-    svgGroupBar([ebitdaArr3(dBk3),ebitdaArr3(dMm3),ebitdaArr3(dCons3)],stLabs3,stCores3,mnAll,{h:200,showVals:true}));
+    svgGroupBar([ebitdaArr3(dBk3),ebitdaArr3(dMm3),ebitdaArr3(dCons3)],stLabs3,stCores3,cLab,{h:200,showVals:true}));
 
   // ── Lucro Bruto Mensal (Black × Multimarcas × Consolidado)
   html+=section('Lucro Bruto Mensal','Receita – Deduções – Custos Diretos · Black × Multimarcas × Consolidado',
-    svgGroupBar([dBk3.lb.slice(0,12),dMm3.lb.slice(0,12),dCons3.lb.slice(0,12)],stLabs3,stCores3,mnAll,{h:220,showVals:true}));
+    svgGroupBar([pk(dBk3.lb),pk(dMm3.lb),pk(dCons3.lb)],stLabs3,stCores3,cLab,{h:220,showVals:true}));
 
   // ── Resultado Líquido Mensal (Black × Multimarcas × Consolidado)
   html+=section('Resultado Líquido Mensal','Lucro bruto – Desp. operacionais + Financeiro · Black × Multimarcas × Consolidado',
-    svgGroupBar([dBk3.res.slice(0,12),dMm3.res.slice(0,12),dCons3.res.slice(0,12)],stLabs3,stCores3,mnAll,{h:220,showVals:true}));
+    svgGroupBar([pk(dBk3.res),pk(dMm3.res),pk(dCons3.res)],stLabs3,stCores3,cLab,{h:220,showVals:true}));
 
   // ── Lucro Líquido Mensal (Resultado + Distrib. Dividendos) (Black × Multimarcas × Consolidado)
-  function lucroLiq3(dd){return dd.res.map(function(v,i){return(v||0)+(dd.div[i]||0);}).slice(0,12);}
+  function lucroLiq3(dd){return dd.res.map(function(v,i){return(v||0)+(dd.div[i]||0);}).filter(function(_,i){return cix.indexOf(i)>=0;});}
   html+=section('Lucro Líquido Mensal','Resultado Líquido + Distribuição de Dividendos (resultado sem o peso da distribuição aos sócios) · Black × Multimarcas × Consolidado',
-    svgGroupBar([lucroLiq3(dBk3),lucroLiq3(dMm3),lucroLiq3(dCons3)],stLabs3,stCores3,mnAll,{h:220,showVals:true}));
+    svgGroupBar([lucroLiq3(dBk3),lucroLiq3(dMm3),lucroLiq3(dCons3)],stLabs3,stCores3,cLab,{h:220,showVals:true}));
 
   // ── Margem Bruta % Mensal (Black × Multimarcas × Consolidado)
-  function pctArr3(dd,key){return dd.rec.map(function(r,i){return r>0?(dd[key][i]||0)/r*100:0;}).slice(0,12);}
+  function pctArr3(dd,key){return dd.rec.map(function(r,i){return r>0?(dd[key][i]||0)/r*100:0;}).filter(function(_,i){return cix.indexOf(i)>=0;});}
   html+=section('Margem Bruta Mensal (%)','Lucro Bruto / Receita · Black × Multimarcas × Consolidado',
     svgLine([
       {vals:pctArr3(dBk3,'lb'),color:STORES.bk.c,label:STORES.bk.label},
       {vals:pctArr3(dMm3,'lb'),color:STORES.mm.c,label:STORES.mm.label},
       {vals:pctArr3(dCons3,'lb'),color:STORES.cons.c,label:STORES.cons.label}
-    ],mnAll,{h:220,showVals:true,pct:true}));
+    ],cLab,{h:220,showVals:true,pct:true}));
 
   // ── Margem Líquida % Mensal (Black × Multimarcas × Consolidado)
   html+=section('Margem Líquida Mensal (%)','Resultado Líquido / Receita · Black × Multimarcas × Consolidado',
@@ -552,14 +612,17 @@ function renderBI(){
       {vals:pctArr3(dBk3,'res'),color:STORES.bk.c,label:STORES.bk.label},
       {vals:pctArr3(dMm3,'res'),color:STORES.mm.c,label:STORES.mm.label},
       {vals:pctArr3(dCons3,'res'),color:STORES.cons.c,label:STORES.cons.label}
-    ],mnAll,{h:220,showVals:true,pct:true}));
+    ],cLab,{h:220,showVals:true,pct:true}));
 
   // ── Custo de Aquisição Mensal (Black × Multimarcas × Consolidado)
-  function custoAq3(dd){return dd.rec.map(function(r,i){var ca=(dd.cshow[i]||0)+(dd.catac[i]||0);return ca>0?ca:Math.max(0,r-(dd.lb[i]||0));}).slice(0,12);}
+  function custoAq3(dd){return dd.rec.map(function(r,i){var ca=(dd.cshow[i]||0)+(dd.catac[i]||0);return ca>0?ca:Math.max(0,r-(dd.lb[i]||0));}).filter(function(_,i){return cix.indexOf(i)>=0;});}
   html+=section('Custo de Aquisição Mensal','Custo de compra dos veículos (showroom + atacado) · Black × Multimarcas × Consolidado',
-    svgGroupBar([custoAq3(dBk3),custoAq3(dMm3),custoAq3(dCons3)],stLabs3,stCores3,mnAll,{h:220,showVals:true}));
+    svgGroupBar([custoAq3(dBk3),custoAq3(dMm3),custoAq3(dCons3)],stLabs3,stCores3,cLab,{h:220,showVals:true}));
 
-  document.getElementById('pg-visaogeral').innerHTML=html;html='';
+  document.getElementById('pg-visaogeral').innerHTML=html;
+  })();
+  var dBk3=DRE.bk[biYear],dMm3=DRE.mm[biYear],dCons3=DRE.cons[biYear];
+  var stCores3=[STORES.bk.c,STORES.mm.c,STORES.cons.c],stLabs3=[STORES.bk.label,STORES.mm.label,STORES.cons.label];
 
   // ── Indicadores de Pós-venda e Preparação ──────────────────────────────
   var totCprep=S(d.cprep,n),totPosv=S(d.posv,n),totGar=S(d.gar,n),totLaudo=S(d.laudo,n);
